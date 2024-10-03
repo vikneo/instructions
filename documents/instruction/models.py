@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 
 
@@ -28,6 +29,7 @@ class Device(models.Model):
     name = models.CharField(max_length=150, verbose_name='Device', db_index=True)
     slug = models.SlugField(max_length=150, verbose_name='URL')
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
+    device_id = models.ManyToManyField("Network", verbose_name='Netork')
 
 
     def __str__(self) -> str:
@@ -79,11 +81,9 @@ class Network(models.Model):
     """
     The class describes the InstructionFile model
     """
-    device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Netork', related_name='devices_networks')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
     slug = models.SlugField(max_length=120, verbose_name='URL')
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
-    settings = models.OneToOneField("Settings", verbose_name="Settings", on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.name
@@ -98,52 +98,49 @@ class Settings(models.Model):
     """
     The class describes the Settings model
     """
-    class Speed(models.TextChoices):
-        '1200'
-        '2400'
-        '4800'
-        '9600'
-        '19200'
-        '38400'
-        '57600'
-        '115200'
-
-        __empty__ = 'speed'
+    class Speed(models.IntegerChoices):
+        NOT_USED = 0
+        S_1200 = 1200, '1200'
+        S_2400 = 2400, '2400'
+        S_4800 = 4800, '4800'
+        S_9600 = 9600, '9600'
+        S_19200 = 19200, '19200'
+        S_38400 = 38400, '38400'
+        S_57600 = 57600, '57600'
+        S_115200 = 115200, '115200'
 
     class Paritet(models.TextChoices):
+        NOT_USED = '-'
         EVEN = 'E'
         NONE = 'N'
         ODD = 'O'
-
-        __empty__ = 'paritet'
     
-    class Bits(models.TextChoices):
-        '7'
-        '8'
-        '9'
-
-        __empty__ = 'bits'
+    class Bits(models.IntegerChoices):
+        NOT_USED = 0
+        SEVEN = 7, '7'
+        EIGHT = 8, '8'
+        NINE = 9, '9'
     
-    class StopBit(models.TextChoices):
-        '1'
-        '2'
+    class StopBit(models.IntegerChoices):
+        NOT_USED = 0
+        ONE = 1, '1'
+        TWO = 2, '2'
 
-        __empty__ = 'storp bits'
-
-    mode = models.CharField(max_length=50, verbose_name='Mode', db_index=True)
+    interface = models.OneToOneField(Network, verbose_name='Interface', on_delete=models.CASCADE)
+    device = models.OneToOneField(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_settings')
     slug = models.SlugField(max_length=50, verbose_name='URL', db_index=True)
-    slave_id = models.IntegerField(verbose_name='Slave ID')
-    speed = models.CharField(max_length=6, verbose_name='Speed', default='9600', choices=Speed)
-    paritet = models.CharField(max_length=1, verbose_name='Paritet', default='N', choices=Paritet)
-    bit = models.CharField(max_length=1, verbose_name='Bits', default='8', choices=Bits)
-    stop_bit = models.CharField(max_length=1, verbose_name='Stop bit', default='1', choices=StopBit)
-    ip_address = models.CharField(max_length=15, verbose_name='IP address')
-    mask = models.CharField(max_length=15, verbose_name='Mask')
-    gateway = models.CharField(max_length=15, verbose_name='Gateway')
+    slave_id = models.IntegerField(verbose_name='Slave ID', default='not used')
+    speed = models.IntegerField(verbose_name='Speed', default=0, choices=Speed.choices)
+    paritet = models.CharField(max_length=1, verbose_name='Paritet', default='-', choices=Paritet.choices)
+    bit = models.IntegerField(verbose_name='Bits', default=0, choices=Bits.choices)
+    stop_bit = models.IntegerField(verbose_name='Stop bit', default=0, choices=StopBit.choices)
+    ip_address = models.CharField(max_length=15, verbose_name='IP address', default='not used')
+    mask = models.CharField(max_length=15, verbose_name='Mask', default='not used')
+    gateway = models.CharField(max_length=15, verbose_name='Gateway', default='not used')
     description = models.TextField(verbose_name='Description', default=' ', blank=True)
 
     def __str__(self) -> str:
-        return self.mode
+        return f"{self.interface} for {self.device}"
     
     class Meta:
         db_table = 'settings'
