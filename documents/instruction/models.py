@@ -1,4 +1,3 @@
-from typing import Any
 from django.db import models
 
 
@@ -7,7 +6,7 @@ class Brand(models.Model):
     The class describes the Brand model
     """
     name = models.CharField(max_length=100, verbose_name='Brand', db_index=True)
-    slug = models.SlugField(max_length=100, verbose_name='URL')
+    slug = models.SlugField(max_length=100, verbose_name='URL', unique=True)
 
     def __str__(self) -> str:
         return self.name
@@ -27,7 +26,7 @@ class Device(models.Model):
     """
     brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Device', related_name='brands')
     name = models.CharField(max_length=150, verbose_name='Device', db_index=True)
-    slug = models.SlugField(max_length=150, verbose_name='URL')
+    slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
     device_id = models.ManyToManyField("Network", verbose_name='Netork')
 
@@ -47,7 +46,7 @@ class InstructionFile(models.Model):
     """
     device_id = models.OneToOneField(Device, on_delete=models.CASCADE, verbose_name='Instruction', related_name='devices_instructs')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
-    slug = models.SlugField(max_length=120, verbose_name='URL')
+    slug = models.SlugField(max_length=120, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
 
     def __str__(self) -> str:
@@ -65,7 +64,6 @@ class File(models.Model):
     """
     device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Photo', related_name='devices_files')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
-    slug = models.SlugField(max_length=120, verbose_name='URL')
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
 
     def __str__(self) -> str:
@@ -82,7 +80,7 @@ class Network(models.Model):
     The class describes the InstructionFile model
     """
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
-    slug = models.SlugField(max_length=120, verbose_name='URL')
+    slug = models.SlugField(max_length=120, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
 
     def __str__(self) -> str:
@@ -126,10 +124,10 @@ class Settings(models.Model):
         ONE = 1, '1'
         TWO = 2, '2'
 
-    interface = models.OneToOneField(Network, verbose_name='Interface', on_delete=models.CASCADE)
-    device = models.OneToOneField(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_settings')
-    slug = models.SlugField(max_length=50, verbose_name='URL', db_index=True)
-    slave_id = models.IntegerField(verbose_name='Slave ID', default='not used')
+    interface = models.ForeignKey(Network, verbose_name='Interface', on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_settings')
+    slug = models.SlugField(max_length=50, verbose_name='URL', db_index=True, unique=True)
+    slave_id = models.IntegerField(verbose_name='Slave ID', blank=True, null=True)
     speed = models.IntegerField(verbose_name='Speed', default=0, choices=Speed.choices)
     paritet = models.CharField(max_length=1, verbose_name='Paritet', default='-', choices=Paritet.choices)
     bit = models.IntegerField(verbose_name='Bits', default=0, choices=Bits.choices)
