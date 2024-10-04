@@ -20,7 +20,7 @@ def path_to_file_configs(instance: 'File', filename: str) -> None:
     :param filename: name file
     :return: str - path to save
     """
-    return f"configs/{instance.device_id.name}/{instance.name}/{filename}"
+    return f"configs/{instance.device_id.name}/{filename}"
 
 
 def path_to_file_report(instance: 'File', filename: str) -> None:
@@ -31,7 +31,7 @@ def path_to_file_report(instance: 'File', filename: str) -> None:
     :param filename: name file
     :return: str - path to save
     """
-    return f"report/{instance.device_id.name}/{instance.name}/{filename}"
+    return f"report/{instance.device_id.name}/{filename}"
 
 
 class Brand(models.Model):
@@ -58,14 +58,15 @@ class Device(models.Model):
     The class describes the Device model
     """
     brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Brand', related_name='brands')
-    name = models.CharField(max_length=150, verbose_name='Device', db_index=True)
+    name = models.CharField(max_length=80, verbose_name='Device', db_index=True)
+    designation = models.CharField(max_length=100, verbose_name='Обозначение')
     slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
     network_id = models.ManyToManyField("Network", verbose_name='Network')
 
 
     def __str__(self) -> str:
-        return self.name
+        return self.designation
     
     class Meta:
         db_table = 'devices'
@@ -105,7 +106,7 @@ class File(models.Model):
     file_report = models.FileField(upload_to=path_to_file_report, verbose_name='Photo report', blank=True)
 
     def __str__(self) -> str:
-        return self.name
+        return self.device_id.name
     
     class Meta:
         db_table = 'files'
