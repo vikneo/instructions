@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.http import HttpRequest
+from django.db.models import QuerySet
+
 from .models import (
     Brand, 
     Device,
@@ -8,6 +11,17 @@ from .models import (
     Settings,
     Project
     )
+
+
+@admin.action(description='Закрыть доступ')
+def close_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    queryset.update(access=False)
+
+
+@admin.action(description='Открыть доступ')
+def open_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    queryset.update(access=True)
+
 
 
 class FileTabularInline(admin.TabularInline):
@@ -33,9 +47,21 @@ class AdminDevice(admin.ModelAdmin):
     inlines = [
         FileTabularInline,
     ]
-    list_display = ['brand_id', 'name', 'description']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
+    list_display = ['brand_id', 'name', 'designation', 'get_id_crm', 'get_company',]
+    list_display_links = ['name',]
+    prepopulated_fields = {'slug': ('name', 'designation')}
+    list_filter = ['name', ]
+
+    def get_id_crm(self, obj):
+        if obj.project_set.all():
+            return obj.project_set.all()[0]
+    
+    def get_company(self, obj):
+        if obj.project_set.all():
+            return obj.project_set.all()[0].company
+    
+    get_id_crm.short_description = "id crm"
+    get_company.short_description = "company"
 
 
 @admin.register(InstructionFile)
@@ -74,7 +100,7 @@ class AdminSettings(admin.ModelAdmin):
     Registration of the "Settings" model in the admin panel
     """
     save_on_top = True
-    list_display = ['interface', 'device']
+    list_display = ['interface', 'device', 'slave_id']
     list_display_links = ['interface']
     prepopulated_fields = {'slug': ('interface', 'device')}
 
