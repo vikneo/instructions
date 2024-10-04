@@ -28,7 +28,7 @@ class Device(models.Model):
     name = models.CharField(max_length=150, verbose_name='Device', db_index=True)
     slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
-    device_id = models.ManyToManyField("Network", verbose_name='Netork')
+    network_id = models.ManyToManyField("Network", verbose_name='Netork')
 
 
     def __str__(self) -> str:
@@ -64,6 +64,8 @@ class File(models.Model):
     """
     device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Photo', related_name='devices_files')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
 
     def __str__(self) -> str:
@@ -135,6 +137,8 @@ class Settings(models.Model):
     ip_address = models.CharField(max_length=15, verbose_name='IP address', default='not used')
     mask = models.CharField(max_length=15, verbose_name='Mask', default='not used')
     gateway = models.CharField(max_length=15, verbose_name='Gateway', default='not used')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
     description = models.TextField(verbose_name='Description', default=' ', blank=True)
 
     def __str__(self) -> str:
@@ -144,3 +148,25 @@ class Settings(models.Model):
         db_table = 'settings'
         verbose_name = 'setting'
         verbose_name_plural = 'settings'
+
+
+class Project(models.Model):
+    """
+    The class describes the Project model
+    """
+    crm_id = models.CharField(max_length=10, verbose_name="ID CRM", db_index=True)
+    company = models.CharField(max_length=120, verbose_name='Company')
+    project = models.CharField(max_length=120, verbose_name="Project", )
+    slug = models.SlugField(max_length=200, verbose_name="URL", db_index=True, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
+    description = models.TextField(verbose_name='Info', default=' ', blank=True)
+    device_id = models.ManyToManyField(Device, verbose_name='Device')
+
+    def __str__(self) -> str:
+        return self.crm_id
+    
+    class Meta:
+        db_table = 'project'
+        verbose_name = 'project'
+        verbose_name_plural = 'projects'
