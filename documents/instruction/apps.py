@@ -6,5 +6,4 @@ class InstructionConfig(AppConfig):
     name = 'instruction'
 
     def ready(self) -> None:
-        print("def ready(self) ")
         import instruction.signals
