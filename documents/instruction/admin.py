@@ -9,7 +9,8 @@ from .models import (
     File,
     Network,
     Settings,
-    Project
+    Project,
+    WaveSensor
     )
 
 
@@ -113,3 +114,13 @@ class AdminProject(admin.ModelAdmin):
     list_display = ['crm_id', 'company', 'project', 'created_at']
     list_display_links = ['crm_id', 'project']
     prepopulated_fields = {'slug': ('crm_id', 'project')}
+
+
+@admin.register(WaveSensor)
+class AdminWaveSensor(admin.ModelAdmin):
+    """
+    Registration of the "AdminWaveSensor" model in the admin panel
+    """
+    list_display = ['device_id', 'name_rkd']
+    list_display_links = ['name_rkd',]
+    list_filter = ['device_id',]
