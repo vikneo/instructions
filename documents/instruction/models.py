@@ -1,6 +1,17 @@
 from django.db import models
 
 
+def path_too_file_instruction(instance: 'InstructionFile', filename: str) -> None:
+    """
+    The function generates a path based on the name of the file with the algorithm.
+
+    :param instance: object File
+    :param filename: name file
+    :return: str - path to save
+    """
+    return f"instruction/{instance.name}/{filename}"
+
+
 class Brand(models.Model):
     """
     The class describes the Brand model
@@ -24,11 +35,11 @@ class Device(models.Model):
     """
     The class describes the Device model
     """
-    brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Device', related_name='brands')
+    brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Brand', related_name='brands')
     name = models.CharField(max_length=150, verbose_name='Device', db_index=True)
     slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
-    network_id = models.ManyToManyField("Network", verbose_name='Netork')
+    network_id = models.ManyToManyField("Network", verbose_name='Network')
 
 
     def __str__(self) -> str:
@@ -44,10 +55,13 @@ class InstructionFile(models.Model):
     """
     The class describes the InstructionFile model
     """
-    device_id = models.OneToOneField(Device, on_delete=models.CASCADE, verbose_name='Instruction', related_name='devices_instructs')
+    device_id = models.OneToOneField(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_instructs')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
     slug = models.SlugField(max_length=120, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
+    docs = models.FileField(upload_to=path_too_file_instruction, verbose_name='File')
 
     def __str__(self) -> str:
         return self.name
@@ -62,7 +76,7 @@ class File(models.Model):
     """
     The class describes the InstructionFile model
     """
-    device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Photo', related_name='devices_files')
+    device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_files')
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
@@ -161,7 +175,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
     description = models.TextField(verbose_name='Info', default=' ', blank=True)
-    device_id = models.ManyToManyField(Device, verbose_name='Device')
+    device_id = models.ManyToManyField(Device, verbose_name='Device', blank=True)
 
     def __str__(self) -> str:
         return self.crm_id
