@@ -15,6 +15,5 @@ def get_slugify_instruction(instance, **kwargs) -> None:
     field through the "slugify" module
     """
     if re.search(r'[0-9]-[0-9]', instance.slug):
-        # TODO для уникальности добавить к slug id_CRM + id_project или name_project
-        instance.slug = f"{slugify(instance.interface.name)}- \
-                        {slugify(instance.device.name)}"
+        instance.slug = f"{slugify(instance.interface.name)}-{slugify(instance.device.name)}-{slugify(instance.device.designation)}"
+                        
