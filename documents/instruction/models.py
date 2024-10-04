@@ -3,13 +3,35 @@ from django.db import models
 
 def path_to_file_instruction(instance: 'InstructionFile', filename: str) -> None:
     """
-    The function generates a path based on the name of the file with the algorithm.
+    The function generates a path based on the name of the file with the instruction.
 
     :param instance: object File
     :param filename: name file
     :return: str - path to save
     """
     return f"instruction/{instance.name}/{filename}"
+
+
+def path_to_file_configs(instance: 'File', filename: str) -> None:
+    """
+    The function generates a path based on the name of the file with the configs.
+
+    :param instance: object File
+    :param filename: name file
+    :return: str - path to save
+    """
+    return f"configs/{instance.device_id.name}/{instance.name}/{filename}"
+
+
+def path_to_file_report(instance: 'File', filename: str) -> None:
+    """
+    The function generates a path based on the name of the file with the report.
+
+    :param instance: object File
+    :param filename: name file
+    :return: str - path to save
+    """
+    return f"report/{instance.device_id.name}/{instance.name}/{filename}"
 
 
 class Brand(models.Model):
@@ -80,7 +102,8 @@ class File(models.Model):
     name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
-    description = models.TextField(verbose_name='Description', blank=True, default=' ')
+    file_configs = models.FileField(upload_to=path_to_file_configs, verbose_name='Photo config', blank=True)
+    file_report = models.FileField(upload_to=path_to_file_report, verbose_name='Photo report', blank=True)
 
     def __str__(self) -> str:
         return self.name
