@@ -1,7 +1,7 @@
 from django.db import models
 
 
-def path_too_file_instruction(instance: 'InstructionFile', filename: str) -> None:
+def path_to_file_instruction(instance: 'InstructionFile', filename: str) -> None:
     """
     The function generates a path based on the name of the file with the algorithm.
 
@@ -61,7 +61,7 @@ class InstructionFile(models.Model):
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
-    docs = models.FileField(upload_to=path_too_file_instruction, verbose_name='File')
+    docs = models.FileField(upload_to=path_to_file_instruction, verbose_name='File')
 
     def __str__(self) -> str:
         return self.name
