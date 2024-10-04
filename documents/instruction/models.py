@@ -207,3 +207,26 @@ class Project(models.Model):
         db_table = 'project'
         verbose_name = 'project'
         verbose_name_plural = 'projects'
+
+
+class WaveSensor(models.Model):
+    """
+    The class describes the WaveSensor model
+    """
+    device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Binding', related_name='devices')
+    name_rkd = models.CharField(max_length=15, verbose_name='Desicn to RKD', db_index=True) # обозначение по РКД
+    description = models.CharField(max_length=80, verbose_name='Name equipment') # наименование оборудования
+    group = models.CharField(max_length=30, verbose_name='Group') # группа датчиков
+    install = models.IntegerField(verbose_name='Column install') # установлено в колонне
+    serial_number = models.CharField(max_length=30, verbose_name='Serial number') # серийный номер
+    register = models.IntegerField(verbose_name='Register') # регистр 
+    temp_warning = models.CharField(max_length=3, verbose_name='Temperature warning', default='85') # Предупреждение
+    temp_error = models.CharField(max_length=3, verbose_name='Temperature over', default='90') # Перегрев
+
+    def __str__(self) -> str:
+        return self.name_rkd
+    
+    class Meta:
+        db_table = 'wavesensors'
+        verbose_name = 'sensor'
+        verbose_name_plural = 'sensors'
