@@ -16,6 +16,7 @@ class AdminBrand(admin.ModelAdmin):
     """
     list_display = ['id', 'name']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Device)
@@ -25,6 +26,7 @@ class AdminDevice(admin.ModelAdmin):
     """
     list_display = ['brand_id', 'name', 'description']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(InstructionFile)
@@ -34,6 +36,7 @@ class AdminInstructionFile(admin.ModelAdmin):
     """
     list_display = ['device_id', 'name', 'description']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(File)
@@ -52,6 +55,7 @@ class AdminNetwork(admin.ModelAdmin):
     """
     list_display = ['name', 'description']
     list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
 
 @admin.register(Settings)
@@ -61,3 +65,7 @@ class AdminSettings(admin.ModelAdmin):
     """
     list_display = ['interface', 'device']
     list_display_links = ['interface']
+    prepopulated_fields = {'slug': ('interface', 'device')}
+
+    def interface(self, obj):
+        return f"{obj.name}"
