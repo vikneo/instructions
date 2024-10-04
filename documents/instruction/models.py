@@ -99,7 +99,6 @@ class File(models.Model):
     The class describes the InstructionFile model
     """
     device_id = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='Device', related_name='devices_files')
-    name = models.CharField(max_length=120, verbose_name='Name', db_index=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
     file_configs = models.FileField(upload_to=path_to_file_configs, verbose_name='Photo config', blank=True)
