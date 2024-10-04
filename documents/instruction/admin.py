@@ -54,8 +54,8 @@ class AdminFile(admin.ModelAdmin):
     Registration of the "File" model in the admin panel
     """
 
-    list_display = ['device_id', 'name', 'file_configs', 'file_report']
-    list_display_links = ['name']
+    list_display = ['device_id', 'file_configs', 'file_report']
+    list_display_links = ['device_id']
 
 
 @admin.register(Network)
