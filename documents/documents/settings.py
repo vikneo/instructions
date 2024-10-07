@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'instruction.apps.InstructionConfig',
+    "import_export",
 ]
 
 MIDDLEWARE = [
