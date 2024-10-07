@@ -60,8 +60,10 @@ class Device(models.Model):
     brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Brand', related_name='brands')
     name = models.CharField(max_length=80, verbose_name='Device', db_index=True)
     designation = models.CharField(max_length=100, verbose_name='Обозначение')
+    serial_num = models.CharField(max_length=15, verbose_name='Serial number')
     slug = models.SlugField(max_length=150, verbose_name='URL', unique=True)
     description = models.TextField(verbose_name='Description', blank=True, default=' ')
+    termodate = models.BooleanField(default=False, verbose_name='Termo date')
     network_id = models.ManyToManyField("Network", verbose_name='Network')
 
 
