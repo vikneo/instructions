@@ -53,20 +53,18 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
         close_access,
         open_access
     ]
-    list_display = ['name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project',]
+    list_display = ['id', 'name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project',]
     list_display_links = ['name',]
     prepopulated_fields = {'slug': ('name', 'designation')}
     list_filter = ['name', 'serial_num']
 
     def get_id_crm(self, obj):
-        if obj.project_set.all():
-            return obj.project_set.all()[0]
+        return obj.project_id
     
     def get_project(self, obj):
-        if obj.project_set.all():
-            return obj.project_set.all()[0].project
+        return obj.project_id.company
     
-    get_id_crm.short_description = "id crm"
+    get_id_crm.short_description = "id / project"
     get_project.short_description = "company"
 
 
@@ -132,7 +130,9 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
     ordering = ['id']
 
     def get_project(self, obj) -> str:
-        return obj.device_id.project_set.first().project
+        id_project = obj.device_id.project_set.first()
+        if id_project:
+            return id_project.project
     
     def get_id_crm(self, obj) -> str:
         return obj.device_id.project_set.first()

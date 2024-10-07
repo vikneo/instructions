@@ -69,11 +69,6 @@ class Device(models.Model):
 
 
     def __str__(self) -> str:
-        name_project = self.project_id
-        print(name_project)
-        if name_project:
-            return f"{self.designation}-{self.serial_num}-{name_project.project}"
-        
         return f"{self.designation}-{self.serial_num}"
     
     class Meta:
