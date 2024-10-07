@@ -58,6 +58,7 @@ class Device(models.Model):
     The class describes the Device model
     """
     brand_id = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Brand', related_name='brands')
+    project_id = models.ForeignKey('Project', on_delete=models.CASCADE, verbose_name='Device', blank=True)
     name = models.CharField(max_length=80, verbose_name='Device', db_index=True)
     designation = models.CharField(max_length=100, verbose_name='Обозначение')
     serial_num = models.CharField(max_length=15, verbose_name='Serial number')
@@ -68,7 +69,12 @@ class Device(models.Model):
 
 
     def __str__(self) -> str:
-        return self.designation
+        name_project = self.project_id
+        print(name_project)
+        if name_project:
+            return f"{self.designation}-{self.serial_num}-{name_project.project}"
+        
+        return f"{self.designation}-{self.serial_num}"
     
     class Meta:
         db_table = 'devices'
@@ -200,10 +206,9 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
     description = models.TextField(verbose_name='Info', default=' ', blank=True)
-    device_id = models.ManyToManyField(Device, verbose_name='Device', blank=True)
 
     def __str__(self) -> str:
-        return self.crm_id
+        return f"{self.crm_id}-{self.project}"
     
     class Meta:
         db_table = 'project'
