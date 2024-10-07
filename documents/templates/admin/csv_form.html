@@ -1,0 +1,18 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="upload-file">
+        <form action="." method="post" enctype="multipart/form-data", encoding="'utf-8">
+            {% csrf_token %}
+            <p>
+                <h2>Загрузка файла csv</h2>
+            </p>
+            {{ form.csv_file }}
+            <div class="submit-row">
+                <input type="submit"  value="Загрузить">
+                <button class="btn-upload" type="submit">Загрузить</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
