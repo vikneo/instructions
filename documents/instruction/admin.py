@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.http import HttpRequest
 from django.db.models import QuerySet
+from import_export.admin import ImportExportModelAdmin
 
 from .models import (
     Brand, 
@@ -14,14 +15,14 @@ from .models import (
     )
 
 
-@admin.action(description='Закрыть доступ')
+@admin.action(description='Del Termo date')
 def close_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
-    queryset.update(access=False)
+    queryset.update(termodate=False)
 
 
-@admin.action(description='Открыть доступ')
+@admin.action(description='Add Termo date')
 def open_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
-    queryset.update(access=True)
+    queryset.update(termodate=True)
 
 
 
@@ -31,7 +32,7 @@ class FileTabularInline(admin.TabularInline):
 
 
 @admin.register(Brand)
-class AdminBrand(admin.ModelAdmin):
+class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Brand" model in the admin panel
     """
@@ -41,28 +42,32 @@ class AdminBrand(admin.ModelAdmin):
 
 
 @admin.register(Device)
-class AdminDevice(admin.ModelAdmin):
+class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Device" model in the admin panel
     """
     inlines = [
         FileTabularInline,
     ]
-    list_display = ['brand_id', 'name', 'designation', 'get_id_crm', 'get_company',]
+    actions = [
+        close_access,
+        open_access
+    ]
+    list_display = ['name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project',]
     list_display_links = ['name',]
     prepopulated_fields = {'slug': ('name', 'designation')}
-    list_filter = ['name', ]
+    list_filter = ['name', 'serial_num']
 
     def get_id_crm(self, obj):
         if obj.project_set.all():
             return obj.project_set.all()[0]
     
-    def get_company(self, obj):
+    def get_project(self, obj):
         if obj.project_set.all():
-            return obj.project_set.all()[0].company
+            return obj.project_set.all()[0].project
     
     get_id_crm.short_description = "id crm"
-    get_company.short_description = "company"
+    get_project.short_description = "company"
 
 
 @admin.register(InstructionFile)
@@ -86,7 +91,7 @@ class AdminFile(admin.ModelAdmin):
 
 
 @admin.register(Network)
-class AdminNetwork(admin.ModelAdmin):
+class AdminNetwork(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Network" model in the admin panel
     """
@@ -96,7 +101,7 @@ class AdminNetwork(admin.ModelAdmin):
 
 
 @admin.register(Settings)
-class AdminSettings(admin.ModelAdmin):
+class AdminSettings(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Settings" model in the admin panel
     """
@@ -107,7 +112,7 @@ class AdminSettings(admin.ModelAdmin):
 
 
 @admin.register(Project)
-class AdminProject(admin.ModelAdmin):
+class AdminProject(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Project" model in the admin panel
     """
@@ -117,10 +122,20 @@ class AdminProject(admin.ModelAdmin):
 
 
 @admin.register(WaveSensor)
-class AdminWaveSensor(admin.ModelAdmin):
+class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "AdminWaveSensor" model in the admin panel
     """
-    list_display = ['device_id', 'name_rkd']
+    list_display = ['id', 'get_id_crm', 'get_project', 'device_id', 'name_rkd']
     list_display_links = ['name_rkd',]
     list_filter = ['device_id',]
+    ordering = ['id']
+
+    def get_project(self, obj) -> str:
+        return obj.device_id.project_set.first().project
+    
+    def get_id_crm(self, obj) -> str:
+        return obj.device_id.project_set.first()
+    
+    get_project.short_description = 'project'
+    get_id_crm.short_description = 'id-crm'
