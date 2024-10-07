@@ -55,8 +55,9 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     ]
     list_display = ['id', 'name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project',]
     list_display_links = ['name',]
-    prepopulated_fields = {'slug': ('name', 'designation')}
+    prepopulated_fields = {'slug': ('name', 'designation', 'serial_num')}
     list_filter = ['name', 'serial_num']
+    save_on_top = True
 
     def get_id_crm(self, obj):
         return obj.project_id
