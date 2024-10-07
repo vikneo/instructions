@@ -124,18 +124,12 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "AdminWaveSensor" model in the admin panel
     """
-    list_display = ['id', 'get_id_crm', 'get_project', 'device_id', 'name_rkd']
+    list_display = ['id', 'get_id_crm', 'device_id', 'name_rkd']
     list_display_links = ['name_rkd',]
     list_filter = ['device_id',]
     ordering = ['id']
-
-    def get_project(self, obj) -> str:
-        id_project = obj.device_id.project_set.first()
-        if id_project:
-            return id_project.project
     
     def get_id_crm(self, obj) -> str:
-        return obj.device_id.project_set.first()
+        return obj.device_id.project_id
     
-    get_project.short_description = 'project'
-    get_id_crm.short_description = 'id-crm'
+    get_id_crm.short_description = 'id / project'
