@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -72,14 +73,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'documents.wsgi.application'
-
-CACHE_ROOT = os.path.join(BASE_DIR, "cache")
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        "LOCATION": CACHE_ROOT,
-    }
-}
 
 
 # Database
@@ -131,6 +124,70 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# cachings
+
+CACHE_ROOT = os.path.join(BASE_DIR, "cache")
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+        "LOCATION": CACHE_ROOT,
+    }
+}
+
+
+#sessions
+
+SESSION_COOKIE_AGE = 14 * 24 * 60 * 60
+
+SESSION_EXPIRE_AT_CLOSE = True
+
+# Loging
+LOGIN_REDIRECT_URL = '/'
+
+LOGGING_ROOT = BASE_DIR / "loging"
+LOGGING_URL = "/loging/"
+
+LOGFILE_NAME = "log_debug.log"
+LOGFILE_NAME_STDOUT = "log_stdout.log"
+# LOGFILE_NAME_STDERR = "log_stderr.log"
+
+LOGFILE_SIZE = 5 * 1024 * 1024
+LOGFILE_COUNT = 10
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'base': {
+            'format': '%(asctime)s [%(levelname)s] "%(name)s %(lineno)s %(message)s"'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'base',
+            'stream': 'ext://sys.stdout',
+        },
+        'file_log': {
+            "class": "logging.handlers.RotatingFileHandler",
+            'level': 'INFO',
+            'formatter': 'base',
+            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            'maxBytes': LOGFILE_SIZE,
+            'backupCount': LOGFILE_COUNT,
+            'mode': 'a',
+            'encoding': 'utf-8'
+        },
+    },
+    'loggers': {
+        'root': {
+            'level': 'INFO',
+            'handlers': ['console', 'file_log']
+        },
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
