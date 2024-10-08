@@ -1,11 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+{% for product in products %}
+<div>
+    {% with product.device_set.all as devices %}
     
-</body>
-</html>
+    <p>{{ product.crm_id }} | {{ product.company }} | <b>{{ product.project }}</b> | {{ product.created_at }} | 
+        {% for device in devices %}{% if device.termodate %}{{ device }} | {% endif %}{% endfor %}</p>
+    {% endwith %}
+</div>
+<p></p>
+{% endfor %}
+{% endblock %}
