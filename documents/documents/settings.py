@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", 0)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split()
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split()
 
 # Application definition
 
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'documents.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv("ENGINE_SQL"),
-        'NAME': BASE_DIR / os.getenv("NAME_SQL"),
+        'NAME': BASE_DIR / os.getenv("NAME_SQL", "db.sqlite3"),
     }
 }
 
@@ -145,8 +145,8 @@ SESSION_EXPIRE_AT_CLOSE = True
 # Loging
 LOGIN_REDIRECT_URL = '/'
 
-LOGGING_ROOT = BASE_DIR / "loging"
-LOGGING_URL = "/loging/"
+LOGGING_ROOT = BASE_DIR / "logging"
+LOGGING_URL = "/logging/"
 
 LOGFILE_NAME = "log_debug.log"
 LOGFILE_NAME_STDOUT = "log_stdout.log"
