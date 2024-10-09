@@ -29,7 +29,7 @@ if settings.DEBUG:
         static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     )
     urlpatterns.extend(
-        static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
     )
     urlpatterns.extend(
         static(settings.LOGGING_URL, document_root=settings.LOGGING_ROOT)
