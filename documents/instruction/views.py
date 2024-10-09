@@ -2,7 +2,7 @@ import logging
 from typing import Any
 
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import (
     Project,
@@ -29,4 +29,17 @@ class ProjectListView(ListView):
 
         context = super().get_context_data(**kwargs)
         context.update(title='Network technologies')
+        logger.info(f"`{self.request.user}` Рендеринг шаблона с проектами")
+        return context
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = 'product/product_detail.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(title=f'Detail info {self.model.project}')
+        logger.info(f"`{self.request.user}` Рендеринг шаблона с детальной информацией ")
         return context
