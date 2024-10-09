@@ -1,4 +1,18 @@
-body {
+/* body {
     background-color: black;
+} */
+
+.auth {
+    color: black !important;
+    background-color: rgb(133, 150, 167) !important;
 }
 
+.logo-icon{
+    max-width: 175px;
+    padding-left: 50px;
+}
+
+.searche-form{
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
