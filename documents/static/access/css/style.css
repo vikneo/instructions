@@ -7,9 +7,10 @@
 }
 
 .breadcrumb-item, ol{
-    width: 100%;
+    padding-left: 15px;
+    padding-bottom: 5px;
     color: black;
-    background-color: #0089ff7a;
+    background-color: #afd9fdf8 !important;
 }
 
 .not-auth {
@@ -18,8 +19,8 @@
 }
 
 .logo-icon{
-    max-width: 175px;
-    padding-left: 50px;
+    max-width: 200px;
+    padding-left: 30px;
 }
 
 .searche-form{
