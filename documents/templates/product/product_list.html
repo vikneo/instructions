@@ -3,14 +3,50 @@
 
 {% block content %}
 
-{% for product in products %}
-<div>
+{% if products %}
+<div class="container overflow-hidden text-center mt-5">
+    {% for product in products %}
     {% with product.device_set.all as devices %}
-    
-    <p>{{ product.crm_id }} | {{ product.company }} | <b>{{ product.project }}</b> | {{ product.created_at }} | 
-        {% for device in devices %}{% if device.termodate %}{{ device }} | {% endif %}{% endfor %}</p>
+    <table class="table caption-top">
+        <tbody>
+            <tr>
+                <td>
+                    <a href="#">{{ product.project }}</a>
+                </td>
+                <td>{{ product.company }}</td>
+                <td>{{ product.crm_id }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {% translate 'Termo date' %}
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if devices %}
+                            {% for devic in devices %}
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    {% if devic.termodate %}{{ devic }}{% else %}{% endif %}
+                                </a>
+                            </li>
+                            {% endfor %}
+                            {% else %}
+                            <li>
+                                <span class="dropdown-item">
+                                    {% translate 'not date' %}
+                                </span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     {% endwith %}
+    {% endfor %}
 </div>
-<p></p>
-{% endfor %}
+{% else %}
+{% endif %}
+
 {% endblock %}
