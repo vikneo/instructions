@@ -28,13 +28,28 @@
                     <a class="nav-link">{% translate 'About' %}</a>
                 </li>
             </ul>
+            {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% translate 'Personal account' %}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% translate 'Edit a profile' %}</a></li>
+                        {% if user.is_staff %}
+                        <li><a class="dropdown-item" href="{% url 'admin:index' %}">{% translate 'Administration' %}</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="#">{% translate 'Log out' %}</a></li>
+                    </ul>
+                </div>
+            {% else %}
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link me-2 auth" href="#">{% translate 'Sign in' %}</a>
+                    <a class="nav-link me-2 not-auth" href="#">{% translate 'Sign in' %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link auth" href="#">{% translate 'Sign up' %}</a>
+                    <a class="nav-link not-auth" href="#">{% translate 'Sign up' %}</a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -44,9 +59,8 @@
 {% block breadcrumbs %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active {% if request.get_full_path == '/' %}d-none{% endif %}" aria-current="page">Главная</li>
+        <li class="breadcrumb-item active {% if request.get_full_path == '/' %}d-none{% endif %}" aria-current="page">
+            Главная</li>
     </ol>
 </nav>
 {% endblock %}
-
-<!-- https://cdn-ru.bitrix24.ru/b13049348/bitrix24/89b/89b1c30f2e5c56d978efed652fa55b7a/logo_VrI4ahUF.png -->

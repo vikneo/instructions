@@ -2,13 +2,17 @@
     background-color: black;
 } */
 
+.flex{
+    display: flex;
+}
+
 .breadcrumb-item, ol{
     width: 100%;
     color: black;
     background-color: #0089ff7a;
 }
 
-.auth {
+.not-auth {
     color: black !important;
     background-color: rgb(133, 150, 167) !important;
 }
