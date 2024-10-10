@@ -20,8 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('instruction.urls'))
+    path('documents/doc-admin/', admin.site.urls),
+    path('', include('instruction.urls')),
+    path('account/', include('users.urls')),
 ]
 
 if settings.DEBUG:
