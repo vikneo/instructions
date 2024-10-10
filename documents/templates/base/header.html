@@ -4,11 +4,11 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img class="logo-icon"
-                src="https://cdn-ru.bitrix24.ru/b13049348/bitrix24/89b/89b1c30f2e5c56d978efed652fa55b7a/logo_VrI4ahUF.png"
-                alt="">
+                 src="https://cdn-ru.bitrix24.ru/b13049348/bitrix24/89b/89b1c30f2e5c56d978efed652fa55b7a/logo_VrI4ahUF.png"
+                 alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-            aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
@@ -29,40 +29,46 @@
                 </li>
             </ul>
             {% if user.is_authenticated %}
-            <ul class="nav nav-underline navbar-nav">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
-                        {{ user.first_name }} {{ user.last_name }}
-                    </button>
-                    <ul class="dropdown-menu auth">
-                        <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
-                        {% if user.is_staff %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                {% translate 'Администрирование' %}
-                            </a>
-                        </li>
-                        {% endif %}
-                        <li><a class="dropdown-item" href="#">{% translate 'Выйти' %}</a></li>
-                    </ul>
-                </div>
-            </ul>
+                <ul class="nav nav-underline navbar-nav">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </button>
+                        <ul class="dropdown-menu auth">
+                            <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
+                            {% if user.is_staff %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                        {% translate 'Администрирование' %}
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% translate 'Выйти' %}</a></li>
+                        </ul>
+                    </div>
+                </ul>
             {% else %}
-            <ul class="nav nav-underline navbar-nav">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle not-auth" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
-                    </button>
-                    <ul class="dropdown-menu not-auth">
-                        <li><a class="dropdown-item" href="#">{% translate 'Авторизация' %}</a></li>
-                        <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
-                    </ul>
-                </div>
-            </ul>
+                <ul class="nav nav-underline navbar-nav">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle not-auth" type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
+                        </button>
+                        <ul class="dropdown-menu not-auth">
+                            <li><a class="dropdown-item" href="{% url 'users:login' %}" 
+{#                                   data-bs-toggle="modal"#}
+{#                                   data-bs-target="#exampleModal">#}>
+                                {% translate 'Авторизация' %}</a></li>
+                            <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
+                        </ul>
+                    </div>
+                </ul>
             {% endif %}
+{#            {% include 'account/login.html' %}#}
         </div>
     </div>
 </nav>
+
