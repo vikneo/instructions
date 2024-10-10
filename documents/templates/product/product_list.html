@@ -35,8 +35,10 @@
                             {% if devices %}
                             {% for devic in devices %}
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    {% if devic.termodate %}{{ devic }}{% else %}{% endif %}
+                                <a type="button" class="dropdown-item btn btn-secondary" href="#"
+                                    class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="right"
+                                    title="{{ devic.name }}">
+                                    {{ devic }}
                                 </a>
                             </li>
                             {% endfor %}
@@ -54,10 +56,11 @@
                     {% termo_date devices as termo %}
                     {% if termo %}
                     <div class="flex termo-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked
+                            disabled>
                         <label class="form-check-label" for="flexCheckCheckedDisabled">
                         </label>
-                      </div>
+                    </div>
                     {% endif %}
                 </td>
             </tr>
@@ -68,5 +71,12 @@
 </div>
 {% else %}
 {% endif %}
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
 {% endblock %}
