@@ -13,44 +13,56 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <form class="d-flex searche-form" role="search">
-                <input class="form-control me-2" type="search" placeholder="search" aria-label="search">
-                <button class="btn btn-outline-success" type="submit">{% translate 'Search' %}</button>
+                <input class="form-control me-2" type="search" placeholder="поиск" aria-label="поиск">
+                <button class="btn btn-outline-success" type="submit">{% translate 'Найти' %}</button>
             </form>
             <ul class="nav nav-underline navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
                 style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">{% translate 'Handbook' %}</a>
+                    <a class="nav-link active" aria-current="page" href="#">{% translate 'Документация' %}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">{% translate 'Bitrix' %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">{% translate 'About' %}</a>
+                    <a class="nav-link">{% translate 'О нас' %}</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
+            <ul class="nav nav-underline navbar-nav">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% translate 'Personal account' %}
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <strong class="profile me-2">{{ user.first_name }}</strong>
+                    <strong class="profile me-2">{{ user.last_name }}</strong>
                     </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">{% translate 'Edit a profile' %}</a></li>
+                    <ul class="dropdown-menu auth">
+                        <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
                         {% if user.is_staff %}
-                        <li><a class="dropdown-item" href="{% url 'admin:index' %}">{% translate 'Administration' %}</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                {% translate 'Администрирование' %}
+                            </a>
+                        </li>
                         {% endif %}
-                        <li><a class="dropdown-item" href="#">{% translate 'Log out' %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% translate 'Выйти' %}</a></li>
                     </ul>
                 </div>
-            {% else %}
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link me-2 not-auth" href="#">{% translate 'Sign in' %}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link not-auth" href="#">{% translate 'Sign up' %}</a>
-                </li>
-                {% endif %}
             </ul>
+            {% else %}
+            <ul class="nav nav-underline navbar-nav">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle not-auth" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
+                    </button>
+                    <ul class="dropdown-menu not-auth">
+                        <li><a class="dropdown-item" href="#">{% translate 'Авторизация' %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
+                    </ul>
+                </div>
+            </ul>
+            {% endif %}
         </div>
     </div>
 </nav>
