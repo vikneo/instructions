@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">Авторизация</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {% for f in form %}
+            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <a class="btn btn-primary" type="submit" href="/">{% trans 'Войти' %}</a>
+    </form>
+{% endblock %}
