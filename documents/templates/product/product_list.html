@@ -1,13 +1,23 @@
 {% extends 'base/base.html' %}
 {% load i18n static %}
+{% load devices_tag %}
 
 {% block content %}
 
 {% if products %}
 <div class="container overflow-hidden text-center mt-5">
-    {% for product in products %}
-    {% with product.device_set.all as devices %}
     <table class="table caption-top">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Проект</th>
+                <th scope="col">Объект</th>
+                <th scope="col">ID CRM</th>
+                <th scope="col">Устройства</th>
+                <th scope="col">Термомониторинг</th>
+            </tr>
+        </thead>
+        {% for product in products %}
+        {% with product.device_set.all as devices %}
         <tbody>
             <tr>
                 <td>
@@ -17,7 +27,7 @@
                 <td>{{ product.crm_id }}</td>
                 <td>
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             {% translate 'Termo date' %}
                         </button>
@@ -40,11 +50,21 @@
                         </ul>
                     </div>
                 </td>
+                <td>
+                    {% termo_date devices as termo %}
+                    {% if termo %}
+                    <div class="flex termo-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked disabled>
+                        <label class="form-check-label" for="flexCheckCheckedDisabled">
+                        </label>
+                      </div>
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
+        {% endwith %}
+        {% endfor %}
     </table>
-    {% endwith %}
-    {% endfor %}
 </div>
 {% else %}
 {% endif %}
