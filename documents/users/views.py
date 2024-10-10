@@ -22,7 +22,7 @@ class LoginUserView(LoginView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('index')
+        return reverse_lazy('project:index')
 
 
 class LogoutUserView(LogoutView):
