@@ -2,6 +2,31 @@
     background-color: black;
 } */
 
+@font-face {
+    font-family: 'WolgadeutscheRegular';
+    src: url(../fonts/Wolgadeutsche.ttf);
+    font-size: 1.3em;
+
+}
+
+@font-face {
+    font-family: 'Zt Chablis Regular';
+    src: url(../fonts/ZtChablisRegular.ttf);
+    font-size: 'regular';
+}
+
+@font-face {
+    font-family: 'Zt Chablis Bolt Show';
+    src: url(../fonts/ZtChablisBoldSlow.ttf);
+    font-size: 'regular';
+}
+
+.navbar-nav .nav-link {
+    font-family: 'Zt Chablis Regular', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
 .flex{
     display: flex;
 }
@@ -16,6 +41,19 @@
 .navbar-nav .dropdown-menu {
     right: 0;
     left: auto !important;
+}
+
+.top-menu li a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    transition: all .3s;
+    transform: scale(0);
+}
+
+.top-menu li a:hover:after {
+    transform: scale(1);
 }
 
 .dropdown .btn {
@@ -40,6 +78,10 @@
     color: black;
 }
 
+.profile:hover {
+    color: rgba(255, 255, 255, 0.753);
+}
+
 .logo-icon{
     max-width: 200px;
     padding-left: 30px;
@@ -56,4 +98,9 @@
 
 .termo-check {
     justify-content: center;
+}
+
+.table .product-list {
+    font-family: 'Zt Chablis Bolt Show', sans-serif;
+    font-size: 1.2em;
 }

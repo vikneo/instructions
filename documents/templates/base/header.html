@@ -16,25 +16,25 @@
                 <input class="form-control me-2" type="search" placeholder="поиск" aria-label="поиск">
                 <button class="btn btn-outline-success" type="submit">{% translate 'Найти' %}</button>
             </form>
-            <ul class="nav nav-underline navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+            <ul class="nav nav-underline navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll top-menu"
                 style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">{% translate 'Документация' %}</a>
+                    <a class="nav-link" aria-current="page" href="#">{% translate 'Документация' %}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">{% translate 'Bitrix' %}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">{% translate 'О нас' %}</a>
+                    <a class="nav-link" href="#">{% translate 'О нас' %}</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
             <ul class="nav nav-underline navbar-nav">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <strong class="profile me-2">{{ user.first_name }}</strong>
-                    <strong class="profile me-2">{{ user.last_name }}</strong>
+                    <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
+                        {{ user.first_name }} {{ user.last_name }}
                     </button>
                     <ul class="dropdown-menu auth">
                         <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>

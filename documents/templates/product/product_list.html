@@ -6,7 +6,7 @@
 
 {% if products %}
 <div class="container overflow-hidden text-center mt-5">
-    <table class="table caption-top">
+    <table class="table caption-top" style="margin-bottom: 100px;">
         <thead class="table-light">
             <tr>
                 <th scope="col">Проект</th>
@@ -23,7 +23,7 @@
                 <td>
                     <a href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
                 </td>
-                <td>{{ product.company }}</td>
+                <td class="product-list">{{ product.company }}</td>
                 <td>{{ product.crm_id }}</td>
                 <td>
                     <div class="dropdown">
