@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "adsasdaad56a7")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", 0)
+DEBUG = os.getenv("DEBUG", 1)
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split()
 
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'documents.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("ENGINE_SQL"),
+        'ENGINE': os.getenv("ENGINE_SQL", "django.db.backends.sqlite3"),
         'NAME': BASE_DIR / os.getenv("NAME_SQL", "db.sqlite3"),
     }
 }
@@ -116,6 +116,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
