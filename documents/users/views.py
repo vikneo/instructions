@@ -2,11 +2,29 @@ import logging
 
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import CreateView
 
-from .forms import AuthFormUser
+from .forms import AuthFormUser, RegisterFormUser
 
 
 logger = logging.getLogger(__name__)
+
+
+class RegisterUserView(CreateView):
+    """
+
+    """
+    form_class = RegisterFormUser
+    template_name = 'account/register.html'
+    success_url = reverse_lazy('project:index')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Регистрация'
+        )
+        logger.info("Загружена страница '%s'", context['title'])
+        return context
 
 
 class LoginUserView(LoginView):
