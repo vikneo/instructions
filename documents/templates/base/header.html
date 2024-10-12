@@ -45,7 +45,8 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% translate 'Выйти' %}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% translate 'Выйти' %}</a>
+                            </li>
                         </ul>
                     </div>
                 </ul>
@@ -58,17 +59,13 @@
                             <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
                         </button>
                         <ul class="dropdown-menu not-auth">
-                            <li><a class="dropdown-item" href="{% url 'users:login' %}" 
-{#                                   data-bs-toggle="modal"#}
-{#                                   data-bs-target="#exampleModal">#}>
+                            <li><a class="dropdown-item signin-link" href="{% url 'users:login' %}">
                                 {% translate 'Авторизация' %}</a></li>
                             <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
                         </ul>
                     </div>
                 </ul>
             {% endif %}
-{#            {% include 'account/login.html' %}#}
         </div>
     </div>
 </nav>
-
