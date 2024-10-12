@@ -3,6 +3,8 @@ import logging
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 
+from .forms import AuthFormUser
+
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +13,7 @@ class LoginUserView(LoginView):
     """
     Authorization user view.
     """
+    form_class = AuthFormUser
     template_name = 'account/login.html'
 
     def get_context_data(self, **kwargs):
@@ -32,5 +35,5 @@ class LogoutUserView(LogoutView):
     next_page = reverse_lazy('project:index')
 
     def dispatch(self, request, *args, **kwargs):
-        logger.info("User '%s' logged out", request.user)
+        logger.info("User '%s' Вышел из системы", request.user)
         return super().post(request, *args, **kwargs)
