@@ -1,6 +1,6 @@
-/* body {
-    background-color: black;
-} */
+body {
+    background-color: #d7e3ed !important;
+}
 
 @font-face {
     font-family: 'WolgadeutscheRegular';
@@ -12,13 +12,11 @@
 @font-face {
     font-family: 'Zt Chablis Regular';
     src: url(../fonts/ZtChablisRegular.ttf);
-    font-size: 'regular';
 }
 
 @font-face {
     font-family: 'Zt Chablis Bolt Show';
     src: url(../fonts/ZtChablisBoldSlow.ttf);
-    font-size: 'regular';
 }
 
 .navbar-nav .nav-link {
@@ -27,11 +25,11 @@
     text-transform: uppercase;
 }
 
-.flex{
+.flex {
     display: flex;
 }
 
-.breadcrumb-item, ol{
+.breadcrumb-item, ol {
     padding-left: 15px;
     padding-bottom: 5px;
     color: black;
@@ -82,21 +80,81 @@
     color: rgba(255, 255, 255, 0.753);
 }
 
-.logo-icon{
+.logo-icon {
     max-width: 200px;
     padding-left: 30px;
 }
 
-.searche-form{
+.searche-form {
     margin-left: auto !important;
     margin-right: auto !important;
 }
 
+/*======== Form ==========*/
 
+.form-auth {
+    padding: 5px 15px;
+}
+
+.wrapper {
+    margin: 10em 0;
+}
+
+.auth-content, .container {
+    max-width: 600px !important;
+    padding: 0 !important;
+}
+
+.signin-form {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    padding: 20px 0;
+    outline: 1px solid black;
+    border-radius: 10px;
+    background-color: #f4f5f5;
+    box-shadow: 3px 5px 16px #656b6db8, -3px -3px 16px #656b6db8;
+}
+
+.form-input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+.signin-form .input {
+    width: 30%;
+    padding: 5px 0;
+    margin: 5px 0;
+}
+
+.signin-form .auth-header {
+    margin: auto 0;
+    flex-direction: column;
+}
+
+.signin-form .auth-title-help {
+    color: #63676b47;
+}
+
+.signin-form .form-footer {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-footer label {
+    padding: 0 10px;
+    margin-right: 10px;
+}
+
+.btn-justify {
+    justify-content: space-between !important;
+}
 
 /* ========== */
 
-.termo-check {
+.termo-check, .auth-header {
     justify-content: center;
 }
 
