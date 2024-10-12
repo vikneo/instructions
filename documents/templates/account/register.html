@@ -6,7 +6,13 @@
     <div class="container wrapper">
         <div class="signin-form">
             <div class="modal-header auth-header">
-                <h2 class="modal-title auth-title">{{ title }}</h2>
+                <div>
+                    <div class="btn-icon-close">
+                        <h2 class="modal-title auth-title">{{ title }}</h2>
+                        <a style="padding: 15px" href="{% url 'project:index' %}" type="button"
+                           class="btn-close position-absolute top-0 end-0"></a>
+                    </div>
+                </div>
                 <h5 class="modal-title auth-title-help">Представьтесь, пожалуйста!</h5>
             </div>
             <form method="post" class="form-auth" novalidate>
@@ -27,7 +33,6 @@
                 <div class="flex form-footer">
                     <button class="btn btn-primary">За регистрироваться</button>
                     <div class="form-help">
-                        <label for="">Перейти на страницу</label>
                         <a href="{% url 'users:login' %}" type="submit" class="btn btn-primary">Авторизации</a>
                     </div>
                 </div>

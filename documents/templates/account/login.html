@@ -7,6 +7,8 @@
         <div class="signin-form">
             <div class="modal-header auth-header">
                 <h2 class="modal-title auth-title">{{ title }}</h2>
+                <a style="padding: 15px" href="{% url 'project:index' %}" type="button"
+                   class="btn-close position-absolute top-0 end-0"></a>
                 <h5 class="modal-title auth-title-help">Представьтесь, пожалуйста!</h5>
             </div>
             <form method="post" class="form-auth" novalidate>
@@ -27,7 +29,6 @@
                 <div class="flex form-footer">
                     <button type="submit" class="btn btn-primary">Войти</button>
                     <div class="form-help">
-                        <label for="">Вы можете</label>
                         <a href="{% url 'users:register' %}" class="btn btn-primary">За регистрироваться</a>
                     </div>
                 </div>
