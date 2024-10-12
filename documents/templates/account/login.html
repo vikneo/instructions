@@ -6,7 +6,7 @@
     <div class="container wrapper">
         <div class="signin-form">
             <div class="modal-header auth-header">
-                <h2 class="modal-title auth-title">Авторизация</h2>
+                <h2 class="modal-title auth-title">{{ title }}</h2>
                 <h5 class="modal-title auth-title-help">Представьтесь, пожалуйста!</h5>
             </div>
             <form method="post" class="form-auth" novalidate>
@@ -27,13 +27,11 @@
                 <div class="flex form-footer">
                     <button type="submit" class="btn btn-primary">Войти</button>
                     <div class="form-help">
-                        <p>
-                            <label for="">Вы можете</label>
-                            <a href="#" class="btn btn-primary">За регистрироваться</a>
-                        </p>
+                        <label for="">Вы можете</label>
+                        <a href="{% url 'users:register' %}" class="btn btn-primary">За регистрироваться</a>
                     </div>
                 </div>
-                
+
             </form>
         </div>
     </div>

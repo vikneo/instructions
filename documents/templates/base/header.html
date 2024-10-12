@@ -34,7 +34,11 @@
                         <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                             <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
-                            {{ user.first_name }} {{ user.last_name }}
+                            {% if user.first_name and user.last_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
                         </button>
                         <ul class="dropdown-menu auth">
                             <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
@@ -61,7 +65,8 @@
                         <ul class="dropdown-menu not-auth">
                             <li><a class="dropdown-item signin-link" href="{% url 'users:login' %}">
                                 {% translate 'Авторизация' %}</a></li>
-                            <li><a class="dropdown-item" href="#">{% translate 'Регистрация' %}</a></li>
+                            <li><a class="dropdown-item"
+                                   href="{% url 'users:register' %}">{% translate 'Регистрация' %}</a></li>
                         </ul>
                     </div>
                 </ul>
