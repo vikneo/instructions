@@ -4,72 +4,84 @@
 
 {% block content %}
 
-{% if products %}
-<div class="container overflow-hidden text-center mt-5">
-    <table class="table caption-top" style="margin-bottom: 100px;">
-        <thead class="table-light">
-            <tr>
-                <th scope="col">Проект</th>
-                <th scope="col">Объект</th>
-                <th scope="col">ID CRM</th>
-                <th scope="col">Устройства</th>
-                <th scope="col">Термомониторинг</th>
-            </tr>
-        </thead>
-        {% for product in products %}
-        {% with product.device_set.all as devices %}
-        <tbody>
-            <tr>
-                <td>
-                    <a href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
-                </td>
-                <td class="product-list">{{ product.company }}</td>
-                <td>{{ product.crm_id }}</td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            {% translate 'Termo date' %}
-                        </button>
-                        <ul class="dropdown-menu">
-                            {% if devices %}
-                            {% for devic in devices %}
-                            <li>
-                                <a type="button" class="dropdown-item btn btn-secondary" data-bs-toggle="tooltip"
-                                    data-bs-placement="right" data-bs-custom-class="custom-tooltip"
-                                    title="{{ devic.name }}">
-                                    {{ devic }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                            {% else %}
-                            <li>
-                                <span class="dropdown-item">
-                                    {% translate 'not date' %}
-                                </span>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </td>
-                <td>
-                    {% termo_date devices as termo %}
-                    {% if termo %}
-                    <div class="flex termo-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedDisabled" checked
-                            disabled>
-                        <label class="form-check-label" for="flexCheckCheckedDisabled">
-                        </label>
-                    </div>
-                    {% endif %}
-                </td>
-            </tr>
-        </tbody>
-        {% endwith %}
-        {% endfor %}
-    </table>
-</div>
-{% else %}
-{% endif %}
+    {% if products %}
+        <div class="container overflow-hidden text-center mt-5">
+            <table class="table caption-top" style="margin-bottom: 100px;">
+                <thead class="table-light">
+                <tr>
+                    <th scope="col">Проект</th>
+                    <th scope="col">Объект</th>
+                    <th scope="col">ID CRM</th>
+                    <th scope="col">Устройства</th>
+                    <th scope="col">Термо мониторинг</th>
+                </tr>
+                </thead>
+                {% for product in products %}
+                    {% with product.device_set.all as devices %}
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a class="project-link"
+                                   href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
+                            </td>
+                            <td class="product-list">{{ product.company }}</td>
+                            <td>{{ product.crm_id }}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle termo" type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        {% translate 'Termo date' %}
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {% if devices %}
+                                            {% for dev in devices %}
+                                                <li>
+                                                    <a type="button" class="dropdown-item btn btn-secondary"
+                                                       data-bs-toggle="tooltip"
+                                                       data-bs-placement="right"
+                                                       data-bs-custom-class="custom-tooltip"
+                                                       title="{{ dev.name }}">
+                                                        {{ dev }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            <li>
+                                                <span class="dropdown-item"
+                                                      data-bs-toggle="tooltip"
+                                                      data-bs-placement="right"
+                                                      data-bs-custom-class="custom-tooltip"
+                                                      title="Нет данных">
+                                                    {% translate 'not date' %}
+                                                </span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
+                                {% termo_date devices as termo %}
+                                {% if termo %}
+                                    <div class="flex termo-check">
+                                        <input class="form-check-input" type="checkbox" value=""
+                                               id="flexCheckCheckedDisabled" checked
+                                               disabled>
+                                        <label class="form-check-label" for="flexCheckCheckedDisabled"></label>
+                                        {% else %}
+                                        <input class="form-check-input icon-disabled" type="checkbox" value=""
+                                               id="flexCheckIndeterminateDisabled" disabled>
+                                        <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    {% endwith %}
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+    {% endif %}
 
 {% endblock %}

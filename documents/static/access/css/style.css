@@ -59,6 +59,10 @@ body {
     border: none;
 }
 
+.dropdown-item:hover {
+    color: var(--bs-green) !important;
+}
+
 .dropdown .termo {
     color: black;
 }
@@ -68,12 +72,18 @@ body {
     background-color: rgb(201, 224, 240) !important;
 }
 
-/* .dropdown .not-auth {
-    border: none;
-} */
-
 .btn .profile {
     color: black;
+}
+
+.project-link {
+    color: #e13309;
+    text-decoration: auto;
+    font-weight: 600;
+}
+
+.project-link:hover {
+    border-bottom: 1px solid deepskyblue;
 }
 
 .profile:hover {
@@ -83,6 +93,11 @@ body {
 .logo-icon {
     max-width: 200px;
     padding-left: 30px;
+}
+
+.icon-disabled {
+    background-color: #e13309 !important;
+    background-image: url("../icon/icon-minus.png") !important;
 }
 
 .searche-form {
