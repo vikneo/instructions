@@ -6,8 +6,9 @@ from instruction.models import Device
 
 register = template.Library()
 
-@register.simple_tag(name='termo_date')
-def termo_date(devices=None):
+
+@register.simple_tag(name = 'termo_date')
+def termo_date(devices = None):
     """
     """
     for dev in devices:
