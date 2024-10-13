@@ -100,9 +100,8 @@ body {
     margin: 10em 0;
 }
 
-.auth-content, .container {
-    max-width: 600px !important;
-    padding: 0 !important;
+.auth-content {
+    width: 600px;
 }
 
 .signin-form {
