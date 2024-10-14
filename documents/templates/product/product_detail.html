@@ -15,6 +15,71 @@
 
 <div class="container">
     <h2>{{ product.project }}</h2>
+    {% with product.device_set.all as devices %}
+    <table class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Устройство</th>
+                <th scope="col">Серийный №</th>
+                <th scope="col">Протокол</th>
+                <th scope="col">Т °С</th>
+                <th scope="col">Настройки</th>
+            </tr>
+        </thead>
+        {% for device in product.device_set.all %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ product.crm_id }}</th>
+                <td>
+                    <a class="project-link" href="">{{ device.name }}</a>
+                </td>
+                <td>{{ device.serial_num }}</td>
+                <td>{{ device.network_id.first }}</td>
+                <td>{% if device.termodate %}
+                    <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        title="Термомонитооринг есть" src="{% static 'access/icon/check-yes.png' %}" width="25px"
+                        alt="Есть">
+                    {% else %}
+                    <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        title="Термомонитооринга нет" src="{% static 'access/icon/check-no.jpg' %}" width="25px"
+                        alt="Нет">
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="flex termo-check" data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-custom-class="custom-tooltip" title="Сетевые настройки">
+                        <a href="#">
+                            <img src="{% static 'access/icon/settings.svg' %}" width="25px" alt="">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endwith %}
 </div>
 
 {% endblock %}
+
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            {{ product.device_set.all }}
+        </div>
+        {% for device in product.device_set.all %}
+        <div class="col">
+            <!-- {{ device.network_id.first }} -->
+        </div>
+        <div class="col">
+            {{ device.devices_settings.first.slave_id }}
+            {{ device.devices_settings.first.speed }}:
+            {{ device.devices_settings.first.paritet }}/
+            {{ device.devices_settings.first.bit }}/
+            {{ device.devices_settings.first.stop_bit }}
+        </div>
+        {% endfor %}
+    </div>
+</div>
