@@ -32,12 +32,12 @@
     <script src="{% static 'access/js/main.js' %}"></script>
 
     <script>
-          {# для активного отображения подсказок на JavaScript #}
+        //    для активного отображения подсказок на JavaScript
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         
-         {# для активного отображения подсказок на jQuery #}
-         {# $(document).ready(function () {$('[data-bs-toggle="tooltip"]').tooltip(); }); #}
+        //   для активного отображения подсказок на jQuery 
+        // $(document).ready(function () {$('[data-bs-toggle="tooltip"]').tooltip(); });
     </script>
 </body>
 
