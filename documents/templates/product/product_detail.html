@@ -32,7 +32,7 @@
             <tr>
                 <th scope="row">{{ product.crm_id }}</th>
                 <td>
-                    <a class="project-link" href="">{{ device.name }}</a>
+                    <a class="project-link" href="{% url 'project:device-detail' device.slug %}">{{ device.name }}</a>
                 </td>
                 <td>{{ device.serial_num }}</td>
                 <td>{{ device.network_id.first }}</td>
@@ -49,7 +49,7 @@
                 <td>
                     <div class="flex termo-check" data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-custom-class="custom-tooltip" title="Сетевые настройки">
-                        <a href="#">
+                        <a href="{% url 'project:device-detail' device.slug %}">
                             <img src="{% static 'access/icon/settings.svg' %}" width="25px" alt="">
                         </a>
                     </div>
