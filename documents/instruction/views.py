@@ -41,6 +41,23 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project = self.model.objects.get(slug=self.kwargs['slug']).project
-        context.update(title=f'Detail info {project}')
+        context.update(title=f'{project} - Профиль')
         logger.info(f"`{self.request.user}` Рендеринг шаблона с детальной информацией о {project}")
+        return context
+    
+
+class DeviceDetailView(DetailView):
+    """
+    
+    """
+    model = Device
+    template_name = 'device/device_detail.html'
+    context_object_name = 'device'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # device = self.model.objects.get(slug=self.kwargs['slug']).name
+        context.update(
+            title=f"{'device'} - Профиль"
+        )
         return context
