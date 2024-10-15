@@ -13,10 +13,10 @@
 {% endblock %}
 
 {% block content %}
-{% with searches as products %}
-
-    {% if products %}
-        {% include 'product/base_product.html' %}
+    <div class="container"><h2>{{ title }}</h2></div>
+    {% with searches as products %}
+        {% if products %}
+            {% include 'product/base_product.html' %}
     {% else %}
     {% endif %}
 
