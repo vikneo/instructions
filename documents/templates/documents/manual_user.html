@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+            <li class="breadcrumb-item active " aria-current="page">
+                <a href="{% url 'project:product-detail' device.project_id.slug %}">
+                    {{ device.project_id.project }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active " aria-current="page">
+                <a href="{% url 'project:device-detail' device.slug %}">
+                    {{ device.name }}
+                </a>
+            </li>
+            <li class="breadcrumb-item active " aria-current="page">{{ title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
