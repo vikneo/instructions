@@ -12,5 +12,5 @@ urlpatterns = [
     path('', ProjectListView.as_view(), name='index'),
     path('product/<slug:slug>/detail', ProjectDetailView.as_view(), name='product-detail'),
     path('device/<slug:slug>/detail', DeviceDetailView.as_view(), name='device-detail'),
-    path('product/searche', SearchProjectView.as_view(), name='searche'),
+    path('product/search', SearchProjectView.as_view(), name='search'),
 ]

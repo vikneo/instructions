@@ -117,7 +117,7 @@ class SearchProjectView(ListView):
                 logger.info(f"'{format_name(self.request)}` - {not_found}")
                 # messages.info(self.request, not_found)
 
-            logger.info(f"'{self.request.user}` - Выполнен запрос поиска с вводной `{self.request.GET.get('search')}`")
+            logger.info(f"'{format_name(self.request)}` - Выполнен запрос поиска с вводной `{self.request.GET.get('search')}`")
 
             return result
         except Exception as err:
