@@ -27,6 +27,8 @@ colors.forEach(stat => {
         stat.classList.add("text-bg-green");
     } else if (stat.id === "Температурный датчик фазы C") {
         stat.classList.add("text-bg-red");
+    } else if (stat.id === "Температурный датчик шина N") {
+        stat.classList.add("text-bg-blue");
     };
     return true;
 });
