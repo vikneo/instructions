@@ -1,6 +1,7 @@
 import logging
 from typing import Any
 
+from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
 from django.core.cache import cache
@@ -96,6 +97,7 @@ class SearchProjectView(ListView):
             context = super().get_context_data(**kwargs)
         except Exception as err:
             logger.warning(f"'{format_name(self.request)}` - Данный запрос не  существует")
+            logger.exception(err)
             raise Http404("Poll does not exist")
 
         context.update(
@@ -114,12 +116,13 @@ class SearchProjectView(ListView):
             )
 
             if not result:
-                logger.info(f"'{format_name(self.request)}` - {not_found}")
                 # messages.info(self.request, not_found)
+                raise ValidationError(not_found)
 
             logger.info(f"'{format_name(self.request)}` - Выполнен запрос поиска с вводной `{self.request.GET.get('search')}`")
 
             return result
         except Exception as err:
-            logger.warning(f"'{format_name(self.request)}` - {not_found} [{err}]")
+            logger.warning(f"'{format_name(self.request)}` - {not_found}")
+            logger.exception(err)
             # messages.info(self.request, not_found)
