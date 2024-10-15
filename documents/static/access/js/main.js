@@ -16,3 +16,17 @@ function signIn() {
 //     $("#exampleModal").load("user/login/");
 // }
 
+const colors = document.querySelectorAll(".setting-color")
+
+colors.forEach(stat => {
+
+    console.log(stat.id)
+    if (stat.id === "Температурный датчик фазы A") {
+        stat.classList.add("text-bg-yellow");
+    } else if (stat.id === "Температурный датчик фазы B") {
+        stat.classList.add("text-bg-green");
+    } else if (stat.id === "Температурный датчик фазы C") {
+        stat.classList.add("text-bg-red");
+    };
+    return true;
+});
