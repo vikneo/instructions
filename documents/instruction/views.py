@@ -13,8 +13,9 @@ from .models import (
     Network,
     InstructionFile,
     File,
-    Settings
+    Settings,
 )
+from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
 
@@ -28,16 +29,17 @@ class ProjectListView(ListView):
     context_object_name = 'products'
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-
         context = super().get_context_data(**kwargs)
-        context.update(title='Network technologies')
-        logger.info(f"`{self.request.user}` - Рендеринг шаблона с проектами")
+        context.update(title = 'Network technologies')
+        logger.info(
+            f"`{format_name(self.request)}` - Рендеринг шаблона с проектами"
+        )
         return context
-    
+
     def get_queryset(self):
         if not cache.get("products"):
             logger.info(f'Сформирован кэш для страницы с проектами')
-        
+
         products = cache.get_or_set('products', Project.objects.all())
         return products
 
@@ -52,9 +54,11 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        project = self.model.objects.get(slug=self.kwargs['slug']).project
-        context.update(title=f'{project} - Профиль')
-        logger.info(f"`{self.request.user}` - Рендеринг шаблона с детальной информацией о {project}")
+        project = self.model.objects.get(slug = self.kwargs['slug']).project
+        context.update(title = f'{project} - Профиль')
+        logger.info(
+            f"`{format_name(self.request)}` - Рендеринг шаблона с детальной информацией о {project}"
+        )
         return context
 
 
@@ -68,11 +72,13 @@ class DeviceDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        device = self.model.objects.get(slug=self.kwargs['slug'])
+        device = self.model.objects.get(slug = self.kwargs['slug'])
         context.update(
-            title=f"{'device'} - Профиль"
+            title = f"{'device'} - Профиль"
         )
-        logger.info(f"`{self.request.user}` - Получены данные о устройстве `{device.name}-{device.serial_num}`")
+        logger.info(
+            f"`{format_name(self.request)}` - Получены данные о устройстве `{device.name}-{device.serial_num}`"
+        )
         return context
 
 
@@ -80,7 +86,7 @@ class SearchProjectView(ListView):
     """
     
     """
-    template_name = 'product/searche.html'
+    template_name = 'product/search.html'
     context_object_name = 'searches'
     # paginate_by = settings.get_paginate_by()
     allow_empty = True
@@ -89,31 +95,31 @@ class SearchProjectView(ListView):
         try:
             context = super().get_context_data(**kwargs)
         except Exception as err:
-            logger.warning(f"'{self.request.user}` - Данный запрос не  существует")
+            logger.warning(f"'{format_name(self.request)}` - Данный запрос не  существует")
             raise Http404("Poll does not exist")
 
         context.update(
-            title=f"Результат поиска - {self.request.GET.get('search')}"
+            title = f"Результат поиска - {self.request.GET.get('search')}"
         )
-        logger.info(f"'{self.request.user}` - Рендеринг шаблона поискового запроса")
+        logger.info(f"'{format_name(self.request)}` - Рендеринг шаблона поискового запроса")
         return context
-    
+
     def get_queryset(self):
         not_found = 'Нет ни одного совпадения'
         try:
             query = self.request.GET.get('search').upper()
             result = Project.objects.filter(
-                Q(crm_id__icontains=query) |
-                Q(project__icontains=query)
+                Q(crm_id__icontains = query) |
+                Q(project__icontains = query)
             )
 
             if not result:
-                logger.info(f"'{self.request.user}` - {not_found}")
+                logger.info(f"'{format_name(self.request)}` - {not_found}")
                 # messages.info(self.request, not_found)
-            
-            logger.info(f"'{self.request.user}` - Выолнен запрос поиска с вводной `{self.request.GET.get('search')}`")
-            print(result)
+
+            logger.info(f"'{self.request.user}` - Выполнен запрос поиска с вводной `{self.request.GET.get('search')}`")
+
             return result
         except Exception as err:
-            logger.warning(f"'{self.request.user}` - {not_found} [{err}]")
+            logger.warning(f"'{format_name(self.request)}` - {not_found} [{err}]")
             # messages.info(self.request, not_found)
