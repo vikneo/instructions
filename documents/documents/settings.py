@@ -131,6 +131,7 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
         "LOCATION": CACHE_ROOT,
+        "TIMEOUT": 60 * 60 * 24,
     }
 }
 
@@ -159,7 +160,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'base': {
-            'format': '%(asctime)s [%(levelname)s] "%(name)s %(lineno)s %(message)s"'
+            'format': '%(asctime)s [%(levelname)s] "%(name)s : %(lineno)s : %(message)s"'
         },
     },
     'handlers': {
@@ -169,7 +170,7 @@ LOGGING = {
             'formatter': 'base',
             'stream': 'ext://sys.stdout',
         },
-        'file_log': {
+        'file_log_info': {
             "class": "logging.handlers.RotatingFileHandler",
             'level': 'INFO',
             'formatter': 'base',
@@ -183,7 +184,7 @@ LOGGING = {
     'loggers': {
         'root': {
             'level': 'INFO',
-            'handlers': ['console', 'file_log']
+            'handlers': ['console', 'file_log_info']
         },
     },
 }
