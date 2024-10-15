@@ -12,8 +12,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
-            <form class="d-flex searche-form" role="search">
-                <input class="form-control me-2" type="search" placeholder="поиск" aria-label="поиск">
+            <form class="d-flex searche-form" role="search" action="{% url 'project:searche' %}" method="get">
+                <input class="form-control me-2" type="search" name="search" placeholder="поиск" aria-label="поиск">
                 <button class="btn btn-outline-success" type="submit">{% translate 'Найти' %}</button>
             </form>
             <ul class="nav nav-underline navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll top-menu"
