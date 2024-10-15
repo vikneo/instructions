@@ -45,7 +45,8 @@
                                                        data-bs-toggle="tooltip"
                                                        data-bs-placement="right"
                                                        data-bs-custom-class="custom-tooltip"
-                                                       title="{{ dev.name }}">
+                                                       title="{{ dev.name }}"
+                                                       href="{% url 'project:device-detail' dev.slug %}">
                                                         {{ dev }}
                                                     </a>
                                                 </li>
