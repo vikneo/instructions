@@ -152,8 +152,7 @@ LOGGING_URL = "/logging/"
 
 LOGFILE_NAME = "loging.log"
 
-# LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
-LOGFILE_SIZE = 200  # size 2.6 Mb
+LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
 LOGFILE_COUNT = 10
 
 LOGGING = {
@@ -204,11 +203,10 @@ LOGGING = {
     'loggers': {
         'root': {
             'level': 'INFO',
-            'handlers': ['console', 'custom_file_log']
+            'handlers': ['console', 'file_by_date']
         },
     },
 }
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
