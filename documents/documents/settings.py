@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+from utils.log_config import LevelFileHandler
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -148,11 +150,10 @@ LOGIN_REDIRECT_URL = ''
 LOGGING_ROOT = BASE_DIR / "logging"
 LOGGING_URL = "/logging/"
 
-LOGFILE_NAME = "log_debug.log"
-LOGFILE_NAME_STDOUT = "log_stdout.log"
-# LOGFILE_NAME_STDERR = "log_stderr.log"
+LOGFILE_NAME = "loging.log"
 
-LOGFILE_SIZE = (5 * 1024 * 1024) // 2  # size 2.6 Mb
+# LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
+LOGFILE_SIZE = 200  # size 2.6 Mb
 LOGFILE_COUNT = 10
 
 LOGGING = {
@@ -170,7 +171,7 @@ LOGGING = {
             'formatter': 'base',
             'stream': 'ext://sys.stdout',
         },
-        'file_log_info': {
+        'file_log': {
             "class": "logging.handlers.RotatingFileHandler",
             'level': 'INFO',
             'formatter': 'base',
@@ -180,14 +181,34 @@ LOGGING = {
             'mode': 'a',
             'encoding': 'utf-8'
         },
+        "file_by_date": {
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'level': 'INFO',
+            'formatter': 'base',
+            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            'when': 'D',
+            'backupCount': LOGFILE_COUNT,
+
+        },
+        "custom_file_log": {
+            "()": LevelFileHandler,
+            'level': 'INFO',
+            'formatter': 'base',
+            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            'maxBytes': LOGFILE_SIZE,
+            'backupCount': LOGFILE_COUNT,
+            'mode': 'a',
+            'encoding': 'utf-8',
+        },
     },
     'loggers': {
         'root': {
             'level': 'INFO',
-            'handlers': ['console', 'file_log_info']
+            'handlers': ['console', 'custom_file_log']
         },
     },
 }
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
