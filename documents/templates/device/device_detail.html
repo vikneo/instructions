@@ -39,35 +39,35 @@
                 </tr>
                 <tr>
                     <td>Slave ID:</td>
-                    <td>{{ set.slave_id }}</td>
+                    <td>{% if set.slave_id %}{{ set.slave_id }}{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Speed:</td>
-                    <td>{{ set.speed }} b/s</td>
+                    <td>{% if set.speed %}{{ set.speed }} b/s{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Paritet:</td>
-                    <td>{{ set.get_paritet_display }}</td>
+                    <td>{% if set.get_paritet_display %}{{ set.get_paritet_display }}{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Bits:</td>
-                    <td>{{ set.bit }}</td>
+                    <td>{% if set.bit %}{{ set.bit }}{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Stop bit:</td>
-                    <td>{{ set.stop_bit }}</td>
+                    <td>{% if set.stop_bit %}{{ set.stop_bit }}{% else %}--{% endif %}</td>
                 </tr>
                 {% else %}
                 <td>IP Address:</td>
-                <td>{{ set.ip_address }}</td>
+                <td>{% if set.ip_address %}{{ set.ip_address }}{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Mask:</td>
-                    <td>{{ set.mask }}</td>
+                    <td>{% if set.mask %}{{ set.mask }}{% else %}--{% endif %}</td>
                 </tr>
                 <tr>
                     <td>Gateway:</td>
-                    <td>{{ set.gateway }}</td>
+                    <td>{% if set.gateway %}{{ set.gateway }}{% else %}--{% endif %}</td>
                 </tr>
                 {% endif %}
             </tbody>
