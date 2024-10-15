@@ -1,20 +1,20 @@
-let signinForm = document.querySelector('.signin-form');
 
-let qweryForm = document.querySelector(".qwery-form")
+function searchID() {
+    let search = document.getElementById('search')[0].value;
+    console.log(search)
+    btn_search.onclick = function (event) {
+        if (event.which == 1) {
+            console.log(`${event.which}; ${search}`);
+            form.onsubmit = function () { return true; }
+        }
+    };
 
-function signIn() {
-
-    // $(window).load(function () {
-    //     console.log('reload')
-    //     location.reload()
-    // })
+    if (search == 0) {
+        console.log('Строка поиска должна быть не пустой!');
+        form.onsubmit = function () { return false; }
+        alert('Строка поиска должна быть не пустой!')
+    }
 }
-
-// function openSignIn() {
-//     console.log('Open window');
-//
-//     $("#exampleModal").load("user/login/");
-// }
 
 const colors = document.querySelectorAll(".setting-color")
 
