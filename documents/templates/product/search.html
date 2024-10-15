@@ -4,12 +4,12 @@
 
 <!-- Хлебные крошки -->
 {% block breadcrumbs %}
-<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
-        <li class="breadcrumb-item active " aria-current="page">Поиск</li>
-    </ol>
-</nav>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+            <li class="breadcrumb-item active " aria-current="page">Поиск</li>
+        </ol>
+    </nav>
 {% endblock %}
 
 {% block content %}
@@ -17,8 +17,24 @@
     {% with searches as products %}
         {% if products %}
             {% include 'product/base_product.html' %}
-    {% else %}
-    {% endif %}
+        {% else %}
+            <div class="">
+                <div class="position-absolute top-50 start-50 translate-middle auth-content">
+                    <div class="signin-form">
+                        <div class="modal-header auth-header">
+                            <h2 class="modal-title auth-title">Нет ни одного совпадения</h2>
+                            <a style="padding: 15px" href="{% url 'project:index' %}" type="button"
+                               class="btn-close position-absolute top-0 end-0"></a>
+                        </div>
+                        <div class="form-auth">
+                            <div class="flex" style="justify-content: flex-end;">
+                                <a type="button" class="btn btn-primary" href="{% url 'project:index' %}">Ясно</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
     {% endwith %}
 {% endblock %}
