@@ -176,3 +176,42 @@ body {
     font-family: 'Zt Chablis Bolt Show', sans-serif;
     font-size: 1.2em;
 }
+
+/* =================== Settings Info ==================== */
+
+.strong {
+    padding-bottom: 20px;
+}
+
+.table-setting {
+    max-width: 60%;
+    margin-top: 20px;
+    margin-right: 25px;
+}
+
+.setting-title {
+    margin-top: 15px !important;
+    margin-bottom: 25px !important;
+    font-family: 'Zt Chablis Regular', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;}
+
+.setting-info {
+    padding: 10px 25px;
+}
+
+.text-bg-yellow {
+    background-color: var(--bs-yellow) !important;
+}
+
+.text-bg-green {
+    background-color: var(--bs-green) !important;
+}
+
+.text-bg-red {
+    background-color: var(--bs-red) !important;
+}
+
+.text-bg-blue {
+    background-color: var(--bs-blue) !important;
+}
