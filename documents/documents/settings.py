@@ -152,7 +152,7 @@ LOGFILE_NAME = "log_debug.log"
 LOGFILE_NAME_STDOUT = "log_stdout.log"
 # LOGFILE_NAME_STDERR = "log_stderr.log"
 
-LOGFILE_SIZE = 5 * 1024 * 1024
+LOGFILE_SIZE = (5 * 1024 * 1024) // 2  # size 2.6 Mb
 LOGFILE_COUNT = 10
 
 LOGGING = {
