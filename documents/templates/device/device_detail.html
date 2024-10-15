@@ -1,4 +1,4 @@
-{%  extends 'base/base.html' %}
+{% extends 'base/base.html' %}
 {% load i18n static %}
 
 <!-- Хлебные крошки -->
@@ -6,14 +6,138 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
-        <li class="breadcrumb-item active " aria-current="page"><a href="{%  url 'project:product-detail' device.project_id.slug %}">{{ device.project_id.project }}</a></li>
+        <li class="breadcrumb-item active " aria-current="page"><a
+                href="{%  url 'project:product-detail' device.project_id.slug %}">{{ device.project_id.project }}</a>
+        </li>
         <li class="breadcrumb-item active " aria-current="page">{{ device.name }}</li>
     </ol>
 </nav>
 {% endblock %}
 
-{%  block content %}
-    <div class="container">
-        <h2>{{ device.name }} - {{ device.serial_num }}</h2>
+{% block content %}
+<div class="container">
+    <h2>{{ device.name }} - {{ device.serial_num }}</h2>
+    <strong class="strong">Сетевые параметры</strong>
+    <div class="flex setting-content">
+        <table class="table table-light table-hover caption-top table-setting">
+            <thead>
+                <tr>
+                    <th scope="col">Наименование</th>
+                    <th scope="col">Значение</th>
+                </tr>
+            </thead>
+            {% with device.devices_settings.first as set %}
+            <tbody>
+                {% if "485" in device.network_id.first.name %}
+                <tr>
+                    <td>Наименование по РКД:</td>
+                    <td>{{ device.designation }}</td>
+                </tr>
+                <tr>
+                    <td>Протокол:</td>
+                    <td>{{ device.network_id.first.name }}</td>
+                </tr>
+                <tr>
+                    <td>Slave ID:</td>
+                    <td>{{ set.slave_id }}</td>
+                </tr>
+                <tr>
+                    <td>Speed:</td>
+                    <td>{{ set.speed }} b/s</td>
+                </tr>
+                <tr>
+                    <td>Paritet:</td>
+                    <td>{{ set.get_paritet_display }}</td>
+                </tr>
+                <tr>
+                    <td>Bits:</td>
+                    <td>{{ set.bit }}</td>
+                </tr>
+                <tr>
+                    <td>Stop bit:</td>
+                    <td>{{ set.stop_bit }}</td>
+                </tr>
+                {% else %}
+                <td>IP Address:</td>
+                <td>{{ set.ip_address }}</td>
+                </tr>
+                <tr>
+                    <td>Mask:</td>
+                    <td>{{ set.mask }}</td>
+                </tr>
+                <tr>
+                    <td>Gateway:</td>
+                    <td>{{ set.gateway }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+            {% endwith %}
+        </table>
+        <div class="setting-info">
+            <div class="container overflow-hidden text-center">
+                <div class="row gy-5">
+                    <div class="col-6">
+                        <div class="p-3"><strong>Брен производителя</strong></div>
+                    </div>
+                    <div class="setting-title">
+                        <h4>{{ device.brand_id.name }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="container overflow-hidden text-center">
+                <div class="row gy-5">
+                    <div class="col-6">
+                        <div class="p-3"><strong>Карта датчиков</strong></div>
+                    </div>
+                    <!-- Кнопка-триггер модального окна -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Открыть список датчиков
+                    </button>
+
+                    <!-- Модальное окно -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">{{ device }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">По РКД</th>
+                                                <th scope="col">Назначение</th>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Серийный №</th>
+                                                <th scope="col">Колонна №</th>
+                                            </tr>
+                                        </thead>
+                                        {% for sensor in device.devices.all %}
+                                        <tbody>
+                                            <tr>
+                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.name_rkd }}</td>
+                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.group }}</td>
+                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.register }}</td>
+                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.serial_number }}</td>
+                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.install }}</td>
+                                            </tr>
+                                        </tbody>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary"
+                                        data-bs-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
