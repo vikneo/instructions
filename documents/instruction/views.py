@@ -148,3 +148,4 @@ class InstructionFileView(ListView):
             logger.info(f"Сформирован кэш для Инструкций")
         
         instructions = cache.get_or_set("instructions", InstructionFile.objects.all())
+        return instructions
