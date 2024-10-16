@@ -15,7 +15,6 @@ class LevelFileHandler(RotatingFileHandler):
             backupCount: int = 0,
             encoding: str = 'utf-8'
     ) -> None:
-
         super().__init__(filename, mode, maxBytes, backupCount)
         self.file_name = filename
         self.mode = mode
@@ -35,5 +34,5 @@ class LevelFileHandler(RotatingFileHandler):
         level = record.levelname.lower()
         self.file_name = self.__created_file(f"{record.name}_{level}.log")
 
-        with open(self.file_name, self.mode, encoding=self.encoding) as file:
+        with open(self.file_name, self.mode, encoding = self.encoding) as file:
             file.write(f"{msg}\n")

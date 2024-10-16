@@ -152,7 +152,8 @@ LOGGING_URL = "/logging/"
 
 LOGFILE_NAME = "loging.log"
 
-LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
+# LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
+LOGFILE_SIZE = 200  # size 2.6 Mb
 LOGFILE_COUNT = 10
 
 LOGGING = {
@@ -187,7 +188,7 @@ LOGGING = {
             'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
             'when': 'D',
             'backupCount': LOGFILE_COUNT,
-            'encoding': 'utf-8'
+            'encoding': 'utf-8',
 
         },
         "custom_file_log": {
