@@ -14,7 +14,6 @@
         </tr>
         </thead>
         {% for product in products %}
-            {% if not product.archive %}
                 {% with product.device_set.all as devices %}
                     <tbody>
                     <tr>
@@ -81,7 +80,6 @@
                     </tr>
                     </tbody>
                 {% endwith %}
-                {% endif %}
         {% endfor %}
     </table>
 </div>
