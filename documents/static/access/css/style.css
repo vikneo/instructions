@@ -218,3 +218,11 @@ body {
 .text-bg-blue {
     background-color: var(--bs-blue) !important;
 }
+
+
+
+/* ================== data- pass ============ */
+
+.data-exemple {
+    width: 20em;
+}
