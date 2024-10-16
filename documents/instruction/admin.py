@@ -7,52 +7,55 @@ from import_export.admin import ImportExportModelAdmin
 import logging
 
 from .models import (
-    Brand, 
+    Brand,
     Device,
     InstructionFile,
     File,
     Network,
     Settings,
     Project,
-    WaveSensor
-    )
+    WaveSensor,
+)
 
 logger = logging.getLogger(__name__)
 
 
-@admin.action(description='Del Termo date')
+@admin.action(description = 'Del Termo date')
 def close_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
     """
     
     """
-    logger.info(f'| {request.user} - Убрал опцию `термомониторинг` с [{queryset.get(id=request.POST["_selected_action"])}]')
-    queryset.update(termodate=False)
+    logger.info(
+        f'| {request.user} - Убрал опцию `термомониторинг` с [{queryset.get(id = request.POST["_selected_action"])}]')
+    queryset.update(termodate = False)
 
 
-@admin.action(description='Add Termo date')
+@admin.action(description = 'Add Termo date')
 def open_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
     """
     
     """
-    logger.info(f'| {request.user} - Добавил опцию `термомониторинг` для [{queryset.get(id=request.POST["_selected_action"])}]')
-    queryset.update(termodate=True)
+    logger.info(
+        f'| {request.user} - Добавил опцию `термомониторинг` для [{queryset.get(id = request.POST["_selected_action"])}]')
+    queryset.update(termodate = True)
 
-@admin.action(description='Add to archive')
+
+@admin.action(description = 'Add to archive')
 def added_to_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
     """
     
     """
-    logger.info(f'| {request.user} - [{queryset.get(id=request.POST["_selected_action"])}] Добавлен в арзив')
-    queryset.update(archive=True)
+    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Добавлен в арзив')
+    queryset.update(archive = True)
 
-@admin.action(description='Del from archive')
+
+@admin.action(description = 'Del from archive')
 def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
     """
     
     """
-    logger.info(f'| {request.user} - [{queryset.get(id=request.POST["_selected_action"])}] Удален из арзив')
-    queryset.update(archive=False)
-
+    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Удален из арзив')
+    queryset.update(archive = False)
 
 
 class FileTabularInline(admin.TabularInline):
@@ -82,8 +85,8 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
         close_access,
         open_access
     ]
-    list_display = ['id', 'name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project',]
-    list_display_links = ['name',]
+    list_display = ['id', 'name', 'serial_num', 'designation', 'termodate', 'get_id_crm', 'get_project', ]
+    list_display_links = ['name', ]
     prepopulated_fields = {'slug': ('name', 'designation', 'serial_num')}
     list_filter = ['name', 'serial_num']
     save_on_top = True
@@ -97,10 +100,10 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     def get_id_crm(self, obj):
         logger.debug(f"`{self.admin_site.name}` посетил страницу с моделью {self.model.__name__}")
         return obj.project_id
-    
+
     def get_project(self, obj):
         return obj.project_id.company
-    
+
     get_id_crm.short_description = "id / project"
     get_project.short_description = "company"
 
@@ -110,7 +113,7 @@ class AdminInstructionFile(admin.ModelAdmin):
     """
     Registration of the "InstructionFile" model in the admin panel
     """
-    list_display = ['device_id', 'name', 'description']
+    list_display = ['brand_id', 'device_id', 'name', 'description']
     list_display_links = ['name']
     prepopulated_fields = {'slug': ('name',)}
 
@@ -145,7 +148,7 @@ class AdminNetwork(ImportExportModelAdmin, admin.ModelAdmin):
     list_display = ['name', 'description']
     list_display_links = ['name']
     prepopulated_fields = {'slug': ('name',)}
-    
+
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'creator', None) is None:
             obj.creator = request.user
@@ -198,17 +201,17 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
     Registration of the "AdminWaveSensor" model in the admin panel
     """
     list_display = ['id', 'get_id_crm', 'device_id', 'name_rkd']
-    list_display_links = ['name_rkd',]
-    list_filter = ['device_id',]
+    list_display_links = ['name_rkd', ]
+    list_filter = ['device_id', ]
     ordering = ['id']
-    
+
     def get_id_crm(self, obj) -> str:
         return obj.device_id.project_id
-    
+
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'creator', None) is None:
             obj.creator = request.user
             logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
         obj.save()
-    
+
     get_id_crm.short_description = 'id / project'

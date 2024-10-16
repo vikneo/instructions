@@ -9,7 +9,7 @@ function searchID() {
         }
     };
 
-    if (search == 0) {
+    if (search <= 0) {
         console.log('Строка поиска должна быть не пустой!');
         form.onsubmit = function () { return false; }
         alert('Строка поиска должна быть не пустой!')
