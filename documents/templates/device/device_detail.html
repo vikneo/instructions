@@ -16,7 +16,10 @@
 
 {% block content %}
 <div class="container">
-    <h2>{{ device.name }} - {{ device.serial_num }}</h2>
+    <div class="flex device-title">
+        <h2>{{ device.name }} - № {{ device.serial_num }}</h2>
+        <span>ID - {{ device.project_id.crm_id }}</span>
+    </div>
     <strong class="strong">Сетевые параметры</strong>
     <div class="flex setting-content">
         <table class="table table-light table-hover caption-top table-setting">
@@ -118,19 +121,28 @@
                                         {% for sensor in device.devices.all %}
                                         <tbody>
                                             <tr>
-                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.name_rkd }}</td>
-                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.group }}</td>
-                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.register }}</td>
-                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.serial_number }}</td>
-                                                <td class="setting-color" id="{{ sensor.description }}">{{ sensor.install }}</td>
+                                                <td class="setting-color" id="{{ sensor.description }}">
+                                                    {{ sensor.name_rkd }}
+                                                </td>
+                                                <td class="setting-color" id="{{ sensor.description }}">
+                                                    {{ sensor.group }}
+                                                </td>
+                                                <td class="setting-color" id="{{ sensor.description }}">
+                                                    {{ sensor.register }}
+                                                </td>
+                                                <td class="setting-color" id="{{ sensor.description }}">
+                                                    {{ sensor.serial_number }}
+                                                </td>
+                                                <td class="setting-color" id="{{ sensor.description }}">
+                                                    {{ sensor.install }}
+                                                </td>
                                             </tr>
                                         </tbody>
                                         {% endfor %}
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary"
-                                        data-bs-dismiss="modal">OK</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>
