@@ -14,72 +14,74 @@
         </tr>
         </thead>
         {% for product in products %}
-            {% with product.device_set.all as devices %}
-                <tbody>
-                <tr>
-                    <td>
-                        <a class="project-link"
-                           href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
-                    </td>
-                    <td class="product-list">{{ product.company }}</td>
-                    <td>{{ product.crm_id }}</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle termo" type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    data-bs-toggle="tooltip"
-                                    data-bs-placement="right"
-                                    data-bs-custom-class="custom-tooltip"
-                                    title="Smart устрройства">
-                                {% translate 'smart' %}
-                            </button>
-                            <ul class="dropdown-menu">
-                                {% if devices %}
-                                    {% for dev in devices %}
+            {% if not product.archive %}
+                {% with product.device_set.all as devices %}
+                    <tbody>
+                    <tr>
+                        <td>
+                            <a class="project-link"
+                            href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
+                        </td>
+                        <td class="product-list">{{ product.company }}</td>
+                        <td>{{ product.crm_id }}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle termo" type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="right"
+                                        data-bs-custom-class="custom-tooltip"
+                                        title="Smart устрройства">
+                                    {% translate 'smart' %}
+                                </button>
+                                <ul class="dropdown-menu">
+                                    {% if devices %}
+                                        {% for dev in devices %}
+                                            <li>
+                                                <a type="button" class="dropdown-item btn btn-secondary"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="right"
+                                                data-bs-custom-class="custom-tooltip"
+                                                title="{{ dev.name }}"
+                                                href="{% url 'project:device-detail' dev.slug %}">
+                                                    {{ dev }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    {% else %}
                                         <li>
-                                            <a type="button" class="dropdown-item btn btn-secondary"
-                                               data-bs-toggle="tooltip"
-                                               data-bs-placement="right"
-                                               data-bs-custom-class="custom-tooltip"
-                                               title="{{ dev.name }}"
-                                               href="{% url 'project:device-detail' dev.slug %}">
-                                                {{ dev }}
-                                            </a>
+                                            <span class="dropdown-item"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="right"
+                                                data-bs-custom-class="custom-tooltip"
+                                                title="Нет данных">
+                                                {% translate 'not date' %}
+                                            </span>
                                         </li>
-                                    {% endfor %}
-                                {% else %}
-                                    <li>
-                                        <span class="dropdown-item"
-                                              data-bs-toggle="tooltip"
-                                              data-bs-placement="right"
-                                              data-bs-custom-class="custom-tooltip"
-                                              title="Нет данных">
-                                            {% translate 'not date' %}
-                                        </span>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </td>
-                    <td>
-                        {% termo_date devices as termo %}
-                        {% if termo %}
-                            <div class="flex termo-check">
-                                <input class="form-check-input" type="checkbox" value=""
-                                       id="flexCheckCheckedDisabled" checked
-                                       disabled>
-                                <label class="form-check-label" for="flexCheckCheckedDisabled"></label>
-                                {% else %}
-                                <input class="form-check-input icon-disabled" type="checkbox" value=""
-                                       id="flexCheckIndeterminateDisabled" disabled>
-                                <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
+                                    {% endif %}
+                                </ul>
                             </div>
-                        {% endif %}
-                    </td>
-                </tr>
-                </tbody>
-            {% endwith %}
+                        </td>
+                        <td>
+                            {% termo_date devices as termo %}
+                            {% if termo %}
+                                <div class="flex termo-check">
+                                    <input class="form-check-input" type="checkbox" value=""
+                                        id="flexCheckCheckedDisabled" checked
+                                        disabled>
+                                    <label class="form-check-label" for="flexCheckCheckedDisabled"></label>
+                                    {% else %}
+                                    <input class="form-check-input icon-disabled" type="checkbox" value=""
+                                        id="flexCheckIndeterminateDisabled" disabled>
+                                    <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endwith %}
+                {% endif %}
         {% endfor %}
     </table>
 </div>

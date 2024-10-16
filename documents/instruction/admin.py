@@ -22,15 +22,36 @@ logger = logging.getLogger(__name__)
 
 @admin.action(description='Del Termo date')
 def close_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    """
+    
+    """
     logger.info(f'| {request.user} - Убрал опцию `термомониторинг` с [{queryset.get(id=request.POST["_selected_action"])}]')
     queryset.update(termodate=False)
 
 
 @admin.action(description='Add Termo date')
 def open_access(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
-    print()
+    """
+    
+    """
     logger.info(f'| {request.user} - Добавил опцию `термомониторинг` для [{queryset.get(id=request.POST["_selected_action"])}]')
     queryset.update(termodate=True)
+
+@admin.action(description='Add to archive')
+def added_to_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    """
+    
+    """
+    logger.info(f'| {request.user} - [{queryset.get(id=request.POST["_selected_action"])}] Добавлен в арзив')
+    queryset.update(archive=True)
+
+@admin.action(description='Del from archive')
+def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet):
+    """
+    
+    """
+    logger.info(f'| {request.user} - [{queryset.get(id=request.POST["_selected_action"])}] Удален из арзив')
+    queryset.update(archive=False)
 
 
 
@@ -155,7 +176,12 @@ class AdminProject(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Project" model in the admin panel
     """
-    list_display = ['crm_id', 'company', 'project', 'created_at']
+    actions = [
+        added_to_archive,
+        deleted_from_archive
+    ]
+
+    list_display = ['crm_id', 'company', 'project', 'created_at', 'archive']
     list_display_links = ['crm_id', 'project']
     prepopulated_fields = {'slug': ('crm_id', 'project')}
 
