@@ -16,6 +16,7 @@
 <div class="container">
     <h2>{{ product.project }}</h2>
     {% with product.device_set.all as devices %}
+    {% if devices %}
     <table class="table table-light table-hover">
         <thead>
             <tr>
@@ -58,6 +59,9 @@
         </tbody>
         {% endfor %}
     </table>
+    {% else %}
+        {% include 'base/empty_data.html' %}
+    {% endif %}
     {% endwith %}
 </div>
 
