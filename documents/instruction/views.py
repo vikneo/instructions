@@ -41,7 +41,7 @@ class ProjectListView(ListView):
         if not cache.get("products"):
             logger.info(f'Сформирован кэш для страницы с проектами')
 
-        products = cache.get_or_set('products', Project.objects.all())
+        products = cache.get_or_set('products', Project.objects.filter(archive=False))
         return products
 
 
@@ -126,3 +126,25 @@ class SearchProjectView(ListView):
             logger.warning(f"'{format_name(self.request)}` - {not_found}")
             logger.exception(err)
             # messages.info(self.request, not_found)
+
+
+class InstructionFileView(ListView):
+    """
+    
+    """
+    template_name = 'documents/instruction.html'
+    context_object_name = 'instructions'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Инструкции'
+        )
+        logger.info(f"`{format_name(self.request)}` - Загружена страница {context['title']}")
+        return context
+    
+    def get_queryset(self):
+        if not cache.get('instructions'):
+            logger.info(f"Сформирован кэш для Инструкций")
+        
+        instructions = cache.get_or_set("instructions", InstructionFile.objects.all())
