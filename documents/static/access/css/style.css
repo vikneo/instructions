@@ -166,6 +166,18 @@ body {
     justify-content: space-between !important;
 }
 
+.device-title {
+    max-width: 60%;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.device-title span {
+    margin-bottom: 8px;
+}
+
 /* ========== */
 
 .termo-check, .auth-header {
@@ -223,6 +235,6 @@ body {
 
 /* ================== data- pass ============ */
 
-.data-exemple {
+.data-empty {
     width: 20em;
 }
