@@ -3,7 +3,7 @@ from django.db.models.signals import pre_save
 from django.core.cache import cache
 
 from utils.slugify import slugify
-from .models import Settings, Project
+from .models import Settings, Project, InstructionFile
 
 import re
 import logging
@@ -23,10 +23,19 @@ def get_slugify_instruction(instance, **kwargs) -> None:
                         
 
 @receiver(pre_save, sender=Project)
-def cleaned_cache(instance, **kwargs) -> None:
+def cleaned_cache_project(instance, **kwargs) -> None:
     """
     
     """
     cache.delete('products')
     logger.warning('Очищен кеш `Project`')
+
+
+@receiver(pre_save, sender=InstructionFile)
+def cleaned_cache_instructions(instance, **kwargs) -> None:
+    """
+    
+    """
+    cache.delete('instructions')
+    logger.warning('Очищен кеш `Instructions`')
 
