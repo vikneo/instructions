@@ -202,10 +202,11 @@ body {
 }
 
 .setting-title {
-    margin-top: 15px !important;
-    margin-bottom: 25px !important;
-    padding-top: 10px !important;
-    outline: 1px solid !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 10px 10px !important;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
     color: chocolate;
     font-family: 'Zt Chablis Regular', sans-serif;
     font-weight: 600;
