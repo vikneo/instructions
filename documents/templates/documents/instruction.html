@@ -6,8 +6,7 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
-        <li class="breadcrumb-item active " aria-current="page"><a
-                href="#">Brand</a>
+        <li class="breadcrumb-item active " aria-current="page"><a href="{% url 'project:brand-list' %}">Brand</a>
         </li>
         <li class="breadcrumb-item active " aria-current="page">{{ title }}</li>
     </ol>
@@ -15,5 +14,38 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="container">
+    <h2>{{ title }}</h2>
+    <table class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Бренд</th>
+                <th scope="col">Имя устройства</th>
+                <th scope="col">Название инструкции</th>
+                <th scope="col">Дополнительно</th>
+            </tr>
+        </thead>
+        {% for instruction in instructions %}
+        <tbody>
+            <tr>
+                <td>{{ instruction.brand_id.name }}</td>
+                <td>{{ instruction.device_id.name }}</td>
+                <td>{{ instruction.name }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Подробнее
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ instruction.docs.url }}" download="">Скачать</a></li>
+                            <li><a class="dropdown-item" href="{{ instruction.docs.url }}" target="_blank">Читать</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
 {% endblock %}
