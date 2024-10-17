@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page"><a
+                href="{% url 'project:brand-list' %}">Brand</a>
+        </li>
+        <li class="breadcrumb-item active " aria-current="page">{{ brand.name }}</li>
+    </ol>
+</nav>
+{% endblock %}
