@@ -17,8 +17,8 @@
     <div class="flex instr-header">
         <h2>{{ title }}</h2>
         <div class="flex instr-title">
-            <a class="btn btn-primary px-4" href="" role="button">Добавить</a>
-            <a class="btn btn-primary px-4 ms-2" href="" role="button">Редактировать</a>
+            <a class="btn btn-primary px-4" href="{% url 'project:instruction-add' %}">Добавить</a>
+            <a class="btn btn-primary px-4 ms-2" href="">Редактировать</a>
         </div>
     </div>
     <div class="row">
@@ -37,14 +37,16 @@
                     <td>{{ instruction.device_id.name }}</td>
                     <td>
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <button class="btn btn-secondary dropdown-toggle termo" type="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ instruction.name }}
                             </button>
                             <ul class="dropdown-menu">
                                 {% if user.is_staff %}
-                                <li><a class="dropdown-item" href="{{ instruction.docs.url }}" download="">Скачать</a></li>
-                                <li><a class="dropdown-item" href="{{ instruction.docs.url }}" target="_blank">Читать</a></li>
+                                <li><a class="dropdown-item" href="{{ instruction.docs.url }}" download="">Скачать</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ instruction.docs.url }}"
+                                        target="_blank">Читать</a></li>
                                 {% else %}
                                 <li><span class="dropdown-item">Скачать</span></li>
                                 <li><span class="dropdown-item">Читать</span></li>
