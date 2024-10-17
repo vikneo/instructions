@@ -162,8 +162,12 @@ body {
     margin-right: 10px;
 }
 
-.btn-justify {
+.btn-justify, .instr-header {
     justify-content: space-between !important;
+}
+
+.instr-header {
+    align-items: center;
 }
 
 .device-title {
