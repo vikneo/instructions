@@ -5,6 +5,8 @@ from .views import (
     DeviceDetailView,
     SearchProjectView,
     InstructionFileView,
+    BrandView,
+    BrandDetailView,
     )
 
 app_name = 'project'
@@ -15,4 +17,6 @@ urlpatterns = [
     path('device/<slug:slug>/detail', DeviceDetailView.as_view(), name='device-detail'),
     path('product/search', SearchProjectView.as_view(), name='search'),
     path('documents/instructions', InstructionFileView.as_view(), name='instructions'),
+    path('brand', BrandView.as_view(), name='brand-list'),
+    path('brand/<slug:slug>', BrandDetailView.as_view(), name='brand-detail'),
 ]
