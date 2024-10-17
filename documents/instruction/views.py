@@ -96,7 +96,7 @@ class SearchProjectView(ListView):
         try:
             context = super().get_context_data(**kwargs)
         except Exception as err:
-            logger.warning(f"'{format_name(self.request)}` - Данный запрос не  существует")
+            logger.warning(f"'{format_name(self.request)}` - По данному запросу ничего не найдено")
             logger.exception(err)
             raise Http404("Poll does not exist")
 
