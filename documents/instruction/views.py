@@ -4,8 +4,9 @@ from typing import Any
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
+from django.urls import reverse_lazy
 from django.core.cache import cache
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .models import (
     Project,
@@ -16,6 +17,7 @@ from .models import (
     File,
     Settings,
 )
+from .forms import CreatedInstructionForms
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -199,3 +201,18 @@ class BrandDetailView(DetailView):
         logger.info(f"`{format_name(self.request)}` - Загружена детальная информация о {brand}")
         return Brand.objects.get(slug=self.kwargs['slug'])
     
+
+class AddedInstructionView(CreateView):
+    """
+    
+    """
+    model = InstructionFile
+    template_name = 'documents/add_instruction.html'
+    form_class = CreatedInstructionForms
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
+    def get_absolute_url(self):
+        return reverse_lazy('project:instructions')
