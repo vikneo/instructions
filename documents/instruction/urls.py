@@ -7,6 +7,7 @@ from .views import (
     InstructionFileView,
     BrandView,
     BrandDetailView,
+    AddedInstructionView
     )
 
 app_name = 'project'
@@ -19,4 +20,5 @@ urlpatterns = [
     path('documents/instructions', InstructionFileView.as_view(), name='instructions'),
     path('brand', BrandView.as_view(), name='brand-list'),
     path('brand/<slug:slug>', BrandDetailView.as_view(), name='brand-detail'),
+    path('documents/instructions/add', AddedInstructionView.as_view(), name='instruction-add'),
 ]
