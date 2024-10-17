@@ -10,3 +10,35 @@
     </ol>
 </nav>
 {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ title }}</h2>
+    <table class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Бренд</th>
+                <th scope="col">Логотип</th>
+                <th scope="col">Дополнительно</th>
+            </tr>
+        </thead>
+        {% for brand in brands %}
+        <tbody>
+            <tr>
+                <td>{{ brand.name }}</td>
+                <td>
+                    {% if brand.icon %}
+                    <img src="{{ brand.icon.url }}" width="35px" alt="MT">
+                    {% else %}
+                    <span>no logo</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="#">Подробнее >></a>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
