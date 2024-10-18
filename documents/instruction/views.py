@@ -1,5 +1,6 @@
 import logging
 from typing import Any
+from itertools import chain
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -113,11 +114,15 @@ class SearchProjectView(ListView):
         not_found = 'Нет ни одного совпадения'
         try:
             query = self.request.GET.get('search').upper()
-            result = Project.objects.filter(
+            product = Project.objects.filter(
                 Q(crm_id__icontains = query) |
                 Q(project__icontains = query)
             )
-
+            instruct = InstructionFile.objects.filter(
+                Q(name__icontains = query)
+            )
+            result = list(chain(product, instruct))
+            
             if not result:
                 # messages.info(self.request, not_found)
                 raise ValidationError(not_found)
