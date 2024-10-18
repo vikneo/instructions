@@ -210,9 +210,21 @@ class AddedInstructionView(CreateView):
     template_name = 'documents/add_instruction.html'
     form_class = CreatedInstructionForms
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавить инструкцию'
+        )
+        logger.info(f"Загружен шаблон с добавлением инструкции")
+        return context
+
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+    def dispatch(self, request, *args, **kwargs):
+        logger.info(f"`{format_name(self.request)}` - Добавил инструкцию для {self.request.POST.get('name')}")
+        return super().dispatch(request, *args, **kwargs)
     
     def get_absolute_url(self):
         return reverse_lazy('project:instructions')
