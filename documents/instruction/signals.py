@@ -1,12 +1,15 @@
+import re
+import logging
+
 from django.dispatch import receiver
 from django.db.models.signals import pre_save
 from django.core.cache import cache
+from django.conf import settings
 
 from utils.slugify import slugify
+from utils.log_config import clear_cache
 from .models import Settings, Project, InstructionFile
 
-import re
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -20,8 +23,6 @@ def get_slugify_settings(instance, **kwargs) -> None:
     """
     if re.search(r'[0-9]-[0-9]', instance.slug):
         instance.slug = f"{slugify(instance.device.name)}-{slugify(instance.device.designation)}-{slugify(instance.device.serial_num)}"
-    if not instance.slug:
-        instance.slug = f"{slugify(instance.name)}"
 
 @receiver(pre_save, sender=InstructionFile)
 def get_slugify_instruction(instance, **kwargs) -> None:
@@ -38,8 +39,7 @@ def cleaned_cache_project(instance, **kwargs) -> None:
     """
     
     """
-    cache.delete('products')
-    logger.warning('Очищен кеш `Project`')
+    logger.warning(f'Очищен кеш `{clear_cache(settings.CACHE_NAME_PROJECT)}`')
 
 
 @receiver(pre_save, sender=InstructionFile)
@@ -47,6 +47,5 @@ def cleaned_cache_instructions(instance, **kwargs) -> None:
     """
     
     """
-    cache.delete('instructions')
-    logger.warning('Очищен кеш `Instructions`')
+    logger.warning(f'Очищен кеш `{clear_cache(settings.CACHE_NAME_INSTRUCT)}`')
 
