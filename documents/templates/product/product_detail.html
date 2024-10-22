@@ -14,7 +14,14 @@
 {% block content %}
 
 <div class="container">
-    <h2>{{ product.project }}</h2>
+    <div class="flex instr-header">
+        <h2>{{ product.project }}</h2>
+        <div class="flex instr-title">
+            {% if user.is_staff %}
+            <a class="btn btn-secondary px-4" href="#">Добавить устройство</a>
+            {% endif %}
+        </div>
+    </div>
     {% with product.device_set.all as devices %}
     {% if devices %}
     <table class="table table-light table-hover">
