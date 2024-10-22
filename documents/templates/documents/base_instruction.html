@@ -1,7 +1,8 @@
+{% load i18n static %}
 {% load devices_tag %}
 
 
-<div class="container overflow-hidden text-center mt-5 row">
+<div class="overflow-hidden text-center mt-5 row">
     <table class="table table-light table-hover gy-5">
         <thead>
             <tr>
@@ -18,7 +19,8 @@
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle termo" type="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
                             {{ instruction.name }}
                         </button>
                         <ul class="dropdown-menu">
