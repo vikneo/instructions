@@ -18,7 +18,7 @@ from .models import (
     File,
     Settings,
 )
-from .forms import CreatedInstructionForms
+from .forms import CreatedInstructionForms, CreatedDeviceForm
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -235,3 +235,26 @@ class AddedInstructionView(CreateView):
 
     def get_absolute_url(self):
         return reverse_lazy('project:instructions')
+
+
+class CreateDeviceView(CreateView):
+    """
+    
+    """
+    model = Device
+    form_class = CreatedDeviceForm
+    template_name = 'device/create_device.html'
+
+    def  get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавить устройство'
+        )
+        return context
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
+    def get_absolute_url(self):
+        return reverse_lazy('project:product-detail', slug=self.kwargs['slug'])
