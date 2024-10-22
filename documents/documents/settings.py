@@ -212,7 +212,7 @@ LOGGING = {
     'loggers': {
         'root': {
             'level': 'INFO',
-            'handlers': ['console', 'file_by_date']
+            'handlers': ['console', 'custom_file_log']
         },
     },
 }
