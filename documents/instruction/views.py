@@ -122,7 +122,12 @@ class SearchProjectView(ListView):
                 Q(name__icontains = query)
             )
             result = list(chain(product, instruct))
-            
+            try:
+                if product[0].project.lower() == 'no name':
+                    raise ValidationError(not_found)
+            except IndexError as err:
+                logger.exception(err)
+
             if not result:
                 # messages.info(self.request, not_found)
                 raise ValidationError(not_found)
