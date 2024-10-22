@@ -92,7 +92,7 @@ class CreatedDeviceForm(forms.ModelForm):
         )
     )
     description = forms.CharField(
-        label='Серийный номер',
+        label='Описание',
         widget=forms.Textarea(
             attrs={
                 'row': 60,
