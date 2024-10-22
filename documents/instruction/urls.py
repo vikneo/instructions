@@ -7,7 +7,8 @@ from .views import (
     InstructionFileView,
     BrandView,
     BrandDetailView,
-    AddedInstructionView
+    AddedInstructionView,
+    CreateDeviceView
     )
 
 app_name = 'project'
@@ -15,6 +16,7 @@ app_name = 'project'
 urlpatterns = [
     path('', ProjectListView.as_view(), name='index'),
     path('product/<slug:slug>/detail', ProjectDetailView.as_view(), name='product-detail'),
+    path('product/<slug:slug>/create', CreateDeviceView.as_view(), name='device-create'),
     path('device/<slug:slug>/detail', DeviceDetailView.as_view(), name='device-detail'),
     path('product/search', SearchProjectView.as_view(), name='search'),
     path('documents/instructions', InstructionFileView.as_view(), name='instructions'),
