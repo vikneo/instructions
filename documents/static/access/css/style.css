@@ -235,6 +235,15 @@ body {
     padding: 10px 25px;
 }
 
+.setting-info button {
+    margin-top: 15px;
+}
+
+.setting-info a {
+    margin-top: 15px;
+}
+
+
 .text-bg-yellow {
     background-color: var(--bs-yellow) !important;
 }
