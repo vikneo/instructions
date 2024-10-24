@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('documents/doc-admin/', admin.site.urls),
     path('', include('instruction.urls')),
+    path('manuals/', include('manuals.urls')),
     path('user/', include('users.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
