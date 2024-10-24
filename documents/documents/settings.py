@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     'users.apps.UsersConfig',
     'instruction.apps.InstructionConfig',
+    'manuals.apps.ManualsConfig',
     "import_export",
 ]
 
