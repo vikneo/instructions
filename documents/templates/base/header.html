@@ -4,76 +4,115 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img class="logo-icon"
-                 src="https://cdn-ru.bitrix24.ru/b13049348/bitrix24/89b/89b1c30f2e5c56d978efed652fa55b7a/logo_VrI4ahUF.png"
-                 alt="">
+                src="https://cdn-ru.bitrix24.ru/b13049348/bitrix24/89b/89b1c30f2e5c56d978efed652fa55b7a/logo_VrI4ahUF.png"
+                alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
+            aria-controls="navbarScroll" aria-expanded="false" aria-label="Переключатель навигации">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
             <form class="d-flex searche-form" role="search" action="{% url 'project:search' %}" method="get" id="search"
-                  name="form">
-                <input id="btn_search" class="form-control me-2" type="search" name="search" placeholder="Имя проекта или ID"
-                       aria-label="поиск">
-                <button class="btn btn-outline-success" type="submit"
-                        onclick="searchID()">{% translate 'Найти' %}</button>
+                name="form">
+                <input id="btn_search" class="form-control me-2" type="search" name="search"
+                    placeholder="Имя проекта или ID" aria-label="поиск">
+                <button class="btn btn-outline-success" type="submit" onclick="searchID()">
+                    {% translate 'Найти' %}
+                </button>
             </form>
             <ul class="nav nav-underline navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll top-menu"
                 style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{% url 'project:instructions' %}">{% translate 'Документация' %}</a>
+                    <a class="nav-link" aria-current="page" href="{% url 'project:instructions' %}">
+                        {% translate 'Документация' %}
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://rinecogroup.bitrix24.ru/" target="_blank">{% translate 'Bitrix' %}</a>
+                    <a class="nav-link" href="https://rinecogroup.bitrix24.ru/" target="_blank">
+                        {% translate 'Bitrix' %}
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">{% translate 'О нас' %}</a>
                 </li>
             </ul>
             {% if user.is_authenticated %}
-                <ul class="nav nav-underline navbar-nav">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
-                            {% if user.first_name and user.last_name %}
-                                {{ user.first_name }} {{ user.last_name }}
-                            {% else %}
-                                {{ user.username }}
-                            {% endif %}
-                        </button>
-                        <ul class="dropdown-menu auth">
-                            <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
-                            {% if user.is_staff %}
-                                <li>
-                                    <a class="dropdown-item" href="{% url 'admin:index' %}">
-                                        {% translate 'Администрирование' %}
-                                    </a>
-                                </li>
-                            {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% translate 'Выйти' %}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </ul>
+            <ul class="nav nav-underline navbar-nav">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle termo" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img class="me-4" src="{% static 'access/icon/user-regular.svg' %}" width="14" alt="10">
+                        {% if user.first_name and user.last_name %}
+                        {{ user.first_name }} {{ user.last_name }}
+                        {% else %}
+                        {{ user.username }}
+                        {% endif %}
+                    </button>
+                    <ul class="dropdown-menu auth">
+                        <li><a class="dropdown-item" href="#">{% translate 'Редактировать' %}</a></li>
+                        {% if user.is_staff %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">
+                                {% translate 'Администрирование' %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                {% translate 'Памятка' %}
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{% url 'users:logout' %}">{% translate 'Выйти' %}</a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
             {% else %}
-                <ul class="nav nav-underline navbar-nav">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle not-auth" type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
-                        </button>
-                        <ul class="dropdown-menu not-auth">
-                            <li><a class="dropdown-item signin-link" href="{% url 'users:login' %}">
+            <ul class="nav nav-underline navbar-nav">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle not-auth" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <img src="{% static 'access/icon/user-regular.svg' %}" width="20" alt="12">
+                    </button>
+                    <ul class="dropdown-menu not-auth">
+                        <li><a class="dropdown-item signin-link" href="{% url 'users:login' %}">
                                 {% translate 'Авторизация' %}</a></li>
-                            <li><a class="dropdown-item"
-                                   href="{% url 'users:register' %}">{% translate 'Регистрация' %}</a></li>
-                        </ul>
-                    </div>
-                </ul>
+                        <li><a class="dropdown-item" href="{% url 'users:register' %}">{% translate 'Регистрация' %}</a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
             {% endif %}
         </div>
     </div>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Памятка</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <h2 class="fs-5">При загрузке данных из файла</h2>
+                    <p>
+                        При добавлении продуктов или оборудования требуется соблюдать их очередность. <br>
+                        В первую очередь:
+                        <ol>
+                            <li>Добавляется Производитель ("Brand");</li>
+                            <li>Добавляется Проект ("Project");</li>
+                            <li>Добавляется тип Сети ("Network");</li>
+                        </ol>
+                        Дальнейшее добавление данных не имеют очередности...
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </nav>
+
