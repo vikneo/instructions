@@ -1,8 +1,11 @@
-from import_export.admin import ImportExportModelAdmin
+import logging
 
 from django.contrib import admin
 
-from .models import Brand
+from import_export.admin import ImportExportModelAdmin
+from .models import Brand, Module, Instructions, FileModule
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -17,38 +20,56 @@ class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 
-# class FileTabularInline(admin.TabularInline):
-#     model = File
-#     extra = 0
-
-# @admin.register(InstructionFile)
-# class AdminInstructionFile(admin.ModelAdmin):
-#     """
-#     Registration of the "InstructionFile" model in the admin panel
-#     """
-#     list_display = ['brand_id', 'device_id', 'name', 'description']
-#     list_display_links = ['name']
-#     prepopulated_fields = {'slug': ('name',)}
-
-#     def save_model(self, request, obj, form, change):
-#         if getattr(obj, 'creator', None) is None:
-#             obj.creator = request.user
-#             logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-#         obj.save()
+class FileTabularInline(admin.TabularInline):
+    model = FileModule
+    extra = 0
 
 
-# @admin.register(File)
-# class AdminFile(admin.ModelAdmin):
-#     """
-#     Registration of the "File" model in the admin panel
-#     """
+@admin.register(Module)
+class AdminModule(admin.ModelAdmin):
+    """
+    
+    """
+    inlines = [
+        FileTabularInline,
+    ]
+    
+    list_display = ['name', 'brand', 'description']
+    list_filter = ['name']
+    search_fields = ['name']
+    list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
 
-#     list_display = ['device_id', 'file_configs', 'file_report']
-#     list_display_links = ['device_id']
 
-#     def save_model(self, request, obj, form, change):
-#         if getattr(obj, 'creator', None) is None:
-#             obj.creator = request.user
-#             logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-#         obj.save()
+@admin.register(Instructions)
+class AdminInstructionFile(admin.ModelAdmin):
+    """
+    Registration of the "InstructionFile" model in the admin panel
+    """
+    list_display = ['device', 'name', 'description']
+    list_display_links = ['name']
+    prepopulated_fields = {'slug': ('name',)}
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'creator', None) is None:
+            obj.creator = request.user
+            
+            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
+        obj.save()
+
+
+@admin.register(FileModule)
+class AdminFileModule(admin.ModelAdmin):
+    """
+    Registration of the "File" model in the admin panel
+    """
+
+    list_display = ['device', 'file_instruction', 'file_manual']
+    list_display_links = ['device']
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'creator', None) is None:
+            obj.creator = request.user
+            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
+        obj.save()
 
