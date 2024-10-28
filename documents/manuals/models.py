@@ -57,9 +57,6 @@ class Brand(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('project:index')
-
     class Meta:
         db_table = 'brands'
         verbose_name = 'brand'
@@ -67,14 +64,29 @@ class Brand(models.Model):
 
 
 class Module(models.Model):
-    pass
+    """
+    
+    """
+    brand = models.ForeignKey(Brand, on_delete = models.CASCADE, verbose_name = 'Brand')
+    name = models.CharField(max_length = 80, verbose_name = 'Module', db_index = True)
+    slug = models.SlugField(max_length = 150, verbose_name = 'URL', unique = True)
+    description = models.TextField(verbose_name = 'Description', blank = True, default = ' ')
+    created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
+    updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        db_table = 'modules'
+        verbose_name = 'module'
+        verbose_name_plural = 'modules'
 
 
 class Instructions(models.Model):
     """
     The class describes the Instruction model
     """
-    brand = models.ForeignKey(Brand, on_delete = models.CASCADE, verbose_name = 'Brand')
     device = models.OneToOneField(Module, on_delete=models.CASCADE, verbose_name='Device')
     name = models.CharField(max_length = 120, verbose_name = 'Name', db_index = True)
     slug = models.SlugField(max_length = 120, verbose_name = 'URL', unique = True)
@@ -84,9 +96,6 @@ class Instructions(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
-    def get_absolute_url(self):
-        return reverse('project:instructions')
 
     class Meta:
         db_table = 'instructions'
