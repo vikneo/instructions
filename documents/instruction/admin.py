@@ -9,10 +9,7 @@ from django.core.cache import cache
 from django.conf import settings
 
 from .models import (
-    Brand,
     Device,
-    InstructionFile,
-    File,
     Network,
     Settings,
     Project,
@@ -63,29 +60,11 @@ def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, que
     logger.info(f'| Очищен Кэш {clear_cache(settings.CACHE_NAME_PROJECT)}')
 
 
-class FileTabularInline(admin.TabularInline):
-    model = File
-    extra = 0
-
-
-@admin.register(Brand)
-class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
-    """
-    Registration of the "Brand" model in the admin panel
-    """
-    list_display = ['id', 'name']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
-
-
 @admin.register(Device)
 class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Device" model in the admin panel
     """
-    inlines = [
-        FileTabularInline,
-    ]
     actions = [
         close_access,
         open_access
@@ -111,38 +90,6 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
 
     get_id_crm.short_description = "id / project"
     get_project.short_description = "company"
-
-
-@admin.register(InstructionFile)
-class AdminInstructionFile(admin.ModelAdmin):
-    """
-    Registration of the "InstructionFile" model in the admin panel
-    """
-    list_display = ['brand_id', 'device_id', 'name', 'description']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
-            obj.creator = request.user
-            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-        obj.save()
-
-
-@admin.register(File)
-class AdminFile(admin.ModelAdmin):
-    """
-    Registration of the "File" model in the admin panel
-    """
-
-    list_display = ['device_id', 'file_configs', 'file_report']
-    list_display_links = ['device_id']
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
-            obj.creator = request.user
-            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-        obj.save()
 
 
 @admin.register(Network)

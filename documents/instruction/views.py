@@ -11,14 +11,10 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .models import (
     Project,
-    Brand,
     Device,
-    Network,
-    InstructionFile,
-    File,
-    Settings,
 )
-from .forms import CreatedInstructionForms, CreatedDeviceForm
+from manuals.models import Instructions
+from .forms import CreatedDeviceForm
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -118,7 +114,7 @@ class SearchProjectView(ListView):
                 Q(crm_id__icontains = query) |
                 Q(project__icontains = query)
             )
-            instruct = InstructionFile.objects.filter(
+            instruct = Instructions.objects.filter(
                 Q(name__icontains = query)
             )
             result = list(chain(product, instruct))
@@ -161,80 +157,80 @@ class InstructionFileView(ListView):
             logger.warning(f"Отсутствует кэш для Инструкций")
             logger.info(f"Сформирован кэш для Инструкций")
         
-        instructions = cache.get_or_set("instructions", InstructionFile.objects.all())
+        instructions = cache.get_or_set("instructions", Instructions.objects.all())
         return instructions
 
 
-class BrandView(ListView):
-    """
+# class BrandView(ListView):
+#     """
     
-    """
-    template_name = 'brands/brand_list.html'
-    context_object_name = 'brands'
+#     """
+#     template_name = 'brands/brand_list.html'
+#     context_object_name = 'brands'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(
-            title='Производители',
-        )
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update(
+#             title='Производители',
+#         )
 
-        logger.info(f"`{format_name(self.request)}` - Загружена страница {context['title']}")
-        return context
+#         logger.info(f"`{format_name(self.request)}` - Загружена страница {context['title']}")
+#         return context
     
-    def get_queryset(self):
-        if not cache.get('brands'):
-            logger.warning(f"Отсутствует кэш для модели Brand")
-            logger.info(f"Сформирован кэш для модели Brand")
+#     def get_queryset(self):
+#         if not cache.get('brands'):
+#             logger.warning(f"Отсутствует кэш для модели Brand")
+#             logger.info(f"Сформирован кэш для модели Brand")
 
-        brands = cache.get_or_set('brands', Brand.objects.all())
-        return brands
+#         brands = cache.get_or_set('brands', Brand.objects.all())
+#         return brands
 
 
-class BrandDetailView(DetailView):
-    """
+# class BrandDetailView(DetailView):
+#     """
     
-    """
-    template_name = 'brands/brand_detail.html'
-    context_object_name = 'brand'
+#     """
+#     template_name = 'brands/brand_detail.html'
+#     context_object_name = 'brand'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(
-            title=f"Brand -{self.model.objects.get(slug=self.kwargs['slug']).name}"
-        )
-        logger.info(f"{format_name(self.request)}` - Загружена страница {context['title']}")
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update(
+#             title=f"Brand -{self.model.objects.get(slug=self.kwargs['slug']).name}"
+#         )
+#         logger.info(f"{format_name(self.request)}` - Загружена страница {context['title']}")
 
-        return context
+#         return context
     
-    def get_queryset(self):
-        brand = self.model.objects.get(slug=self.kwargs['slug']).name
-        logger.info(f"`{format_name(self.request)}` - Загружена детальная информация о {brand}")
-        return Brand.objects.get(slug=self.kwargs['slug'])
+#     def get_queryset(self):
+#         brand = self.model.objects.get(slug=self.kwargs['slug']).name
+#         logger.info(f"`{format_name(self.request)}` - Загружена детальная информация о {brand}")
+#         return Brand.objects.get(slug=self.kwargs['slug'])
     
 
-class AddedInstructionView(CreateView):
-    """
+# class AddedInstructionView(CreateView):
+#     """
     
-    """
-    model = InstructionFile
-    template_name = 'documents/add_instruction.html'
-    form_class = CreatedInstructionForms
+#     """
+#     model = Instructions
+#     template_name = 'documents/add_instruction.html'
+#     form_class = CreatedInstructionForms
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(
-            title='Добавить инструкцию'
-        )
-        logger.info(f"Загружен шаблон с добавлением инструкции")
-        return context
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context.update(
+#             title='Добавить инструкцию'
+#         )
+#         logger.info(f"Загружен шаблон с добавлением инструкции")
+#         return context
 
-    def form_valid(self, form):
-        form.save()
-        logger.info(f"`{format_name(self.request)}` - Добавил инструкцию для {self.request.POST.get('name')}")
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         form.save()
+#         logger.info(f"`{format_name(self.request)}` - Добавил инструкцию для {self.request.POST.get('name')}")
+#         return super().form_valid(form)
 
-    def get_absolute_url(self):
-        return reverse_lazy('project:instructions')
+#     def get_absolute_url(self):
+#         return reverse_lazy('project:instructions')
 
 
 class CreateDeviceView(CreateView):
