@@ -13,7 +13,19 @@ def path_to_file_instruction(instance: 'Instructions', filename: str) -> str:
     :param filename: name file
     :return: str - path to save
     """
-    return f"instruction/{instance.name}/{filename}"
+    return f"files/{instance.name}/instruction/{filename}"
+
+
+def path_to_file_manual(instance: 'File', filename: str) -> str:
+    """
+    The function generates a path based on the name of the file with the configs.
+
+    :param instance: object File
+    :param filename: name file
+    :return: str - path to save
+    """
+    return f"files/{instance.name}/manuals/{filename}"
+
 
 def path_to_icon_brand(instance: 'Brand', filename: str) -> str:
     """
@@ -54,26 +66,21 @@ class Brand(models.Model):
         verbose_name_plural = 'brands'
 
 
-
-    # brand_id = models.ForeignKey(Brand, on_delete = models.CASCADE, verbose_name = 'Brand', related_name = 'brands')
-
-
 class Module(models.Model):
     pass
 
 
 class Instructions(models.Model):
     """
-    The class describes the InstructionFile model
+    The class describes the Instruction model
     """
-    brand_id = models.ForeignKey(Brand, on_delete = models.CASCADE, verbose_name = 'Brand')
-    device_id = models.OneToOneField(Module, on_delete=models.CASCADE, verbose_name='Device')
+    brand = models.ForeignKey(Brand, on_delete = models.CASCADE, verbose_name = 'Brand')
+    device = models.OneToOneField(Module, on_delete=models.CASCADE, verbose_name='Device')
     name = models.CharField(max_length = 120, verbose_name = 'Name', db_index = True)
     slug = models.SlugField(max_length = 120, verbose_name = 'URL', unique = True)
     description = models.TextField(verbose_name = 'Description', blank = True, default = ' ')
     created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
     updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
-    docs = models.FileField(upload_to = path_to_file_instruction, verbose_name = 'File')
 
     def __str__(self) -> str:
         return self.name
@@ -87,5 +94,22 @@ class Instructions(models.Model):
         verbose_name_plural = 'instructions'
 
 
-class UserGuide(models.Model):
-    pass
+class FileModule(models.Model):
+    """
+    The class describes the InstructionFile model
+    """
+    device = models.ForeignKey(Module, on_delete = models.CASCADE, verbose_name = 'Device',
+                                  related_name = 'devices_files')
+    created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
+    updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
+    file_instruction = models.FileField(upload_to = path_to_file_instruction, verbose_name = 'Инструкция', blank = True)
+    file_manual = models.FileField(upload_to = path_to_file_manual, verbose_name = 'Руководство', blank = True)
+
+    def __str__(self) -> str:
+        return self.device.name
+
+    class Meta:
+        db_table = 'file_modules'
+        verbose_name = 'file'
+        verbose_name_plural = 'files'
+    
