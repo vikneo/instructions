@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0014_brand_icon'),
+        ('instruction', '0013_instructionfile_brand_id_and_more'),
     ]
 
     operations = [
