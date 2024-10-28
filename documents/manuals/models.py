@@ -16,7 +16,7 @@ def path_to_file_instruction(instance: 'Instructions', filename: str) -> str:
     return f"files/{instance.name}/instruction/{filename}"
 
 
-def path_to_file_manual(instance: 'File', filename: str) -> str:
+def path_to_file_manual(instance: 'FileModule', filename: str) -> str:
     """
     The function generates a path based on the name of the file with the configs.
 
