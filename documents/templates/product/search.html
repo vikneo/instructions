@@ -17,7 +17,7 @@
         <h2>{{ title }}</h2>
         {% if searches %}
             {% with searches|first as search %}
-                {% if search|isinst:"InstructionFile" %}    
+                {% if search|isinst:"Instructions" %}    
                     {% with searches as instructions %}
                         {% include 'documents/base_instruction.html' %}
                     {% endwith %}
