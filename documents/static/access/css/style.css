@@ -193,6 +193,13 @@ body {
     margin-bottom: 8px;
 }
 
+.device-title img {
+    position: relative;
+    top: -15px;
+    left: 10px;
+    padding-left: 9px;
+}
+
 /* ========== */
 
 .termo-check, .auth-header {
