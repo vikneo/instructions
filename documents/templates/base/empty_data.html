@@ -4,13 +4,13 @@
     <div class="signin-form">
         <div class="modal-header auth-header">
             <h2 class="modal-title auth-title">Данных пока нет</h2>
-            <a style="padding: 15px" href="{% url 'project:index' %}" type="button"
+            <a style="padding: 15px" href="{{ request.META.HTTP_REFERER }}" type="button"
                class="btn-close position-absolute top-0 end-0"></a>
                <img class="data-empty" src="{% static 'access/img/wayne-tumbleweed.gif' %}"  alt="Пусто">
         </div>
         <div class="form-auth">
             <div class="flex" style="justify-content: flex-end;">
-                <a type="button" class="btn btn-primary" href="{% url 'project:index' %}">Ok</a>
+                <a type="button" class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">Ok</a>
             </div>
         </div>
     </div>
