@@ -31,7 +31,7 @@ class Device(models.Model):
     project_id = models.ForeignKey('Project', on_delete = models.CASCADE, verbose_name = 'Project', blank = True, default="not project")
     name = models.CharField(max_length = 80, verbose_name = 'Device', db_index = True)
     designation = models.CharField(max_length = 100, verbose_name = 'Обозначение', blank=True)
-    serial_num = models.CharField(max_length = 15, verbose_name = 'Serial number', blank=True)
+    serial_num = models.CharField(max_length = 15, verbose_name = 'Serial number', default='n/a', blank=True)
     slug = models.SlugField(max_length = 150, verbose_name = 'URL', unique = True)
     description = models.TextField(verbose_name = 'Description', blank = True, default = ' ')
     termodate = models.BooleanField(default = False, verbose_name = 'Termo date')
