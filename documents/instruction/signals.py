@@ -33,7 +33,7 @@ def get_slugify_settings(instance, **kwargs) -> None:
     field through the "slugify" module
     """
     if not instance.slug:
-        instance.slug = f"{slugify(instance.name)}-{slugify(instance.designation)}-{slugify(instance.serial_num)}"
+        instance.slug = f"{slugify(instance.project_id.crm_id)}-{instance.project_id.project}-{slugify(instance.designation)}"
 
 
 @receiver(pre_save, sender=Project)
