@@ -182,7 +182,7 @@ body {
 }
 
 .device-title {
-    max-width: 60%;
+    max-width: 90%;
     justify-content: space-between;
     align-items: center;
     font-size: 2rem;
