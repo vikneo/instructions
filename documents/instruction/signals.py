@@ -17,20 +17,22 @@ logger = logging.getLogger(__name__)
 @receiver(pre_save, sender=Settings)
 def get_slugify_settings(instance, **kwargs) -> None:
     """
-    Before saving the model, the "slug" field is checked, 
-    if the field is empty, it is filled in from the "name" 
-    field through the "slugify" module
+    Before saving the "Settings" model, the "slug" field is checked, by default, 
+    the numerical result from the dependent models is recorded in the slug, 
+    if any, it is filled in from the "crm_id", "project" fields of the "Progect" model and 
+    the "design" fields of the "Device" model via the "slugify" module
     """
-    if re.search(r'[0-9]-[0-9]', instance.slug):
-        instance.slug = f"{slugify(instance.device.name)}-{slugify(instance.device.designation)}-{slugify(instance.device.serial_num)}"
+    result = re.search(r"[0-9]-[0-9]", instance.slug)
+    if result:
+        instance.slug = f"{slugify(instance.device.project_id.crm_id)}-{slugify(instance.device.project_id.project)}-{slugify(instance.device.designation)}"
 
 
 @receiver(pre_save, sender=Device)
 def get_slugify_settings(instance, **kwargs) -> None:
     """
-    Before saving the model, the "slug" field is checked, 
-    if the field is empty, it is filled in from the "name" 
-    field through the "slugify" module
+    Before saving the "Device" model, the "slug" field is checked, if the field is empty, 
+    it is filled in from the "crm_id", "project" fields of the "Progect" model and the "design" 
+    fields of the "Device" model via the "slugify" module
     """
     if not instance.slug:
         instance.slug = f"{slugify(instance.project_id.crm_id)}-{slugify(instance.project_id.project)}-{slugify(instance.designation)}"
@@ -39,7 +41,6 @@ def get_slugify_settings(instance, **kwargs) -> None:
 @receiver(pre_save, sender=Project)
 def cleaned_cache_project(instance, **kwargs) -> None:
     """
-    
+    The cache is cleared before saving the "Project" model
     """
-    logger.warning(f'Очищен кеш `{clear_cache(settings.CACHE_NAME_PROJECT)}`')
-
+    logger.warning(f"Очищен кеш `{clear_cache(settings.CACHE_NAME_PROJECT)}`")
