@@ -97,7 +97,7 @@ class AdminNetwork(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Network" model in the admin panel
     """
-    list_display = ['name', 'description']
+    list_display = ['id', 'name', 'description']
     list_display_links = ['name']
     prepopulated_fields = {'slug': ('name',)}
 
@@ -115,7 +115,7 @@ class AdminSettings(ImportExportModelAdmin, admin.ModelAdmin):
     Registration of the "Settings" model in the admin panel
     """
     save_on_top = True
-    list_display = ['interface', 'device', 'slave_id']
+    list_display = ['id', 'interface', 'device', 'slave_id']
     list_display_links = ['interface']
     prepopulated_fields = {'slug': ('interface', 'device')}
 

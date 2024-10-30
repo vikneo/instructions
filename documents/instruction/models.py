@@ -33,7 +33,7 @@ class Device(models.Model):
     designation = models.CharField(max_length = 100, verbose_name = 'Обозначение', blank=True)
     serial_num = models.CharField(max_length = 15, verbose_name = 'Serial number', default='n/a', blank=True)
     slug = models.SlugField(max_length = 150, verbose_name = 'URL', unique = True)
-    description = models.TextField(verbose_name = 'Description', blank = True, default = ' ')
+    description = models.TextField(verbose_name = 'Description', blank = True, default = 'Пока данных нет')
     termodate = models.BooleanField(default = False, verbose_name = 'Termo date')
     network_id = models.ManyToManyField("Network", verbose_name = 'Network')
 
