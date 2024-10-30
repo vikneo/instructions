@@ -23,6 +23,12 @@ def path_to_file_report(instance: 'FileDevice', filename: str) -> str:
     """
     return f"photos/{instance.device_id.name}/report/{filename}"
 
+def path_to_file(instance: 'FileDevice', filename: str) -> str:
+    """
+    
+    """
+    return f"files/{instance.project_id}/{instance.name}"
+
 
 class Device(models.Model):
     """
@@ -195,3 +201,12 @@ class WaveSensor(models.Model):
         db_table = 'wavesensors'
         verbose_name = 'sensor'
         verbose_name_plural = 'sensors'
+
+
+class FileProject(models.Model):
+    """
+    
+    """
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Проект', related_name = 'files')
+    name = models.CharField(verbose_name='Название', max_length=110, db_index=True)
+    file = models.FileField(verbose_name='Файл', upload_to = path_to_file, blank = True)
