@@ -30,6 +30,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Устройство</th>
                 <th scope="col">Серийный №</th>
+                <th scope="col">Скриншот</th>
                 <th scope="col">Протокол</th>
                 <th scope="col">Т °С</th>
                 <th scope="col">Настройки</th>
@@ -40,9 +41,21 @@
             <tr>
                 <th scope="row">{{ product.crm_id }}</th>
                 <td>
-                    <a class="project-link" href="{% url 'project:device-detail' device.slug %}">{{ device.name }}</a>
+                    <a class="project-link" href="{% url 'project:device-detail' device.slug %}"
+                    data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="{{ device.name }}">{{ device.designation }}</a>
                 </td>
                 <td>{{ device.serial_num }}</td>
+                {% with device.devices_files.all as photos %}
+                <td>
+                    {% if photos %}
+                    <a href="#">{{ device.devices_files.first }}</a>
+                    {% else %}
+                    not found
+                    {% endif %}
+                </td>
+                    {% endwith %}
                 <td>{{ device.network_id.first }}</td>
                 <td>{% if device.termodate %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
