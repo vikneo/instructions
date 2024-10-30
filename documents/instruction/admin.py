@@ -10,6 +10,8 @@ from django.conf import settings
 
 from .models import (
     Device,
+    FileDevice,
+    FileProject,
     Network,
     Settings,
     Project,
@@ -58,6 +60,17 @@ def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, que
     logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Удален из архив')
     queryset.update(archive = False)
     logger.info(f'| Очищен Кэш {clear_cache(settings.CACHE_NAME_PROJECT)}')
+
+
+class FileTabularInlineDevice(admin.TabularInline):
+    model = FileDevice
+    extra = 0
+
+
+class FileTabularInlineProject(admin.TabularInline):
+    model = FileProject
+    extra = 0
+
 
 
 @admin.register(Device)
@@ -131,6 +144,10 @@ class AdminProject(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Project" model in the admin panel
     """
+    inlines = [
+        FileTabularInlineProject
+    ]
+
     actions = [
         added_to_archive,
         deleted_from_archive
