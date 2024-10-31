@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load i18n static %}
+{% load photo_devices_tag %}
 
 <!-- Хлебные крошки -->
 {% block breadcrumbs %}
@@ -18,7 +19,8 @@
         <h2>{{ product.project }}</h2>
         <div class="flex instr-title">
             {% if user.is_staff %}
-            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить устройство</a>
+            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
+                устройство</a>
             {% endif %}
         </div>
     </div>
@@ -42,9 +44,8 @@
                 <th scope="row">{{ product.crm_id }}</th>
                 <td>
                     <a class="project-link" href="{% url 'project:device-detail' device.slug %}"
-                    data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-custom-class="custom-tooltip"
-                    data-bs-title="{{ device.name }}">{{ device.designation }}</a>
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        data-bs-title="{{ device.name }}">{{ device.designation }}</a>
                 </td>
                 <td>{{ device.serial_num }}</td>
                 {% with device.devices_files.all as photos %}
@@ -55,7 +56,7 @@
                     not found
                     {% endif %}
                 </td>
-                    {% endwith %}
+                {% endwith %}
                 <td>{{ device.network_id.first }}</td>
                 <td>{% if device.termodate %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
@@ -80,30 +81,28 @@
         {% endfor %}
     </table>
     {% else %}
-        {% include 'base/empty_data.html' %}
+    {% include 'base/empty_data.html' %}
     {% endif %}
     {% endwith %}
+    {% photos_device  product.id as photos %}
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            {% for photo in photos %}
+            <div class="carousel-item active">
+                <img src="{{ photo.url }}" class="d-block w-100" width="100px" alt="{{ photo }}">
+            </div>
+            {% endfor %}
+        </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Следующий</span>
+        </button>
+    </div>
 </div>
 
 {% endblock %}
-
-
-<div class="container text-center">
-    <div class="row">
-        <div class="col">
-            {{ product.device_set.all }}
-        </div>
-        {% for device in product.device_set.all %}
-        <div class="col">
-            <!-- {{ device.network_id.first }} -->
-        </div>
-        <div class="col">
-            {{ device.devices_settings.first.slave_id }}
-            {{ device.devices_settings.first.speed }}:
-            {{ device.devices_settings.first.paritet }}/
-            {{ device.devices_settings.first.bit }}/
-            {{ device.devices_settings.first.stop_bit }}
-        </div>
-        {% endfor %}
-    </div>
-</div>
