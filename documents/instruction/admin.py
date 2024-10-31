@@ -184,3 +184,11 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
         obj.save()
 
     get_id_crm.short_description = 'id / project'
+
+
+@admin.register(FileProject)
+class AdminFileProject(admin.ModelAdmin):
+    """
+    
+    """
+    list_display = ['project_id', 'name']
