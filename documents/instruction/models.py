@@ -23,11 +23,15 @@ def path_to_file_report(instance: 'FileDevice', filename: str) -> str:
     """
     return f"photos/{instance.device_id.name}/report/{filename}"
 
-def path_to_file(instance: 'FileDevice', filename: str) -> str:
+def path_to_file(instance: 'FileProject', filename: str) -> str:
     """
-    
+    The function generates a path based on the name of the file .
+
+    :param instance: object File
+    :param filename: name file
+    :return: str - path to save
     """
-    return f"files/{instance.project_id}/{instance.name}"
+    return f"files/{instance.project_id}/{filename}"
 
 
 class Device(models.Model):
@@ -210,3 +214,14 @@ class FileProject(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Проект', related_name = 'files')
     name = models.CharField(verbose_name='Название', max_length=110, db_index=True)
     file = models.FileField(verbose_name='Файл', upload_to = path_to_file, blank = True)
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse()
+    
+    class Meta:
+        db_table = 'file_project'
+        verbose_name = 'file'
+        verbose_name_plural = 'files'
