@@ -9,7 +9,7 @@
             <th scope="col">Проект</th>
             <th scope="col">Объект</th>
             <th scope="col">ID CRM</th>
-            <th scope="col">Устройства</th>
+            <th scope="col">Файлы</th>
             <th scope="col">Термо мониторинг</th>
         </tr>
         </thead>
@@ -24,42 +24,36 @@
                         <td class="product-list">{{ product.company }}</td>
                         <td>{{ product.crm_id }}</td>
                         <td>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle termo" type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="right"
-                                        data-bs-custom-class="custom-tooltip"
-                                        title="Smart устрройства">
-                                    {% translate 'smart' %}
-                                </button>
-                                <ul class="dropdown-menu">
-                                    {% if devices %}
-                                        {% for dev in devices %}
-                                            <li>
-                                                <a type="button" class="dropdown-item btn btn-secondary"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="right"
-                                                data-bs-custom-class="custom-tooltip"
-                                                title="{{ dev.name }}"
-                                                href="{% url 'project:device-detail' dev.slug %}">
-                                                    {{ dev }}
-                                                </a>
-                                            </li>
+                            <button type="button" class="btn btn-secondary py-0" data-bs-toggle="modal" data-bs-target="#{{ product.project}}">
+                                Подробнее
+                            </button>
+                              <!-- Модальное окно -->
+                            <div class="modal fade" id="{{ product.project}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="filesForProjectLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="{{ product.project}}Label">Доступные файлы для проекта {{ product.project }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% with product.files.all as files %}
+                                        {% if files %}
+                                        {% for file in files %}
+                                        <div class="container flex btn-justify">
+                                            {{ file.name }}
+                                            <a href="{{ file.file.url }}" download="">Скачать</a>
+                                        </div>
                                         {% endfor %}
-                                    {% else %}
-                                        <li>
-                                            <span class="dropdown-item"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="right"
-                                                data-bs-custom-class="custom-tooltip"
-                                                title="Нет данных">
-                                                {% translate 'not date' %}
-                                            </span>
-                                        </li>
-                                    {% endif %}
-                                </ul>
+                                        {% else %}
+                                        ...
+                                        {% endif %}
+                                        {% endwith %}
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                         </td>
                         <td>
