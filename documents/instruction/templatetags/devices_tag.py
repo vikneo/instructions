@@ -1,8 +1,4 @@
 from django import template
-from django.http import HttpResponse
-from django.core.cache import cache
-
-from instruction.models import Device
 
 register = template.Library()
 
