@@ -6,6 +6,7 @@
     <table class="table caption-top" {% if searches %}style="margin-bottom: 100px;"{% endif %}>
         <thead class="table-light">
         <tr>
+            {% if user.is_staff %}<th scope="col">id</th>{% endif %}
             <th scope="col">Проект</th>
             <th scope="col">Объект</th>
             <th scope="col">ID CRM</th>
@@ -17,6 +18,7 @@
                 {% with product.device_set.all as devices %}
                     <tbody>
                     <tr>
+                        {% if user.is_staff %}<th scope="col">{{ product.id }}</th>{% endif %}
                         <td>
                             <a class="project-link"
                             href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
