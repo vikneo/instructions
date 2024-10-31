@@ -78,6 +78,10 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Device" model in the admin panel
     """
+    inlines = [
+        FileTabularInlineDevice
+    ]
+
     actions = [
         close_access,
         open_access
@@ -192,3 +196,12 @@ class AdminFileProject(admin.ModelAdmin):
     
     """
     list_display = ['project_id', 'name']
+    list_display_links = ['name']
+    search_fields = ['name']
+    list_filter = ['name']
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'creator', None) is None:
+            obj.creator = request.user
+            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
+        obj.save()
