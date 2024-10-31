@@ -41,7 +41,7 @@ class Device(models.Model):
     project_id = models.ForeignKey('Project', on_delete = models.CASCADE, verbose_name = 'Project', blank = True, default="not project")
     name = models.CharField(max_length = 80, verbose_name = 'Device', db_index = True)
     designation = models.CharField(max_length = 100, verbose_name = 'Обозначение', blank=True)
-    serial_num = models.CharField(max_length = 15, verbose_name = 'Serial number', default='n/a', blank=True)
+    serial_num = models.CharField(max_length = 25, verbose_name = 'Serial number', default='n/a', blank=True)
     slug = models.SlugField(max_length = 150, verbose_name = 'URL', unique = True)
     description = models.TextField(verbose_name = 'Description', blank = True, default = 'Пока данных нет')
     termodate = models.BooleanField(default = False, verbose_name = 'Termo date')
@@ -71,7 +71,6 @@ class FileDevice(models.Model):
     created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
     updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
     file_configs = models.FileField(upload_to = path_to_file_configs, verbose_name = 'Photo config', blank = True)
-    file_report = models.FileField(upload_to = path_to_file_report, verbose_name = 'Photo report', blank = True)
 
     def __str__(self) -> str:
         return self.device_id.name
