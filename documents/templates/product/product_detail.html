@@ -60,11 +60,11 @@
                 <td>{{ device.network_id.first }}</td>
                 <td>{% if device.termodate %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                        title="Термомонитооринг есть" src="{% static 'access/icon/check-yes.png' %}" width="25px"
+                        title="Есть в термомонитооринге" src="{% static 'access/icon/check-yes.png' %}" width="25px"
                         alt="Есть">
                     {% else %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                        title="Термомонитооринга нет" src="{% static 'access/icon/check-no.jpg' %}" width="25px"
+                        title="Нет в термомонитооринге" src="{% static 'access/icon/check-no.jpg' %}" width="25px"
                         alt="Нет">
                     {% endif %}
                 </td>
@@ -85,11 +85,12 @@
     {% endif %}
     {% endwith %}
     {% photos_device product.id as photos %}
+    {% with photos|random as photo_pk %}
     <div class="flex jc-centr">
         <div id="carouselExample" class="carousel slide" style="width: 50%;">
             <div class="carousel-inner">
                 {% for photo in photos %}
-                <div class="carousel-item active">
+                <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#photosModal">
                         <img src="{{ photo.file_configs.url }}" class="d-block w-100" width="100px" alt="{{ photo }}">
                     </button>
@@ -107,36 +108,38 @@
             </button>
         </div>
     </div>
-</div>
-
-<!-- Модальное окно -->
-<div class="modal fade" id="photosModal" tabindex="-1" aria-labelledby="photosModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-4" id="photosModalLabel">{{ photos| first }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                <div id="fullModal" class="carousel slide">
-                    <div class="carousel-inner">
-                        {% for photo in photos %}
-                        <div class="carousel-item active">
-                            <img src="{{ photo.file_configs.url }}" class="d-block w-100" width="100px" alt="{{ photo }}">
+    <!-- Модальное окно -->
+    <div class="modal fade" id="photosModal" tabindex="-1" aria-labelledby="photosModalLabel" aria-hidden="true">
+        <div class="modal-dialog " style="max-width: 1200px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <h1 class="modal-title fs-4" id="photosModalLabel">{{ photos|first }}</h1> -->
+                    <button type="button" aria-label="+"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="fullModal" class="carousel slide">
+                        <div class="carousel-inner">
+                            {% for photo in photos %}
+                            <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
+                                <img src="{{ photo.file_configs.url }}" class="d-block w-100" alt="{{ photo }}">
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#fullModal" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Предыдущий</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#fullModal" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Следующий</span>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#fullModal" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Предыдущий</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#fullModal" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Следующий</span>
-                    </button>
                 </div>
             </div>
         </div>
     </div>
+    {% endwith %}
 </div>
+
 {% endblock %}
