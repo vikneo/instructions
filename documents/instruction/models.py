@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+
 
 def path_to_file_configs(instance: 'FileDevice', filename: str) -> str:
     """
@@ -70,7 +73,13 @@ class FileDevice(models.Model):
                                   related_name = 'devices_files')
     created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
     updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
-    file_configs = models.FileField(upload_to = path_to_file_configs, verbose_name = 'Photo config', blank = True)
+    file_configs = ProcessedImageField(
+        upload_to = path_to_file_configs, 
+        verbose_name = 'Photo config',
+        blank = True,
+        options={'quantity': 100},
+        processors=[ResizeToFill(850, 380)]
+        )
 
     def __str__(self) -> str:
         return self.device_id.name
