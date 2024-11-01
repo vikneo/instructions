@@ -17,6 +17,6 @@ def photos_device(project_id):
 
     for dev in devices:
         for photo in dev.devices_files.all():
-            photos.append(photo.file_configs)
+            photos.append(photo)
 
     return photos
