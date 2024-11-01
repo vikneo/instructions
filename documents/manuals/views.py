@@ -36,3 +36,23 @@ class BrandView(ListView):
         brands = cache.get_or_set('brands', Brand.objects.all())
         logger.info(f"Сформирован кэш для модели Brand")
         return brands
+
+
+class BrandDetailView(DetailView):
+    """
+    The "BrandDetailView" class display all device  the brand
+    """
+    model = Brand
+    template_name = 'documents/brand_detail.html'
+    context_object_name = 'brand'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        brand = self.model.objects.get(slug = self.kwargs['slug']).name
+        context.update(
+            title=f'{brand}'
+        )
+        logger.info(
+            f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {brand}"
+        )
+        return context
