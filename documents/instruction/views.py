@@ -13,7 +13,7 @@ from .models import (
     Project,
     Device,
 )
-from manuals.models import Instructions
+from manuals.models import Module
 from .forms import CreatedDeviceForm
 from utils.format_name_uer import format_name
 
@@ -114,7 +114,7 @@ class SearchProjectView(ListView):
                 Q(crm_id__icontains = query) |
                 Q(project__icontains = query)
             )
-            instruct = Instructions.objects.filter(
+            instruct = Module.objects.filter(
                 Q(name__icontains = query)
             )
             result = list(chain(product, instruct))
@@ -157,7 +157,7 @@ class InstructionFileView(ListView):
             logger.warning(f"Отсутствует кэш для Инструкций")
             logger.info(f"Сформирован кэш для Инструкций")
         
-        instructions = cache.get_or_set("instructions", Instructions.objects.all())
+        instructions = cache.get_or_set("instructions", Module.objects.all())
         return instructions
 
 
