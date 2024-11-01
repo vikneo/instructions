@@ -1,11 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
-from imagekit.models import ProcessedImageField
-from pilkit.processors import ResizeToFit
 
-
-def path_to_file_instruction(instance: 'Instructions', filename: str) -> str:
+def path_to_file_instruction(instance: 'FileModule', filename: str) -> str:
     """
     The function generates a path based on the name of the file with the instruction.
 
@@ -27,32 +24,12 @@ def path_to_file_manual(instance: 'FileModule', filename: str) -> str:
     return f"files/{instance.name}/manuals/{filename}"
 
 
-def path_to_icon_brand(instance: 'Brand', filename: str) -> str:
-    """
-    The function generates a path based on the name of the file with the report.
-
-    :param instance: object File
-    :param filename: name file
-    :return: str - path to save
-    """
-    return f"icon/{instance.name}/{filename}"
-
-
-
 class Brand(models.Model):
     """
     The class describes the Brand model
     """
     name = models.CharField(max_length = 100, verbose_name = 'Brand', db_index = True)
     slug = models.SlugField(max_length = 100, verbose_name = 'URL', unique = True)
-    icon = ProcessedImageField(
-        blank=True,
-        verbose_name="Logo",
-        upload_to=path_to_icon_brand,
-        options={"quality": 80},
-        processors=[ResizeToFit(200, 155, mat_color='white')],
-        null=True
-    )
 
     def __str__(self) -> str:
         return self.name
