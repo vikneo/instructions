@@ -1,9 +1,10 @@
 import logging
 
+from django.core.cache import cache
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
-from models import (
+from .models import (
     Brand,
     Module
 )
@@ -25,5 +26,13 @@ class BrandView(ListView):
         context.update(
             title='Производители'
         )
-        logger.info(f"`{format_name(self.request)}` - Рендеринг шаблона с Brands")
+        logger.info(f"`{format_name(self.request)}` - Загрузка шаблона с {context['title']}")
         return context
+    
+    def get_queryset(self):
+        if not cache.get('brands'):
+            logger.warning(f"Отсутствует кэш для модели Brand")
+
+        brands = cache.get_or_set('brands', Brand.objects.all())
+        logger.info(f"Сформирован кэш для модели Brand")
+        return brands
