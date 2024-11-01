@@ -45,7 +45,7 @@
                 <td>
                     <a class="project-link" href="{% url 'project:device-detail' device.slug %}"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                        data-bs-title="{{ device.name }}">{{ device.designation }}</a>
+                        data-bs-title="{{ device.name }} | {{ device.id}}">{{ device.designation }}</a>
                 </td>
                 <td>{{ device.serial_num }}</td>
                 {% with device.devices_files.all as photos %}
