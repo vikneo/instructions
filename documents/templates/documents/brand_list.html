@@ -26,7 +26,7 @@
                 <tr>
                     <th scope="col">Бренд</th>
                     <th scope="col">Имя устройства</th>
-                    <th scope="col">Название инструкции</th>
+                    <th scope="col">Дополнительно</th>
                 </tr>
             </thead>
             {% for brand in brands %}
@@ -35,7 +35,7 @@
                     <td style="color: rgb(2, 100, 75); font-weight: 500;">{{ brand.name }}</td>
                     <td>{{ brand.module_set.first }}</td>
                     <td>
-                        <a class="btn btn-secondary" href="#">Подробнее</a>
+                        <a class="btn btn-secondary" href="{% url 'manual:brand-detail' brand.slug %}">Подробнее >></a>
                     </td>
                 </tr>
             </tbody>
