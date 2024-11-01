@@ -181,6 +181,10 @@ body {
     align-items: center;
 }
 
+.jc-centr {
+    justify-content: center;
+}
+
 .device-title {
     max-width: 90%;
     justify-content: space-between;
