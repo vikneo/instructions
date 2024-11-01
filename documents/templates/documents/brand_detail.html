@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+            <li class="breadcrumb-item active " aria-current="page">
+                <a href="{% url 'manual:brand-list' %}">
+                    Производители
+                </a>
+            </li>
+            <li class="breadcrumb-item active " aria-current="page">{{ brand }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+{% with brand.module_set.all as devices %}
+    <div class="container">
+        <div class="flex instr-header">
+            <h2>{{ brand }}</h2>
+            <div class="flex instr-title">
+                {% if user.is_staff %}
+                <a class="btn btn-secondary px-4" href="#">Добавить
+                    устройство</a>
+                {% endif %}
+            </div>
+        </div>
+        {% if devices %}
+            {% for device in devices %}
+
+            {% endfor %}
+        {% else %}
+            {% include 'base/empty_data.html' %}
+        {% endif %}
+    </div>
+{% endwith %}
+{% endblock %}
