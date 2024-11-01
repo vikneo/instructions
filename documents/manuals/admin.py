@@ -3,7 +3,7 @@ import logging
 from django.contrib import admin
 
 from import_export.admin import ImportExportModelAdmin
-from .models import Brand, Module, Instructions, FileModule
+from .models import Brand, Module, FileModule
 
 logger = logging.getLogger(__name__)
 
@@ -39,23 +39,6 @@ class AdminModule(admin.ModelAdmin):
     search_fields = ['name']
     list_display_links = ['name']
     prepopulated_fields = {'slug': ('name',)}
-
-
-@admin.register(Instructions)
-class AdminInstructionFile(admin.ModelAdmin):
-    """
-    Registration of the "InstructionFile" model in the admin panel
-    """
-    list_display = ['device', 'name', 'description']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
-            obj.creator = request.user
-            
-            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-        obj.save()
 
 
 @admin.register(FileModule)
