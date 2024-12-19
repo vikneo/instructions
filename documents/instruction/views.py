@@ -1,4 +1,6 @@
 import logging
+from math import prod
+from turtle import title
 from typing import Any
 from itertools import chain
 
@@ -61,6 +63,27 @@ class ProjectDetailView(DetailView):
             f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {project}"
         )
         return context
+    
+
+class IdCRMDetailView(ListView):
+    """
+    
+    """
+    model = Project
+    template_name = 'product/product_crm.html'
+    context_object_name = 'crm_id'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title=f"{self.model.objects.filter(crm_id=self.kwargs['crm_id'])[0]}",
+            current_path=self.request.META.get('HTTP_REFERER')
+        )
+        return context
+    
+    def get_queryset(self):
+        product = Project.objects.filter(crm_id=self.kwargs['crm_id'])
+        return product
 
 
 class DeviceDetailView(DetailView):
