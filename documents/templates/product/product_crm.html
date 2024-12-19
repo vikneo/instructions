@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+{% load photo_devices_tag %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">ID-CRM {{ crm_id.first.crm_id }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>ID-CRM {{ crm_id.first.crm_id }}</h2>
+    {% if crm_id %}
+        {% with crm_id as products %}
+            {% include 'product/base_product.html' %}
+        {% endwith %}
+    {% else %}
+        {% include 'product/not_found.html' %}
+    {% endif %}
+</div>
+{% endblock %}
