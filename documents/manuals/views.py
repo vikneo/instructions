@@ -1,8 +1,9 @@
 import logging
+from subprocess import DETACHED_PROCESS
 
 from django.core.cache import cache
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from .models import (
     Brand,
@@ -56,3 +57,22 @@ class BrandDetailView(DetailView):
             f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {brand}"
         )
         return context
+
+
+class BrandCreateView(CreateView):
+    """
+    
+    """
+    template_name = "documents/brand_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавить производителя'
+        )
+        return context
+    
+    def form_valid(self, form):
+        docs = form.save()
+        print(docs)
+        return super().form_valid(form)
