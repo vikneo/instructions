@@ -29,7 +29,7 @@
     <table class="table table-light table-hover">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">ID CRM</th>
                 <th scope="col">Устройство</th>
                 <th scope="col">Серийный №</th>
                 <th scope="col">Скриншот</th>
@@ -41,7 +41,16 @@
         {% for device in product.device_set.all %}
         <tbody>
             <tr>
-                <th scope="row">{{ product.crm_id }}</th>
+                <th scope="row">
+                    {% url 'project:id_crm-detail' product.crm_id  as crm_id_path %} <!--  Проверка url-address -->
+                    {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
+                        {{ product.crm_id }}
+                    {% else %}
+                    <a class="project-link" href="{% url 'project:id_crm-detail' product.crm_id %}">
+                        {{ product.crm_id }}
+                    </a>
+                    {% endif %}
+                </th>
                 <td>
                     <a class="project-link" href="{% url 'project:device-detail' device.slug %}"
                         data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"

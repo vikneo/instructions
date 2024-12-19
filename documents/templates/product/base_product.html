@@ -11,7 +11,7 @@
             <th scope="col">Объект</th>
             <th scope="col">ID CRM</th>
             <th scope="col">Файлы</th>
-            <th scope="col">Термо мониторинг</th>
+            <th scope="col">Термомониторинг</th>
         </tr>
         </thead>
         {% for product in products %}
@@ -24,7 +24,17 @@
                             href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
                         </td>
                         <td class="product-list">{{ product.company }}</td>
-                        <td>{{ product.crm_id }}</td>
+                        <td>
+                            {% url 'project:id_crm-detail' product.crm_id  as crm_id_path %} <!--  Проверка url-address -->
+                            {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
+                                {{ product.crm_id }}
+                            {% else %}
+                                <a class="project-link" 
+                                    href="{% url 'project:id_crm-detail' product.crm_id %}">
+                                {{ product.crm_id }}
+                            </a>
+                            {% endif %}
+                        </td>
                         <td>
                             <button type="button" class="btn btn-secondary py-0" data-bs-toggle="modal" data-bs-target="#{{ product.project}}">
                                 Подробнее
