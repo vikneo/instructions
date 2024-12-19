@@ -17,6 +17,11 @@
 
 <body>
     {% include 'base/header.html' %}
+    {% block tester %}
+    <div class="tester">
+        <span>Данный проект еще в разработке. Некоторе ресурсы могут быть не доступны!</span>
+    </div>
+    {% endblock %}
     {% block breadcrumbs %}{% endblock %}
 
     {% block content %}

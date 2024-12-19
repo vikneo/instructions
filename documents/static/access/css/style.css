@@ -278,3 +278,13 @@ body {
 .data-empty {
     width: 20em;
 }
+
+
+.tester {
+    padding: 3px 0;
+    text-align: center;
+    background-color: #ff7d7d82;
+    font-size: 19px;
+    font-family: 'Zt Chablis Regular';
+    font-weight: 600;
+}
