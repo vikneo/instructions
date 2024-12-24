@@ -35,6 +35,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">{% translate 'О нас' %}</a>
                 </li>
+                {% if user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:instruction_project_add' %}">{% translate 'Добавить' %}</a>
+                </li>
+                {% endif %}
             </ul>
             {% if user.is_authenticated %}
             <ul class="nav nav-underline navbar-nav">
