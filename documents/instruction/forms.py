@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Device
+from .models import Device, Project
 
 
 class CSVImportForm(forms.Form):
@@ -57,7 +57,7 @@ class CreatedDeviceForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'row': 60,
-                'cols': 5,
+                'cols': 10,
                 "class": "form-input",
                 "id": "description",
                 "name": "description",
@@ -78,4 +78,69 @@ class CreatedDeviceForm(forms.ModelForm):
             'description',
             'termodate',
             'network_id'
+        ]
+
+
+class CrerateprojectForm(forms.ModelForm):
+    """
+    
+    """
+    crm_id = forms.CharField(
+        label='ID_CRM',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "crm_id",
+                "name": "crm_id",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    company = forms.CharField(
+        label='Заказчик',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "company",
+                "name": "company",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    project = forms.CharField(
+        label='Проект',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "project",
+                "name": "project",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    description = forms.CharField(
+        label='Дополнительно',
+        widget=forms.Textarea(
+            attrs={
+                # 'row': 5,
+                # 'cols': 60,
+                "class": "form-text",
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+
+    class Meta:
+        model = Project
+        fields = [
+            'crm_id',
+            'company',
+            'project',
+            'description'
         ]
