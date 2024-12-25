@@ -176,7 +176,7 @@ class Project(models.Model):
     created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
     updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
     description = models.TextField(verbose_name = 'Info', default = ' ', blank = True)
-    archive = models.BooleanField(default = False, verbose_name = 'Archive')
+    archive = models.BooleanField(default = False, verbose_name = 'Archive', blank = True)
 
     def __str__(self) -> str:
         return f"{self.crm_id}-{self.project}"
