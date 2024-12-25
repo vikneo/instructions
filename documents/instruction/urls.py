@@ -6,7 +6,8 @@ from .views import (
     DeviceDetailView,
     SearchProjectView,
     InstructionFileView,
-    CreateDeviceView
+    CreateDeviceView,
+    ProjectCreateView
     )
 
 app_name = 'project'
@@ -14,6 +15,7 @@ app_name = 'project'
 urlpatterns = [
     path('', ProjectListView.as_view(), name='index'),
     path('product/<slug:slug>/detail', ProjectDetailView.as_view(), name='product-detail'),
+    path('product/create', ProjectCreateView.as_view(), name='product-create'),
     path('id_crm/<int:crm_id>/detail', IdCRMDetailView.as_view(), name='id_crm-detail'),
     path('product/<slug:slug>/create', CreateDeviceView.as_view(), name='device-create'),
     path('device/<slug:slug>/detail', DeviceDetailView.as_view(), name='device-detail'),
