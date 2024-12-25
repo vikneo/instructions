@@ -77,7 +77,7 @@ class ProjectCreateView(CreateView):
         context.update(
             title='Добавление проекта'
         )
-        logger.info("Успешно добавлен проект")
+        logger.info("Рендеринг шаблона с формой добавления проекта")
         return context
     
     def form_valid(self, form):
