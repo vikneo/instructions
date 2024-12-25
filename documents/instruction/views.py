@@ -16,7 +16,7 @@ from .models import (
     Device,
 )
 from manuals.models import Module
-from .forms import CreatedDeviceForm
+from .forms import CreatedDeviceForm, CrerateprojectForm
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -63,7 +63,27 @@ class ProjectDetailView(DetailView):
             f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {project}"
         )
         return context
+
+
+class ProjectCreateView(CreateView):
+    """
     
+    """
+    template_name = "product/project_create.html"
+    form_class = CrerateprojectForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавление проекта'
+        )
+        logger.info("Успешно добавлен проект")
+        return context
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
 
 class IdCRMDetailView(ListView):
     """
