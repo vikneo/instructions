@@ -79,7 +79,7 @@ body {
 }
 
 .project-link {
-    color: #e13309;
+    color: #f9ff0c;
     text-decoration: auto;
     font-weight: 600;
 }
@@ -297,9 +297,33 @@ body {
 
 .tester {
     padding: 3px 0;
-    text-align: center;
-    background-color: #ff7d7d82;
     font-size: 19px;
-    font-family: 'Zt Chablis Regular';
+    font-family: 'monospace';
     font-weight: 600;
+    text-align: center;
+    color: white;
+    background-color: #ff7d7d82;
+}
+
+th {
+    padding: 8px 10px;
+}
+
+.table_ tr {
+    border-bottom: 1px solid black;
+}
+
+table {
+    color: aliceblue;
+}
+
+.table-light {
+    color: #f4f5f5 !important;
+}
+
+.table_ {
+    width: 100% !important;
+    margin-bottom: 1rem;
+    vertical-align: top;
+    background: rgba(255, 255, 255, .1);
 }
