@@ -133,8 +133,12 @@ body {
 .form-input {
     width: 100%;
     height: 23px;
-    border: none;
-    border-bottom: 1px solid;
+    /* border: none;
+    border-bottom: 1px solid; */
+}
+
+.form-group .form-text {
+    min-width: 100%;
 }
 
 .form-group .alert {
@@ -143,9 +147,13 @@ body {
 
 .form-group select {
     width: 100%;
-    height: 23px;
+    height: 25px;
     border: none;
     border-bottom: 1px solid;
+}
+
+.form-label label {
+    font-weight: 700;
 }
 
 .signin-form .input {
