@@ -43,4 +43,6 @@ def cleaned_cache_project(instance, **kwargs) -> None:
     """
     The cache is cleared before saving the "Project" model
     """
+    if not instance.slug:
+         instance.slug =f"{slugify(instance.crm_id)}-{slugify(instance.project)}"
     logger.warning(f"Очищен кеш `{clear_cache(settings.CACHE_NAME_PROJECT)}`")
