@@ -26,7 +26,7 @@
         </div>
         <span>ID - {{ device.project_id.crm_id }}</span>
     </div>
-    <strong class="strong">Сетевые параметры</strong>
+    <span class="strong">Сетевые параметры</span>
     <div class="flex setting-content">
         <table class="table table-light table-hover caption-top table-setting">
             <thead>
@@ -87,7 +87,7 @@
                 <div class="row gy-5">
                     {% if device.devices.all %}
                     <div class="col-6">
-                        <div class="p-2"><strong>Карта датчиков</strong></div>
+                        <div class="p-2"><span>Карта датчиков</span></div>
                     </div>
                     <!-- Кнопка-триггер модального окна -->
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -95,7 +95,7 @@
                     </button>
                     {% endif %}
                     <div class="col-10">
-                        <div class="p-2"><strong>Настроить {{ device }}</strong></div>
+                        <div class="p-2"><span>Настроить {{ device }}</span></div>
                     </div>
                     <a type="button" class="btn btn-primary" href="#">
                         Настроить сетевые параметры

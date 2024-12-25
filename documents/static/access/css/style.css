@@ -317,7 +317,7 @@ table {
     color: aliceblue;
 }
 
-.table-light {
+.table-light, h2, span {
     color: #f4f5f5 !important;
 }
 
