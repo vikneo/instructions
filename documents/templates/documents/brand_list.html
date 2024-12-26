@@ -21,8 +21,8 @@
         </div>
     </div>
     <div class="row">
-        <table class="table table-light table-hover gy-5">
-            <thead>
+        <table class="table_ table-light table-hover">
+            <thead class="table-light">
                 <tr>
                     <th scope="col">Бренд</th>
                     <th scope="col">Имя устройства</th>
@@ -32,7 +32,9 @@
             {% for brand in brands %}
             <tbody>
                 <tr>
-                    <td style="color: rgb(2, 100, 75); font-weight: 500;">{{ brand.name }}</td>
+                    <th scope="row">
+                        <a class="project-link" href="">{{ brand.name }}</a>
+                    </th>
                     <td>{{ brand.module_set.first }}</td>
                     <td>
                         <a class="btn btn-secondary" href="{% url 'manual:brand-detail' brand.slug %}">Подробнее >></a>
