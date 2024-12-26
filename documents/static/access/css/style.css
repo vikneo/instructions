@@ -122,6 +122,10 @@ body {
     margin: 10em 0;
 }
 
+.auth-title {
+    color: black !important;
+}
+
 .auth-content {
     width: 600px;
 }
@@ -139,7 +143,7 @@ body {
 
 .form-input {
     width: 100%;
-    height: 23px;
+    height: 27px;
     /* border: none;
     border-bottom: 1px solid; */
 }
@@ -154,9 +158,9 @@ body {
 
 .form-group select {
     width: 100%;
-    height: 25px;
-    border: none;
-    border-bottom: 1px solid;
+    height: 32px;
+    /* border: none;
+    border-bottom: 1px solid; */
 }
 
 .form-label label {

@@ -15,7 +15,7 @@ class CreatedDeviceForm(forms.ModelForm):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["project_id"].empty_label = "Проекты"
+        self.fields["project_id"].empty_label = "Выбрать проект"
     
     name = forms.CharField(
         label='Наименование', 
