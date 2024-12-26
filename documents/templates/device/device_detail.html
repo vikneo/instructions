@@ -6,6 +6,11 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">
+            <a href="{% url 'project:id_crm-detail' device.project_id.crm_id %}">
+                ID-CRM {{ device.project_id.crm_id }}
+            </a>
+        </li>
         <li class="breadcrumb-item active " aria-current="page"><a
                 href="{%  url 'project:product-detail' device.project_id.slug %}">{{ device.project_id.project }}</a>
         </li>
