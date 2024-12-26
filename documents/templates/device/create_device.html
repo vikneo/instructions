@@ -1,5 +1,28 @@
 {% extends 'base/base.html' %}
 {% load i18n static %}
+{% load devices_tag %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+{% project_breadcrumb slug as product %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">
+            <a href="{% url 'project:id_crm-detail' product.crm_id %}">
+                ID-CRM {{ product.crm_id }}
+            </a>
+        </li>
+        <li class="breadcrumb-item active " aria-current="page">
+            <a href="{% url 'project:product-detail' product.slug %}">
+            {{ product.project }}
+            </a>
+        </li>
+        <li class="breadcrumb-item active " aria-current="page">Новое устройство</li>
+    </ol>
+</nav>
+{% endblock %}
+
 
 {% block content %}
 <div class="device-create"> 
