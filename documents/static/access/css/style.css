@@ -132,7 +132,18 @@ body {
 
 .form-input {
     width: 100%;
-    height: 40px;
+    height: 23px;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+.form-group .alert {
+    padding: 3px 8px !important;
+}
+
+.form-group select {
+    width: 100%;
+    height: 23px;
     border: none;
     border-bottom: 1px solid;
 }
@@ -162,8 +173,12 @@ body {
     margin-right: 10px;
 }
 
-.btn-justify {
+.btn-justify, .instr-header {
     justify-content: space-between !important;
+}
+
+.instr-header {
+    align-items: center;
 }
 
 .device-title {
@@ -189,6 +204,10 @@ body {
     font-size: 1.2em;
 }
 
+.device-create, .form-footer {
+    font-size: 13px;
+}
+
 /* =================== Settings Info ==================== */
 
 .strong {
@@ -202,10 +221,11 @@ body {
 }
 
 .setting-title {
-    margin-top: 15px !important;
-    margin-bottom: 25px !important;
-    padding-top: 10px !important;
-    outline: 1px solid !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    padding: 10px 10px !important;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
     color: chocolate;
     font-family: 'Zt Chablis Regular', sans-serif;
     font-weight: 600;
@@ -214,6 +234,15 @@ body {
 .setting-info {
     padding: 10px 25px;
 }
+
+.setting-info button {
+    margin-top: 15px;
+}
+
+.setting-info a {
+    margin-top: 15px;
+}
+
 
 .text-bg-yellow {
     background-color: var(--bs-yellow) !important;

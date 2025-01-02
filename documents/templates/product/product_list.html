@@ -3,10 +3,10 @@
 {% load devices_tag %}
 
 {% block content %}
-
+<div class="container">
     {% if products %}
-        {% include 'product/base_product.html' %}
+    {% include 'product/base_product.html' %}
     {% else %}
     {% endif %}
-
+</div>
 {% endblock %}

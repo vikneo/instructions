@@ -3,6 +3,7 @@ import os
 from logging.handlers import RotatingFileHandler
 
 from django.conf import settings
+from django.core.cache import cache
 
 
 class LevelFileHandler(RotatingFileHandler):
@@ -36,3 +37,11 @@ class LevelFileHandler(RotatingFileHandler):
 
         with open(self.file_name, self.mode, encoding = self.encoding) as file:
             file.write(f"{msg}\n")
+
+
+def clear_cache(name_cache: str) -> str:
+    """
+    Deleted cache by key
+    """
+    cache.delete(name_cache)
+    return name_cache

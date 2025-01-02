@@ -1,10 +1,12 @@
+import logging
 import logging.handlers
+from import_export.admin import ImportExportModelAdmin
+
 from django.contrib import admin
 from django.http import HttpRequest
 from django.db.models import QuerySet
-from import_export.admin import ImportExportModelAdmin
-
-import logging
+from django.core.cache import cache
+from django.conf import settings
 
 from .models import (
     Brand,
@@ -16,6 +18,7 @@ from .models import (
     Project,
     WaveSensor,
 )
+from utils.log_config import clear_cache
 
 logger = logging.getLogger(__name__)
 
@@ -45,8 +48,9 @@ def added_to_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, queryse
     """
     
     """
-    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Добавлен в арзив')
+    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Добавлен в архив')
     queryset.update(archive = True)
+    logger.info(f'| Очищен Кэш {clear_cache(settings.CACHE_NAME_PROJECT)}')
 
 
 @admin.action(description = 'Del from archive')
@@ -54,8 +58,9 @@ def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, que
     """
     
     """
-    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Удален из арзив')
+    logger.info(f'| {request.user} - [{queryset.get(id = request.POST["_selected_action"])}] Удален из архив')
     queryset.update(archive = False)
+    logger.info(f'| Очищен Кэш {clear_cache(settings.CACHE_NAME_PROJECT)}')
 
 
 class FileTabularInline(admin.TabularInline):

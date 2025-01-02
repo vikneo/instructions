@@ -1,11 +1,13 @@
 import logging
 from typing import Any
+from itertools import chain
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
+from django.urls import reverse_lazy
 from django.core.cache import cache
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .models import (
     Project,
@@ -16,6 +18,7 @@ from .models import (
     File,
     Settings,
 )
+from .forms import CreatedInstructionForms, CreatedDeviceForm
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -33,13 +36,14 @@ class ProjectListView(ListView):
         context = super().get_context_data(**kwargs)
         context.update(title = 'Network technologies')
         logger.info(
-            f"`{format_name(self.request)}` - Рендеринг шаблона с проектами"
+            f"`{format_name(self.request)}` - Рендеринг шаблона с Projects"
         )
         return context
 
     def get_queryset(self):
         if not cache.get("products"):
-            logger.info(f'Сформирован кэш для страницы с проектами')
+            logger.warning(f'Отсутствует кэш для Projects')
+            logger.info(f'Сформирован кэш для Projects')
 
         products = cache.get_or_set('products', Project.objects.filter(archive=False))
         return products
@@ -58,7 +62,7 @@ class ProjectDetailView(DetailView):
         project = self.model.objects.get(slug = self.kwargs['slug']).project
         context.update(title = f'{project} - Профиль')
         logger.info(
-            f"`{format_name(self.request)}` - Рендеринг шаблона с детальной информацией о {project}"
+            f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {project}"
         )
         return context
 
@@ -96,7 +100,7 @@ class SearchProjectView(ListView):
         try:
             context = super().get_context_data(**kwargs)
         except Exception as err:
-            logger.warning(f"'{format_name(self.request)}` - Данный запрос не  существует")
+            logger.warning(f"'{format_name(self.request)}` - По данному запросу ничего не найдено")
             logger.exception(err)
             raise Http404("Poll does not exist")
 
@@ -110,10 +114,19 @@ class SearchProjectView(ListView):
         not_found = 'Нет ни одного совпадения'
         try:
             query = self.request.GET.get('search').upper()
-            result = Project.objects.filter(
+            product = Project.objects.filter(
                 Q(crm_id__icontains = query) |
                 Q(project__icontains = query)
             )
+            instruct = InstructionFile.objects.filter(
+                Q(name__icontains = query)
+            )
+            result = list(chain(product, instruct))
+            try:
+                if product[0].project.lower() == 'no name':
+                    raise ValidationError(not_found)
+            except IndexError as err:
+                logger.exception(err)
 
             if not result:
                 # messages.info(self.request, not_found)
@@ -145,7 +158,104 @@ class InstructionFileView(ListView):
     
     def get_queryset(self):
         if not cache.get('instructions'):
+            logger.warning(f"Отсутствует кэш для Инструкций")
             logger.info(f"Сформирован кэш для Инструкций")
         
         instructions = cache.get_or_set("instructions", InstructionFile.objects.all())
         return instructions
+
+
+class BrandView(ListView):
+    """
+    
+    """
+    template_name = 'brands/brand_list.html'
+    context_object_name = 'brands'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Производители',
+        )
+
+        logger.info(f"`{format_name(self.request)}` - Загружена страница {context['title']}")
+        return context
+    
+    def get_queryset(self):
+        if not cache.get('brands'):
+            logger.warning(f"Отсутствует кэш для модели Brand")
+            logger.info(f"Сформирован кэш для модели Brand")
+
+        brands = cache.get_or_set('brands', Brand.objects.all())
+        return brands
+
+
+class BrandDetailView(DetailView):
+    """
+    
+    """
+    template_name = 'brands/brand_detail.html'
+    context_object_name = 'brand'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title=f"Brand -{self.model.objects.get(slug=self.kwargs['slug']).name}"
+        )
+        logger.info(f"{format_name(self.request)}` - Загружена страница {context['title']}")
+
+        return context
+    
+    def get_queryset(self):
+        brand = self.model.objects.get(slug=self.kwargs['slug']).name
+        logger.info(f"`{format_name(self.request)}` - Загружена детальная информация о {brand}")
+        return Brand.objects.get(slug=self.kwargs['slug'])
+    
+
+class AddedInstructionView(CreateView):
+    """
+    
+    """
+    model = InstructionFile
+    template_name = 'documents/add_instruction.html'
+    form_class = CreatedInstructionForms
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавить инструкцию'
+        )
+        logger.info(f"Загружен шаблон с добавлением инструкции")
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        logger.info(f"`{format_name(self.request)}` - Добавил инструкцию для {self.request.POST.get('name')}")
+        return super().form_valid(form)
+
+    def get_absolute_url(self):
+        return reverse_lazy('project:instructions')
+
+
+class CreateDeviceView(CreateView):
+    """
+    
+    """
+    model = Device
+    form_class = CreatedDeviceForm
+    template_name = 'device/create_device.html'
+
+    def  get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(
+            title='Добавить устройство',
+            slug=self.kwargs['slug']
+        )
+        return context
+    
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
+    def get_absolute_url(self):
+        return reverse_lazy('project:product-detail', slug=self.kwargs['slug'])

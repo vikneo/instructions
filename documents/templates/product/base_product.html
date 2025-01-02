@@ -2,8 +2,8 @@
 {% load devices_tag %}
 
 
-<div class="container overflow-hidden text-center mt-5">
-    <table class="table caption-top" style="margin-bottom: 100px;">
+<div class="container overflow-hidden text-center mt-5 row">
+    <table class="table caption-top" {% if searches %}style="margin-bottom: 100px;"{% endif %}>
         <thead class="table-light">
         <tr>
             <th scope="col">Проект</th>

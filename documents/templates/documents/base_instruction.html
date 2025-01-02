@@ -1,0 +1,43 @@
+{% load i18n static %}
+{% load devices_tag %}
+
+
+<div class="overflow-hidden text-center mt-5 row">
+    <table class="table table-light table-hover gy-5">
+        <thead>
+            <tr>
+                <th scope="col">Бренд</th>
+                <th scope="col">Имя устройства</th>
+                <th scope="col">Название инструкции</th>
+            </tr>
+        </thead>
+        {% for instruction in instructions %}
+        <tbody>
+            <tr>
+                <td>{{ instruction.brand_id.name }}</td>
+                <td>{{ instruction.device_id.name }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle termo" type="button"
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                            {{ instruction.name }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if user.is_staff %}
+                            <li><a class="dropdown-item" href="{{ instruction.docs.url }}" download="">Скачать</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ instruction.docs.url }}"
+                                    target="_blank">Читать</a></li>
+                            {% else %}
+                            <li><span class="dropdown-item">Скачать</span></li>
+                            <li><span class="dropdown-item">Читать</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>
