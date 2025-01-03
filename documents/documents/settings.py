@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from os import getenv
+from dotenv import load_dotenv
 
 from utils.log_config import LevelFileHandler
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
@@ -29,8 +32,8 @@ DATABASE_DIR.mkdir(exist_ok=True)
 SECRET_KEY = getenv("SECRET_KEY", "adsasdaad56a7")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv("DEBUG", "1") == "0"
-print(DEBUG)
+DEBUG = getenv("DEBUG", "0") == "1"
+
 ALLOWED_HOSTS = [
     '127.0.0.1',
     '0.0.0.0',
