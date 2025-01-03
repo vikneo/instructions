@@ -62,7 +62,7 @@ megano/Makefile
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+documents/cache/db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
