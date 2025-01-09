@@ -157,6 +157,8 @@ CACHES = {
 CACHE_NAME_INSTRUCT = 'instructions'
 CACHE_NAME_PROJECT = 'products'
 
+FIXTURE_DIRS = [BASE_DIR / 'fixtures']
+
 # sessions
 
 SESSION_COOKIE_AGE = 14 * 24 * 60 * 60
