@@ -21,12 +21,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='instructionfile',
-            name='docs',
-            field=models.FileField(default=1, upload_to=instruction.models.path_to_file_instruction, verbose_name='File'),
-            preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='instructionfile',
             name='updated_at',
             field=models.DateTimeField(auto_now=True, verbose_name='Date updated'),
         ),

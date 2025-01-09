@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+            <li class="breadcrumb-item active " aria-current="page">
+                <a href="{% url 'manual:brand-list' %}">
+                    Производители
+                </a>
+            </li>
+            <li class="breadcrumb-item active " aria-current="page">{{ brand }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+{% with brand.module_set.all as devices %}
+    <div class="container">
+        <div class="flex instr-header">
+            <h2>{{ brand }}</h2>
+            <div class="flex instr-title">
+                {% if user.is_staff %}
+                <button type="button" class="btn btn-secondary px-4" data-bs-toggle="modal" data-bs-target="#createDevice">Добавить устройство</button>
+                {% endif %}
+            </div>
+        </div>
+        {% if devices %}
+            {% for device in devices %}
+
+            {% endfor %}
+        {% else %}
+            {% include 'base/empty_data.html' %}
+        {% endif %}
+    </div>
+{% endwith %}
+    <!-- Модальное окно -->
+    <div class="modal fade" id="createDevice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createDeviceLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="createDeviceLabel">Заголовок модального окна</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary">Понял</button>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

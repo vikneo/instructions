@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import InstructionFile, Device
+from .models import Device, Project
 
 
 class CSVImportForm(forms.Form):
@@ -9,52 +9,13 @@ class CSVImportForm(forms.Form):
     csv_file = forms.FileField()
 
 
-class CreatedInstructionForms(forms.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["brand_id"].empty_label = "Производители"
-        self.fields["device_id"].empty_label = "Устройство"
-
-    name = forms.CharField(
-        label="Название",
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-input",
-                "id": "name",
-                "name": "name",
-                "type": "text",
-                "data-validate": "require",
-            }
-        ),
-    )
-    description = forms.CharField(
-        label="Описание",
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-input",
-                "id": "description",
-                "name": "description",
-                "type": "text",
-                "data-validate": "require",
-            }
-        ),
-    )
-    docs = forms.FileField(label="Файл")
-
-    class Meta:
-        model = InstructionFile
-        fields = ["brand_id", "device_id", "name", "description", "docs"]
-
-
 class CreatedDeviceForm(forms.ModelForm):
     """
     
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["brand_id"].empty_label = "Производители"
-        self.fields["project_id"].empty_label = "Проекты"
+        self.fields["project_id"].empty_label = "Выбрать проект"
     
     name = forms.CharField(
         label='Наименование', 
@@ -96,7 +57,7 @@ class CreatedDeviceForm(forms.ModelForm):
         widget=forms.Textarea(
             attrs={
                 'row': 60,
-                'cols': 5,
+                'cols': 10,
                 "class": "form-input",
                 "id": "description",
                 "name": "description",
@@ -110,7 +71,6 @@ class CreatedDeviceForm(forms.ModelForm):
     class Meta:
         model = Device
         fields = [
-            'brand_id',
             'project_id',
             'name',
             'designation',
@@ -118,4 +78,69 @@ class CreatedDeviceForm(forms.ModelForm):
             'description',
             'termodate',
             'network_id'
+        ]
+
+
+class CrerateprojectForm(forms.ModelForm):
+    """
+    
+    """
+    crm_id = forms.CharField(
+        label='ID_CRM',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "crm_id",
+                "name": "crm_id",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    company = forms.CharField(
+        label='Заказчик',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "company",
+                "name": "company",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    project = forms.CharField(
+        label='Проект',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-input",
+                "id": "project",
+                "name": "project",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+    description = forms.CharField(
+        label='Дополнительно',
+        widget=forms.Textarea(
+            attrs={
+                # 'row': 5,
+                # 'cols': 60,
+                "class": "form-text",
+                "id": "description",
+                "name": "description",
+                "type": "text",
+                "data-validate": "require",
+            }
+        )
+    )
+
+    class Meta:
+        model = Project
+        fields = [
+            'crm_id',
+            'company',
+            'project',
+            'description'
         ]

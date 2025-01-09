@@ -1,1 +1,74 @@
-[{"id": 4, "name": "Механотроника", "slug": "mehanotronika"}, {"id": 3, "name": "Микропроцессорные технологии", "slug": "mikroprocessornye-tehnologii"}, {"id": 2, "name": "Owen", "slug": "owen"}, {"id": 1, "name": "System Electric", "slug": "system-electrik"}]
+[
+    {
+        "id": 12,
+        "name": "CHINT",
+        "slug": "chint",
+        "icon": ""
+    },
+    {
+        "id": 11,
+        "name": "LOVATO Electric",
+        "slug": "lovato-electric",
+        "icon": ""
+    },
+    {
+        "id": 10,
+        "name": "Энергосервис",
+        "slug": "energoservis",
+        "icon": ""
+    },
+    {
+        "id": 9,
+        "name": "Crevis",
+        "slug": "crevis",
+        "icon": ""
+    },
+    {
+        "id": 8,
+        "name": "Dekraft",
+        "slug": "dekraft",
+        "icon": ""
+    },
+    {
+        "id": 7,
+        "name": "Oni",
+        "slug": "oni",
+        "icon": ""
+    },
+    {
+        "id": 6,
+        "name": "Moxa",
+        "slug": "moxa",
+        "icon": ""
+    },
+    {
+        "id": 5,
+        "name": "Schneider Electric",
+        "slug": "schneider-electric",
+        "icon": ""
+    },
+    {
+        "id": 4,
+        "name": "Механотроника",
+        "slug": "mehanotronika",
+        "icon": ""
+    },
+    {
+        "id": 3,
+        "name": "System Electrik",
+        "slug": "system-electrik",
+        "icon": ""
+    },
+    {
+        "id": 2,
+        "name": "Owen",
+        "slug": "owen",
+        "icon": "icon/Owen/owen.PNG"
+    },
+    {
+        "id": 1,
+        "name": "Микропроцессорные технологии",
+        "slug": "mikroprocessornye-tehnologii",
+        "icon": "icon/Микропроцессорные технологии/mt.jpg"
+    }
+]

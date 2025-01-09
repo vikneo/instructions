@@ -9,10 +9,9 @@ from django.core.cache import cache
 from django.conf import settings
 
 from .models import (
-    Brand,
     Device,
-    InstructionFile,
-    File,
+    FileDevice,
+    FileProject,
     Network,
     Settings,
     Project,
@@ -63,19 +62,15 @@ def deleted_from_archive(modeladmin: admin.ModelAdmin, request: HttpRequest, que
     logger.info(f'| Очищен Кэш {clear_cache(settings.CACHE_NAME_PROJECT)}')
 
 
-class FileTabularInline(admin.TabularInline):
-    model = File
+class FileTabularInlineDevice(admin.TabularInline):
+    model = FileDevice
     extra = 0
 
 
-@admin.register(Brand)
-class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
-    """
-    Registration of the "Brand" model in the admin panel
-    """
-    list_display = ['id', 'name']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
+class FileTabularInlineProject(admin.TabularInline):
+    model = FileProject
+    extra = 0
+
 
 
 @admin.register(Device)
@@ -84,8 +79,9 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     Registration of the "Device" model in the admin panel
     """
     inlines = [
-        FileTabularInline,
+        FileTabularInlineDevice
     ]
+
     actions = [
         close_access,
         open_access
@@ -113,44 +109,12 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     get_project.short_description = "company"
 
 
-@admin.register(InstructionFile)
-class AdminInstructionFile(admin.ModelAdmin):
-    """
-    Registration of the "InstructionFile" model in the admin panel
-    """
-    list_display = ['brand_id', 'device_id', 'name', 'description']
-    list_display_links = ['name']
-    prepopulated_fields = {'slug': ('name',)}
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
-            obj.creator = request.user
-            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-        obj.save()
-
-
-@admin.register(File)
-class AdminFile(admin.ModelAdmin):
-    """
-    Registration of the "File" model in the admin panel
-    """
-
-    list_display = ['device_id', 'file_configs', 'file_report']
-    list_display_links = ['device_id']
-
-    def save_model(self, request, obj, form, change):
-        if getattr(obj, 'creator', None) is None:
-            obj.creator = request.user
-            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
-        obj.save()
-
-
 @admin.register(Network)
 class AdminNetwork(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Network" model in the admin panel
     """
-    list_display = ['name', 'description']
+    list_display = ['id', 'name', 'description']
     list_display_links = ['name']
     prepopulated_fields = {'slug': ('name',)}
 
@@ -168,7 +132,7 @@ class AdminSettings(ImportExportModelAdmin, admin.ModelAdmin):
     Registration of the "Settings" model in the admin panel
     """
     save_on_top = True
-    list_display = ['interface', 'device', 'slave_id']
+    list_display = ['id', 'interface', 'device', 'slave_id']
     list_display_links = ['interface']
     prepopulated_fields = {'slug': ('interface', 'device')}
 
@@ -184,6 +148,10 @@ class AdminProject(ImportExportModelAdmin, admin.ModelAdmin):
     """
     Registration of the "Project" model in the admin panel
     """
+    inlines = [
+        FileTabularInlineProject
+    ]
+
     actions = [
         added_to_archive,
         deleted_from_archive
@@ -220,3 +188,20 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
         obj.save()
 
     get_id_crm.short_description = 'id / project'
+
+
+@admin.register(FileProject)
+class AdminFileProject(admin.ModelAdmin):
+    """
+    
+    """
+    list_display = ['project_id', 'name']
+    list_display_links = ['name']
+    search_fields = ['name']
+    list_filter = ['name']
+
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'creator', None) is None:
+            obj.creator = request.user
+            logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
+        obj.save()

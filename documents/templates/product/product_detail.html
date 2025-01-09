@@ -1,11 +1,13 @@
 {% extends 'base/base.html' %}
 {% load i18n static %}
+{% load photo_devices_tag %}
 
 <!-- Хлебные крошки -->
 {% block breadcrumbs %}
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page"><a href="{% url 'project:id_crm-detail' product.crm_id %}">ID-CRM {{ product.crm_id }}</a></li>
         <li class="breadcrumb-item active " aria-current="page">{{ product.project }}</li>
     </ol>
 </nav>
@@ -18,18 +20,20 @@
         <h2>{{ product.project }}</h2>
         <div class="flex instr-title">
             {% if user.is_staff %}
-            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить устройство</a>
+            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
+                устройство</a>
             {% endif %}
         </div>
     </div>
     {% with product.device_set.all as devices %}
     {% if devices %}
-    <table class="table table-light table-hover">
+    <table class="table_ table-light table-hover">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">ID CRM</th>
                 <th scope="col">Устройство</th>
                 <th scope="col">Серийный №</th>
+                <th scope="col">Скриншот</th>
                 <th scope="col">Протокол</th>
                 <th scope="col">Т °С</th>
                 <th scope="col">Настройки</th>
@@ -38,19 +42,39 @@
         {% for device in product.device_set.all %}
         <tbody>
             <tr>
-                <th scope="row">{{ product.crm_id }}</th>
+                <th scope="row">
+                    {% url 'project:id_crm-detail' product.crm_id  as crm_id_path %} <!--  Проверка url-address -->
+                    {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
+                        {{ product.crm_id }}
+                    {% else %}
+                    <a class="project-link" href="{% url 'project:id_crm-detail' product.crm_id %}">
+                        {{ product.crm_id }}
+                    </a>
+                    {% endif %}
+                </th>
                 <td>
-                    <a class="project-link" href="{% url 'project:device-detail' device.slug %}">{{ device.name }}</a>
+                    <a class="project-link" href="{% url 'project:device-detail' device.slug %}"
+                        data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
+                        data-bs-title="{{ device.name }} | {{ device.id}}">{{ device.designation }}</a>
                 </td>
                 <td>{{ device.serial_num }}</td>
+                {% with device.devices_files.all as photos %}
+                <td>
+                    {% if photos %}
+                    <a href="#">{{ device.devices_files.first }}</a>
+                    {% else %}
+                    not found
+                    {% endif %}
+                </td>
+                {% endwith %}
                 <td>{{ device.network_id.first }}</td>
                 <td>{% if device.termodate %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                        title="Термомонитооринг есть" src="{% static 'access/icon/check-yes.png' %}" width="25px"
+                        title="Есть в термомонитооринге" src="{% static 'access/icon/check-yes.png' %}" width="25px"
                         alt="Есть">
                     {% else %}
                     <img data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip"
-                        title="Термомонитооринга нет" src="{% static 'access/icon/check-no.jpg' %}" width="25px"
+                        title="Нет в термомонитооринге" src="{% static 'access/icon/check-no.jpg' %}" width="25px"
                         alt="Нет">
                     {% endif %}
                 </td>
@@ -67,30 +91,65 @@
         {% endfor %}
     </table>
     {% else %}
-        {% include 'base/empty_data.html' %}
+    {% include 'base/empty_data.html' %}
     {% endif %}
+    {% endwith %}
+    {% photos_device product.id as photos %}
+    {% with photos|random as photo_pk %}
+    <div class="flex jc-centr">
+        <div id="carouselExample" class="carousel slide" style="width: 50%;">
+            <div class="carousel-inner">
+                {% for photo in photos %}
+                <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#photosModal">
+                        <img src="{{ photo.file_configs.url }}" class="d-block w-100" width="100px" alt="{{ photo }}">
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+        </div>
+    </div>
+    <!-- Модальное окно -->
+    <div class="modal fade" id="photosModal" tabindex="-1" aria-labelledby="photosModalLabel" aria-hidden="true">
+        <div class="modal-dialog " style="max-width: 1200px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <h1 class="modal-title fs-4" id="photosModalLabel">{{ photos|first }}</h1> -->
+                    <button type="button" aria-label="+"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="fullModal" class="carousel slide">
+                        <div class="carousel-inner">
+                            {% for photo in photos %}
+                            <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
+                                <img src="{{ photo.file_configs.url }}" class="d-block w-100" alt="{{ photo }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#fullModal" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Предыдущий</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#fullModal" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Следующий</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endwith %}
 </div>
 
 {% endblock %}
-
-
-<div class="container text-center">
-    <div class="row">
-        <div class="col">
-            {{ product.device_set.all }}
-        </div>
-        {% for device in product.device_set.all %}
-        <div class="col">
-            <!-- {{ device.network_id.first }} -->
-        </div>
-        <div class="col">
-            {{ device.devices_settings.first.slave_id }}
-            {{ device.devices_settings.first.speed }}:
-            {{ device.devices_settings.first.paritet }}/
-            {{ device.devices_settings.first.bit }}/
-            {{ device.devices_settings.first.stop_bit }}
-        </div>
-        {% endfor %}
-    </div>
-</div>

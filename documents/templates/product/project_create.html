@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+{% load photo_devices_tag %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">Новый проект</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="device-create"> 
+    <div class="position-absolute top-50 start-50 translate-middle auth-content">
+        <div class="signin-form ">
+            <div class="modal-header auth-header">
+                <h2 class="modal-title auth-title h4">{{ title }}</h2>
+                <a style="padding: 15px" href="{% url 'project:index' %}" type="button"
+                    class="btn-close position-absolute top-0 end-0"></a>
+            </div>
+            {% include "form_create/form_create.html" %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+
+<!-- Хлебные крошки -->
+{% block breadcrumbs %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'project:index' %}">Главная</a></li>
+        <li class="breadcrumb-item active " aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="flex instr-header">
+        <h2>{{ title }}</h2>
+        <div class="flex instr-title">
+            <a class="btn btn-primary px-4" href="">Добавить</a>
+            <a class="btn btn-primary px-4 ms-2" href="">Редактировать</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table_ table-light table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Бренд</th>
+                    <th scope="col">Имя устройства</th>
+                    <th scope="col">Дополнительно</th>
+                </tr>
+            </thead>
+            {% for brand in brands %}
+            <tbody>
+                <tr>
+                    <th scope="row">
+                        <a class="project-link" href="">{{ brand.name }}</a>
+                    </th>
+                    <td>{{ brand.module_set.first }}</td>
+                    <td>
+                        <a class="btn btn-secondary" href="{% url 'manual:brand-detail' brand.slug %}">Подробнее >></a>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
