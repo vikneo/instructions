@@ -104,6 +104,7 @@ class FileDevice(models.Model):
         verbose_name = 'Photo config',
         blank = True,
         options={'quantity': 100},
+        format= 'JPEG',
         processors=[ResizeToFill(850, 380)]
         )
 

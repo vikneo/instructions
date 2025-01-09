@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'instruction.apps.InstructionConfig',
     'manuals.apps.ManualsConfig',
+    'imagekit',
     "import_export",
 ]
 
