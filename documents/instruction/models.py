@@ -26,6 +26,7 @@ def path_to_file_report(instance: 'FileDevice', filename: str) -> str:
     """
     return f"photos/{instance.device_id.name}/report/{filename}"
 
+
 def path_to_file(instance: 'FileProject', filename: str) -> str:
     """
     The function generates a path based on the name of the file .

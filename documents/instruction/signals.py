@@ -14,7 +14,7 @@ from .models import Settings, Project, Device
 logger = logging.getLogger(__name__)
 
 
-@receiver(pre_save, sender=Settings)
+@receiver(pre_save, sender = Settings)
 def get_slugify_settings(instance, **kwargs) -> None:
     """
     Before saving the "Settings" model, the "slug" field is checked, by default, 
@@ -27,7 +27,7 @@ def get_slugify_settings(instance, **kwargs) -> None:
         instance.slug = f"{slugify(instance.device.project_id.crm_id)}-{slugify(instance.device.project_id.project)}-{slugify(instance.device.designation)}"
 
 
-@receiver(pre_save, sender=Device)
+@receiver(pre_save, sender = Device)
 def get_slugify_settings(instance, **kwargs) -> None:
     """
     Before saving the "Device" model, the "slug" field is checked, if the field is empty, 
@@ -38,7 +38,7 @@ def get_slugify_settings(instance, **kwargs) -> None:
         instance.slug = f"{slugify(instance.project_id.crm_id)}-{slugify(instance.project_id.project)}-{slugify(instance.designation)}"
 
 
-@receiver(pre_save, sender=Project)
+@receiver(pre_save, sender = Project)
 def cleaned_cache_project(instance, **kwargs) -> None:
     """
     The cache is cleared before saving the "Project" model

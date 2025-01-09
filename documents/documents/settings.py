@@ -12,25 +12,36 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from os import getenv
+from dotenv import load_dotenv
 
 from utils.log_config import LevelFileHandler
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
 BASE_DIR = Path(__file__).resolve().parent.parent
+DATABASE_DIR = BASE_DIR / 'docs_base'
+DATABASE_DIR.mkdir(exist_ok=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "adsasdaad56a7")
+SECRET_KEY = getenv("SECRET_KEY", "adsasdaad56a7")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", 1)
+DEBUG = getenv("DEBUG", "0") == "1"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1").split()
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '0.0.0.0',
+] + getenv("ALLOWED_HOSTS", "").split(",")
+
 INTERNAL_IPS = [
     '127.0.0.1',
+    '0.0.0.0',
 ]
 
 # Application definition
@@ -86,8 +97,8 @@ WSGI_APPLICATION = 'documents.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv("ENGINE_SQL", "django.db.backends.sqlite3"),
-        'NAME': BASE_DIR / os.getenv("NAME_SQL", "db.sqlite3"),
+        'ENGINE': getenv("ENGINE_SQL", "django.db.backends.sqlite3"),
+        'NAME': DATABASE_DIR / getenv("NAME_SQL", "db.sqlite3"),
     }
 }
 
@@ -123,7 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-LOCAL_MACHINE_DEV = os.getenv("LOCAL_MACHINE_DEV") == "1"
+LOCAL_MACHINE_DEV = getenv("LOCAL_MACHINE_DEV") == "1"
 
 # STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -161,8 +172,10 @@ LOGGING_URL = "/logging/"
 
 LOGFILE_NAME = "loging.log"
 
-LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
+# LOGFILE_SIZE = 2 * 1024 * 1024  # size 2.6 Mb
+LOGFILE_SIZE = 200  # size 200 Kb
 LOGFILE_COUNT = 10
+LOGLEVEL = getenv("LOGLEVEL", "info").upper()
 
 LOGGING = {
     'version': 1,
@@ -196,7 +209,7 @@ LOGGING = {
             'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
             'when': 'D',
             'backupCount': LOGFILE_COUNT,
-            'encoding': 'utf-8'
+            'encoding': 'utf-8',
 
         },
         "custom_file_log": {
