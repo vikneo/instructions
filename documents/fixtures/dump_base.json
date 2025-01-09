@@ -41,6 +41,230 @@
   }
 },
 {
+  "model": "instruction.project",
+  "pk": 2,
+  "fields": {
+    "crm_id": "7454",
+    "company": "Амуркий ГКХ",
+    "project": "MSG-001",
+    "slug": "7454-msg-001",
+    "created_at": "2024-10-31T06:50:29.735Z",
+    "updated_at": "2024-10-31T06:50:29.735Z",
+    "description": " ",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 3,
+  "fields": {
+    "crm_id": "7454",
+    "company": "Амуркий ГКХ",
+    "project": "NSG-001",
+    "slug": "7454-nsg-001",
+    "created_at": "2024-10-31T06:50:29.713Z",
+    "updated_at": "2024-10-31T06:50:29.713Z",
+    "description": " ",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 4,
+  "fields": {
+    "crm_id": "7454",
+    "company": "Амуркий ГКХ",
+    "project": "NSG-002",
+    "slug": "7454-nsg-002",
+    "created_at": "2024-10-31T06:50:29.701Z",
+    "updated_at": "2024-10-31T06:50:29.701Z",
+    "description": " ",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 5,
+  "fields": {
+    "crm_id": "7454",
+    "company": "Амуркий ГКХ",
+    "project": "NSG-003",
+    "slug": "7454-nsg-003",
+    "created_at": "2024-10-31T06:50:29.688Z",
+    "updated_at": "2024-10-31T06:50:29.688Z",
+    "description": " ",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 6,
+  "fields": {
+    "crm_id": "7308",
+    "company": "ООО \"ТЕМП\"",
+    "project": "1ШУФ01",
+    "slug": "7308-1shuf01",
+    "created_at": "2024-10-31T06:50:29.667Z",
+    "updated_at": "2024-10-31T06:50:29.668Z",
+    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 7,
+  "fields": {
+    "crm_id": "7308",
+    "company": "ООО \"ТЕМП\"",
+    "project": "1ШУФ02",
+    "slug": "7308-1shuf02",
+    "created_at": "2024-10-31T06:50:29.645Z",
+    "updated_at": "2024-10-31T06:50:29.645Z",
+    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 8,
+  "fields": {
+    "crm_id": "7308",
+    "company": "ООО \"ТЕМП\"",
+    "project": "2ШУФ01",
+    "slug": "7308-2shuf01",
+    "created_at": "2024-10-31T06:50:29.626Z",
+    "updated_at": "2024-10-31T06:50:29.626Z",
+    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 9,
+  "fields": {
+    "crm_id": "7308",
+    "company": "ООО \"ТЕМП\"",
+    "project": "2ШУФ02",
+    "slug": "7308-2shuf02",
+    "created_at": "2024-10-31T06:50:29.609Z",
+    "updated_at": "2024-10-31T06:50:29.609Z",
+    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 10,
+  "fields": {
+    "crm_id": "10726",
+    "company": "ООО \"ТЕМП\"",
+    "project": "1ШПН",
+    "slug": "10726-1shpn",
+    "created_at": "2024-10-31T06:50:29.580Z",
+    "updated_at": "2024-10-31T06:50:29.580Z",
+    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\nинфраструктуры. Участок измельчения",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 11,
+  "fields": {
+    "crm_id": "10726",
+    "company": "ООО \"ТЕМП\"",
+    "project": "1ШУН",
+    "slug": "10726-1shun",
+    "created_at": "2024-10-31T06:50:29.559Z",
+    "updated_at": "2024-11-01T03:58:45.296Z",
+    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\r\nинфраструктуры. Участок измельчения",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 12,
+  "fields": {
+    "crm_id": "10726",
+    "company": "ООО \"ТЕМП\"",
+    "project": "2ШПН",
+    "slug": "10726-2shpn",
+    "created_at": "2024-10-31T06:50:29.540Z",
+    "updated_at": "2024-11-01T04:04:10.289Z",
+    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\r\nинфраструктуры. Участок измельчения",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 13,
+  "fields": {
+    "crm_id": "10726",
+    "company": "ООО \"ТЕМП\"",
+    "project": "2ШУН",
+    "slug": "10726-2shun",
+    "created_at": "2024-10-31T06:50:29.525Z",
+    "updated_at": "2024-10-31T06:50:29.525Z",
+    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\nинфраструктуры. Участок измельчения",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 14,
+  "fields": {
+    "crm_id": "6346",
+    "company": "ООО \"СК-КУПРУМ\"",
+    "project": "РУ-0,4кВ",
+    "slug": "6346-ru-04kv",
+    "created_at": "2024-10-31T06:50:29.512Z",
+    "updated_at": "2024-10-31T06:50:29.512Z",
+    "description": "АО \"Теплоозерский цементный завод\". Топливоподготовительное отделение.\nТП 2х1000кВА/6/0,4кВ.",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 15,
+  "fields": {
+    "crm_id": "7524",
+    "company": "АО \"Спасскцемент\"",
+    "project": "ЩСН",
+    "slug": "7524-shsn",
+    "created_at": "2024-10-31T06:50:29.494Z",
+    "updated_at": "2024-10-31T06:50:29.494Z",
+    "description": "Модернизация цем. мельницы 7 и 8 и цем. силосов 1-6 (строительство\nсепаратора)",
+    "archive": false
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 16,
+  "fields": {
+    "crm_id": "0000",
+    "company": "No name",
+    "project": "No name",
+    "slug": "0000-no-name",
+    "created_at": "2024-10-31T06:50:29.465Z",
+    "updated_at": "2024-10-31T06:50:29.465Z",
+    "description": " ",
+    "archive": true
+  }
+},
+{
+  "model": "instruction.project",
+  "pk": 21,
+  "fields": {
+    "crm_id": "5873",
+    "company": "Монтэл",
+    "project": "КРУ \"Монтэл\" 10кВ",
+    "slug": "5873-kru-montel-10kv",
+    "created_at": "2024-12-25T07:21:39.264Z",
+    "updated_at": "2024-12-25T07:21:39.279Z",
+    "description": "!",
+    "archive": false
+  }
+},
+{
   "model": "instruction.device",
   "pk": 1,
   "fields": {
@@ -2223,230 +2447,6 @@
     "created_at": "2024-10-31T08:38:40.166Z",
     "updated_at": "2024-10-31T08:38:40.166Z",
     "description": " "
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 2,
-  "fields": {
-    "crm_id": "7454",
-    "company": "Амуркий ГКХ",
-    "project": "MSG-001",
-    "slug": "7454-msg-001",
-    "created_at": "2024-10-31T06:50:29.735Z",
-    "updated_at": "2024-10-31T06:50:29.735Z",
-    "description": " ",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 3,
-  "fields": {
-    "crm_id": "7454",
-    "company": "Амуркий ГКХ",
-    "project": "NSG-001",
-    "slug": "7454-nsg-001",
-    "created_at": "2024-10-31T06:50:29.713Z",
-    "updated_at": "2024-10-31T06:50:29.713Z",
-    "description": " ",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 4,
-  "fields": {
-    "crm_id": "7454",
-    "company": "Амуркий ГКХ",
-    "project": "NSG-002",
-    "slug": "7454-nsg-002",
-    "created_at": "2024-10-31T06:50:29.701Z",
-    "updated_at": "2024-10-31T06:50:29.701Z",
-    "description": " ",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 5,
-  "fields": {
-    "crm_id": "7454",
-    "company": "Амуркий ГКХ",
-    "project": "NSG-003",
-    "slug": "7454-nsg-003",
-    "created_at": "2024-10-31T06:50:29.688Z",
-    "updated_at": "2024-10-31T06:50:29.688Z",
-    "description": " ",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 6,
-  "fields": {
-    "crm_id": "7308",
-    "company": "ООО \"ТЕМП\"",
-    "project": "1ШУФ01",
-    "slug": "7308-1shuf01",
-    "created_at": "2024-10-31T06:50:29.667Z",
-    "updated_at": "2024-10-31T06:50:29.668Z",
-    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 7,
-  "fields": {
-    "crm_id": "7308",
-    "company": "ООО \"ТЕМП\"",
-    "project": "1ШУФ02",
-    "slug": "7308-1shuf02",
-    "created_at": "2024-10-31T06:50:29.645Z",
-    "updated_at": "2024-10-31T06:50:29.645Z",
-    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 8,
-  "fields": {
-    "crm_id": "7308",
-    "company": "ООО \"ТЕМП\"",
-    "project": "2ШУФ01",
-    "slug": "7308-2shuf01",
-    "created_at": "2024-10-31T06:50:29.626Z",
-    "updated_at": "2024-10-31T06:50:29.626Z",
-    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 9,
-  "fields": {
-    "crm_id": "7308",
-    "company": "ООО \"ТЕМП\"",
-    "project": "2ШУФ02",
-    "slug": "7308-2shuf02",
-    "created_at": "2024-10-31T06:50:29.609Z",
-    "updated_at": "2024-10-31T06:50:29.609Z",
-    "description": "Участок флотации.\nШкаф управления основной флотацией I секции",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 10,
-  "fields": {
-    "crm_id": "10726",
-    "company": "ООО \"ТЕМП\"",
-    "project": "1ШПН",
-    "slug": "10726-1shpn",
-    "created_at": "2024-10-31T06:50:29.580Z",
-    "updated_at": "2024-10-31T06:50:29.580Z",
-    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\nинфраструктуры. Участок измельчения",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 11,
-  "fields": {
-    "crm_id": "10726",
-    "company": "ООО \"ТЕМП\"",
-    "project": "1ШУН",
-    "slug": "10726-1shun",
-    "created_at": "2024-10-31T06:50:29.559Z",
-    "updated_at": "2024-11-01T03:58:45.296Z",
-    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\r\nинфраструктуры. Участок измельчения",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 12,
-  "fields": {
-    "crm_id": "10726",
-    "company": "ООО \"ТЕМП\"",
-    "project": "2ШПН",
-    "slug": "10726-2shpn",
-    "created_at": "2024-10-31T06:50:29.540Z",
-    "updated_at": "2024-11-01T04:04:10.289Z",
-    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\r\nинфраструктуры. Участок измельчения",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 13,
-  "fields": {
-    "crm_id": "10726",
-    "company": "ООО \"ТЕМП\"",
-    "project": "2ШУН",
-    "slug": "10726-2shun",
-    "created_at": "2024-10-31T06:50:29.525Z",
-    "updated_at": "2024-10-31T06:50:29.525Z",
-    "description": "Култуминский ГОК. Перерабатывающий комплекс и объекты его\nинфраструктуры. Участок измельчения",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 14,
-  "fields": {
-    "crm_id": "6346",
-    "company": "ООО \"СК-КУПРУМ\"",
-    "project": "РУ-0,4кВ",
-    "slug": "6346-ru-04kv",
-    "created_at": "2024-10-31T06:50:29.512Z",
-    "updated_at": "2024-10-31T06:50:29.512Z",
-    "description": "АО \"Теплоозерский цементный завод\". Топливоподготовительное отделение.\nТП 2х1000кВА/6/0,4кВ.",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 15,
-  "fields": {
-    "crm_id": "7524",
-    "company": "АО \"Спасскцемент\"",
-    "project": "ЩСН",
-    "slug": "7524-shsn",
-    "created_at": "2024-10-31T06:50:29.494Z",
-    "updated_at": "2024-10-31T06:50:29.494Z",
-    "description": "Модернизация цем. мельницы 7 и 8 и цем. силосов 1-6 (строительство\nсепаратора)",
-    "archive": false
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 16,
-  "fields": {
-    "crm_id": "0000",
-    "company": "No name",
-    "project": "No name",
-    "slug": "0000-no-name",
-    "created_at": "2024-10-31T06:50:29.465Z",
-    "updated_at": "2024-10-31T06:50:29.465Z",
-    "description": " ",
-    "archive": true
-  }
-},
-{
-  "model": "instruction.project",
-  "pk": 21,
-  "fields": {
-    "crm_id": "5873",
-    "company": "Монтэл",
-    "project": "КРУ \"Монтэл\" 10кВ",
-    "slug": "5873-kru-montel-10kv",
-    "created_at": "2024-12-25T07:21:39.264Z",
-    "updated_at": "2024-12-25T07:21:39.279Z",
-    "description": "!",
-    "archive": false
   }
 },
 {

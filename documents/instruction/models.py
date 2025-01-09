@@ -38,6 +38,31 @@ def path_to_file(instance: 'FileProject', filename: str) -> str:
     return f"files/{instance.project_id}/{filename}"
 
 
+class Project(models.Model):
+    """
+    The class describes the Project model
+    """
+    crm_id = models.CharField(max_length = 10, verbose_name = "ID CRM", db_index = True)
+    company = models.CharField(max_length = 120, verbose_name = 'Company')
+    project = models.CharField(max_length = 120, verbose_name = "Project", )
+    slug = models.SlugField(max_length = 200, verbose_name = "URL", db_index = True, unique = True)
+    created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
+    updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
+    description = models.TextField(verbose_name = 'Info', default = ' ', blank = True)
+    archive = models.BooleanField(default = False, verbose_name = 'Archive', blank = True)
+
+    def __str__(self) -> str:
+        return f"{self.crm_id}-{self.project}"
+
+    def get_absolute_url(self):
+        return reverse('project:product-detail', kwargs = {'slug': self.slug})
+
+    class Meta:
+        db_table = 'project'
+        verbose_name = 'project'
+        verbose_name_plural = 'projects'
+
+
 class Device(models.Model):
     """
     The class describes the Device model
@@ -164,31 +189,6 @@ class Settings(models.Model):
         db_table = 'settings'
         verbose_name = 'setting'
         verbose_name_plural = 'settings'
-
-
-class Project(models.Model):
-    """
-    The class describes the Project model
-    """
-    crm_id = models.CharField(max_length = 10, verbose_name = "ID CRM", db_index = True)
-    company = models.CharField(max_length = 120, verbose_name = 'Company')
-    project = models.CharField(max_length = 120, verbose_name = "Project", )
-    slug = models.SlugField(max_length = 200, verbose_name = "URL", db_index = True, unique = True)
-    created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
-    updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
-    description = models.TextField(verbose_name = 'Info', default = ' ', blank = True)
-    archive = models.BooleanField(default = False, verbose_name = 'Archive', blank = True)
-
-    def __str__(self) -> str:
-        return f"{self.crm_id}-{self.project}"
-
-    def get_absolute_url(self):
-        return reverse('project:product-detail', kwargs = {'slug': self.slug})
-
-    class Meta:
-        db_table = 'project'
-        verbose_name = 'project'
-        verbose_name_plural = 'projects'
 
 
 class WaveSensor(models.Model):
