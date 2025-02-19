@@ -6,24 +6,23 @@
     <table class="table_ caption-top" {% if searches %}style="margin-bottom: 100px;"{% endif %}>
         <thead class="table-light">
         <tr>
-            {% if user.is_staff %}<th scope="col">id</th>{% endif %}
             <th scope="col">Проект</th>
             <th scope="col">Объект</th>
             <th scope="col">ID CRM</th>
             <th scope="col">Файлы</th>
             <th scope="col">Термомониторинг</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         {% for product in products %}
                 {% with product.device_set.all as devices %}
                     <tbody>
                     <tr>
-                        {% if user.is_staff %}<th scope="col">{{ product.id }}</th>{% endif %}
                         <td>
                             <a class="project-link"
                             href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
                         </td>
-                        <td class="product-list"><th scope="col">{{ product.company }}</th></td>
+                        <td class="product-list">{{ product.company }}</td>
                         <td>
                             {% url 'project:id_crm-detail' product.crm_id  as crm_id_path %} <!--  Проверка url-address -->
                             {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
@@ -82,6 +81,11 @@
                                     <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
                                 </div>
                             {% endif %}
+                        </td>
+                        <td>
+                            <a href="#">
+                                <img src="{% static 'access/icon/trash-solid.svg' %}" width="20px" alt="">
+                            </a>
                         </td>
                     </tr>
                     </tbody>

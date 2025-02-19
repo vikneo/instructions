@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load i18n static %}
+{% load devices_tag %}
+
+{% block content %}
+<div class="position-absolute top-50 start-50 translate-middle auth-content">
+    <div class="signin-form">
+        <div class="modal-header auth-header">
+            <h2 class="modal-title auth-title">Действительно хотите удалить</h2>
+            <a style="padding: 15px" href="{{ request.META.HTTP_REFERER }}" type="button"
+               class="btn-close position-absolute top-0 end-0">
+            </a>
+        </div>
+        <div class="form-auth">
+            <div class="flex" style="justify-content: flex-end;">
+                <form action="{% url 'project:product-detail' slug=product_slug %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">
+                        Подтвердить
+                    </button>
+                </form>
+                <!-- <a type="button" class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">Ok</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

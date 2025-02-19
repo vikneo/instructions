@@ -229,7 +229,8 @@ body {
     justify-content: center;
 }
 
-.table .product-list {
+.table, .product-list {
+    padding: 5px 0;
     font-family: 'Zt Chablis Bolt Show', sans-serif;
     font-size: 1.2em;
 }

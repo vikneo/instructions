@@ -1,6 +1,4 @@
 import logging
-from math import prod
-from turtle import title
 from typing import Any
 from itertools import chain
 
@@ -9,7 +7,8 @@ from django.db.models import Q
 from django.http import Http404
 from django.urls import reverse_lazy
 from django.core.cache import cache
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView
+
 
 from .models import (
     Project,
