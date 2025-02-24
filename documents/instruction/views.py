@@ -297,3 +297,11 @@ class CreateDeviceView(CreateView):
     
     def get_absolute_url(self):
         return reverse_lazy('project:product-detail', slug=self.kwargs['slug'])
+
+
+class DownloadArchiveView():
+    """
+    Класс для скачивания всех файлов в виде архива .zip 
+    для 
+    """
+    pass

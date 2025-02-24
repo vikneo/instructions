@@ -51,12 +51,12 @@
                                         {% if files %}
                                         {% for file in files %}
                                         <div class="container flex btn-justify">
-                                            {{ file.name }}
+                                            <span style="color: black !important;">{{ file.name }}</span>
                                             <a href="{{ file.file.url }}" download="">Скачать</a>
                                         </div>
                                         {% endfor %}
                                         {% else %}
-                                        ...
+                                            <span style="color: black !important;">Файлов пока не поступило</span>
                                         {% endif %}
                                         {% endwith %}
                                     </div>
@@ -84,7 +84,7 @@
                         </td>
                         <td>
                             <a href="#">
-                                <img src="{% static 'access/icon/trash-solid.svg' %}" width="20px" alt="">
+                                <img style="display: none;" src="{% static 'access/icon/trash-solid.svg' %}" width="20px" alt="">
                             </a>
                         </td>
                     </tr>
