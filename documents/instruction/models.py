@@ -226,14 +226,15 @@ class FileProject(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Проект', related_name = 'files')
     name = models.CharField(verbose_name='Название', max_length=110, db_index=True)
     file = models.FileField(verbose_name='Файл', upload_to = path_to_file, blank = True)
-    file_photos = ProcessedImageField(
-        upload_to = path_to_file_report, 
-        verbose_name = 'Photo',
-        blank = True,
-        options={'quantity': 100},
-        format= 'JPEG',
-        processors=[ResizeToFill(850, 380)]
-        )
+    file_photos = models.ImageField(verbose_name='Photo', upload_to=path_to_file_report, blank=True)
+    # file_photos = ProcessedImageField(
+    #     upload_to = path_to_file_report, 
+    #     verbose_name = 'Photo',
+    #     blank = True,
+    #     options={'quantity': 60},
+    #     format= 'JPEG',
+    #     processors=[ResizeToFill(310, 280, anchor=False)]
+    #     )
 
     def __str__(self):
         return self.name

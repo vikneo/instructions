@@ -18,8 +18,10 @@
 <div class="container">
     <div class="flex instr-header">
         <h2>{{ product.project }}</h2>
-        <div class="flex instr-title">
+        <div class="flex instr-title col gx-5">
             {% if user.is_staff %}
+            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
+                файлы</a>
             <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
                 устройство</a>
             {% endif %}
@@ -94,17 +96,22 @@
     {% include 'base/empty_data.html' %}
     {% endif %}
     {% endwith %}
+    {{ photos_device }}
     {% photos_device product.id as photos %}
     {% with photos|random as photo_pk %}
     <div class="flex jc-centr">
         <div id="carouselExample" class="carousel slide" style="width: 50%;">
             <div class="carousel-inner">
                 {% for photo in photos %}
+                {% if photo %}
                 <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#photosModal">
-                        <img src="{{ photo.file_configs.url }}" class="d-block w-100" width="100px" alt="{{ photo }}">
-                    </button>
+                    <div class="flex jc-centr">
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#photosModal">
+                            <img src="{{ photo.url }}" class="d-block" width="300px" alt="{{ photo }}">
+                        </button>
+                    </div>
                 </div>
+                {% endif %}
                 {% endfor %}
             </div>
 
@@ -120,7 +127,7 @@
     </div>
     <!-- Модальное окно -->
     <div class="modal fade" id="photosModal" tabindex="-1" aria-labelledby="photosModalLabel" aria-hidden="true">
-        <div class="modal-dialog " style="max-width: 1400px;">
+        <div class="modal-dialog " style="max-width: 550px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <!-- <h1 class="modal-title fs-4" id="photosModalLabel">{{ photos|first }}</h1> -->
@@ -131,9 +138,11 @@
                     <div id="fullModal" class="carousel slide">
                         <div class="carousel-inner">
                             {% for photo in photos %}
+                            {% if photo %}
                             <div class="carousel-item {% if photo.pk == photo_pk.pk %}active{% endif %}">
-                                <img src="{{ photo.file_configs.url }}" class="d-block w-100" alt="{{ photo }}">
+                                <img src="{{ photo.url }}" class="d-block w-100" alt="{{ photo }}">
                             </div>
+                            {% endif %}
                             {% endfor %}
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#fullModal" data-bs-slide="prev">
@@ -150,6 +159,7 @@
         </div>
     </div>
     {% endwith %}
+    
 </div>
 
 {% endblock %}

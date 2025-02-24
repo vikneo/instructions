@@ -2,7 +2,7 @@ from django import template
 from django.http import HttpResponse
 from django.core.cache import cache
 
-from instruction.models import Device, Project
+from instruction.models import FileProject
 
 register = template.Library()
 
@@ -12,11 +12,12 @@ def photos_device(project_id):
     """
 
     """
-    photos = []
-    devices = Device.objects.filter(project_id=project_id)
+    devices = FileProject.objects.filter(project_id=project_id)
 
-    for dev in devices:
-        for photo in dev.devices_files.all():
-            photos.append(photo)
+    photos = [dev.file_photos for dev in devices]
+    # for dev in devices:
+    #     print(dev.file_photos)
+        # for photo in dev.file_photos:
+        #     photos.append(photo)
 
     return photos
