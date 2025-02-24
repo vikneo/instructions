@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from django.urls import reverse
 
@@ -13,10 +14,10 @@ def path_to_file_configs(instance: 'FileDevice', filename: str) -> str:
     :param filename: name file
     :return: str - path to save
     """
-    return f"photos/{instance.device_id.name}/configs/{filename}"
+    return f"configs/{instance.device_id.name}/{filename}"
 
 
-def path_to_file_report(instance: 'FileDevice', filename: str) -> str:
+def path_to_file_report(instance: 'FileProject', filename: str) -> str:
     """
     The function generates a path based on the name of the file with the report.
 
@@ -24,7 +25,7 @@ def path_to_file_report(instance: 'FileDevice', filename: str) -> str:
     :param filename: name file
     :return: str - path to save
     """
-    return f"photos/{instance.device_id.name}/report/{filename}"
+    return f"photos/{instance.project_id}/{filename}"
 
 
 def path_to_file(instance: 'FileProject', filename: str) -> str:
@@ -99,14 +100,15 @@ class FileDevice(models.Model):
                                   related_name = 'devices_files')
     created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
     updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
-    file_configs = ProcessedImageField(
-        upload_to = path_to_file_configs, 
-        verbose_name = 'Photo config',
-        blank = True,
-        options={'quantity': 100},
-        format= 'JPEG',
-        processors=[ResizeToFill(850, 380)]
-        )
+    file_configs = models.FileField(verbose_name="Файлы", upload_to=path_to_file_configs, blank=True)
+    # file_configs = ProcessedImageField(
+    #     upload_to = path_to_file_configs, 
+    #     verbose_name = 'Photo config',
+    #     blank = True,
+    #     options={'quantity': 100},
+    #     format= 'JPEG',
+    #     processors=[ResizeToFill(850, 380)]
+    #     )
 
     def __str__(self) -> str:
         return self.device_id.name
@@ -224,6 +226,14 @@ class FileProject(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name='Проект', related_name = 'files')
     name = models.CharField(verbose_name='Название', max_length=110, db_index=True)
     file = models.FileField(verbose_name='Файл', upload_to = path_to_file, blank = True)
+    file_photos = ProcessedImageField(
+        upload_to = path_to_file_report, 
+        verbose_name = 'Photo',
+        blank = True,
+        options={'quantity': 100},
+        format= 'JPEG',
+        processors=[ResizeToFill(850, 380)]
+        )
 
     def __str__(self):
         return self.name
