@@ -53,13 +53,14 @@ def cleaned_cache_project(instance, **kwargs) -> None:
 @receiver(pre_save, sender=Project)
 def created_zip_archive(instance, **kwargs) -> None:
     """ """
-    file_zip = f"{settings.MEDIA_ROOT}/{instance}.zip"  
-    with zipfile.ZipFile(file_zip, "w") as _object:
-        for file in instance.files.all():
-            _object.writestr(
-                str(file.file), "utf-8", compress_type=zipfile.ZIP_DEFLATED
-            )
+    if instance.files.all():
+        file_zip = f"{settings.MEDIA_ROOT}/{instance}.zip"  
+        with zipfile.ZipFile(file_zip, "w") as _object:
+            for file in instance.files.all():
+                _object.writestr(
+                    str(file.file), "utf-8", compress_type=zipfile.ZIP_DEFLATED
+                )
 
-    archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
-    if not archive:
-        archive.save()
+        archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
+        if not archive:
+            archive.save()
