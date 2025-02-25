@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 from django.urls import reverse
 
@@ -37,6 +36,16 @@ def path_to_file(instance: 'FileProject', filename: str) -> str:
     :return: str - path to save
     """
     return f"files/{instance.project_id}/{filename}"
+
+def path_to_zip_file(instance: 'ArchiveFile', filename: str) -> str:
+    """
+    The function generates a path based on the name of the file .
+
+    :param instance: object ArchiveFile
+    :param filename: name file
+    :return: str - path to save
+    """
+    return f"zip_files/{instance.project_id}/{filename}"
 
 
 class Project(models.Model):
@@ -246,3 +255,22 @@ class FileProject(models.Model):
         db_table = 'file_project'
         verbose_name = 'file'
         verbose_name_plural = 'files'
+
+
+class ArchiveFile(models.Model):
+    """
+    
+    """
+    pass
+    project_id = models.OneToOneField(Project, on_delete=models.CASCADE, verbose_name='Проект', related_name='zip_archives')
+    zip_archive = models.FileField(verbose_name='Zip archive', upload_to=path_to_zip_file, blank=True)
+    created_at = models.DateTimeField(auto_now_add = True, verbose_name = "Date created")
+    updated_at = models.DateTimeField(auto_now = True, verbose_name = "Date updated")
+
+    def __str__(self):
+        return f"{self.zip_archive}"
+    
+    class Meta:
+        db_table = 'zip_archives'
+        verbose_name = 'zip_archive'
+        verbose_name_plural = 'zip_archives'
