@@ -3,93 +3,103 @@
 
 
 <div class="container overflow-hidden text-center mt-5 row">
-    <table class="table_ caption-top" {% if searches %}style="margin-bottom: 100px;"{% endif %}>
+    <table class="table_ caption-top" {% if searches %}style="margin-bottom: 100px;" {% endif %}>
         <thead class="table-light">
-        <tr>
-            <th scope="col">Проект</th>
-            <th scope="col">Объект</th>
-            <th scope="col">ID CRM</th>
-            <th scope="col">Файлы</th>
-            <th scope="col">Термомониторинг</th>
-            <th scope="col"></th>
-        </tr>
+            <tr>
+                <th scope="col">Проект</th>
+                <th scope="col">Объект</th>
+                <th scope="col">ID CRM</th>
+                <th scope="col">Файлы</th>
+                <th scope="col">Термомониторинг</th>
+                <th scope="col"></th>
+            </tr>
         </thead>
         {% for product in products %}
-                {% with product.device_set.all as devices %}
-                    <tbody>
-                    <tr>
-                        <td>
-                            <a class="project-link"
-                            href="{% url 'project:product-detail' product.slug %}">{{ product.project }}</a>
-                        </td>
-                        <td class="product-list">{{ product.company }}</td>
-                        <td>
-                            {% url 'project:id_crm-detail' product.crm_id  as crm_id_path %} <!--  Проверка url-address -->
-                            {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
-                                {{ product.crm_id }}
-                            {% else %}
-                                <a class="project-link" 
-                                    href="{% url 'project:id_crm-detail' product.crm_id %}">
-                                {{ product.crm_id }}
-                            </a>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary py-0" data-bs-toggle="modal" data-bs-target="#{{ product.project}}">
-                                Подробнее
-                            </button>
-                              <!-- Модальное окно -->
-                            <div class="modal fade" id="{{ product.project}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="filesForProjectLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h1 class="modal-title auth-title fs-5" id="{{ product.project}}Label">Доступные файлы для проекта {{ product.project }}</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {% with product.files.all as files %}
-                                        {% if files %}
-                                        {% for file in files %}
-                                        <div class="container flex btn-justify">
-                                            <span style="color: black !important;">{{ file.name }}</span>
-                                            <a href="{{ file.file.url }}" download="">Скачать</a>
-                                        </div>
-                                        {% endfor %}
-                                        {% else %}
-                                            <span style="color: black !important;">Файлов пока не поступило</span>
-                                        {% endif %}
-                                        {% endwith %}
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-                                    </div>
+        {% with product.device_set.all as devices %}
+        <tbody>
+            <tr>
+                <td>
+                    <a class="project-link" href="{% url 'project:product-detail' product.slug %}">
+                        {{ product.project }}
+                    </a>
+                </td>
+                <td class="product-list">{{ product.company }}</td>
+                <td>
+                    {% url 'project:id_crm-detail' product.crm_id as crm_id_path %} <!--  Проверка url-address -->
+                    {% if request.get_full_path == crm_id_path %} <!--  на текущей странице -->
+                    {{ product.crm_id }}
+                    {% else %}
+                    <a class="project-link" href="{% url 'project:id_crm-detail' product.crm_id %}">
+                        {{ product.crm_id }}
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-secondary py-0" data-bs-toggle="modal"
+                        data-bs-target="#{{ product.project}}">
+                        Подробнее
+                    </button>
+                    <!-- Модальное окно -->
+                    <div class="modal fade" id="{{ product.project}}" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="filesForProjectLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title auth-title fs-5" id="{{ product.project}}Label">Доступные
+                                        файлы для проекта {{ product.project }}</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Закрыть"></button>
                                 </div>
+                                <div class="modal-body">
+                                    {% with product.files.all as files %}
+                                    {% if files %}
+                                    {% for file in files %}
+                                    <div class="container flex btn-justify">
+                                        <span style="color: black !important;">{{ file.name }}</span>
+                                        <a href="{{ file.file.url }}" download="">Скачать</a>
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <span style="color: black !important;">Файлов пока не поступило</span>
+                                    {% endif %}
+                                    {% endwith %}
+                                </div>
+                                <div class="flex btn-justify modal-footer">
+                                    {% if product.zip_archives %}
+                                    <a href="{{ product.zip_archives.zip_archive.url }}" download="" type="button"
+                                        class="btn btn-primary">
+                                        Скачать архив
+                                    </a>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                                 </div>
                             </div>
-                        </td>
-                        <td>
-                            {% termo_date devices as termo %}
-                            {% if termo %}
-                                <div class="flex termo-check">
-                                    <input class="form-check-input icon-enable" type="checkbox" value=""
-                                        id="flexCheckCheckedDisabled" checked
-                                        disabled>
-                                    <label class="form-check-label" for="flexCheckCheckedDisabled"></label>
-                                    {% else %}
-                                    <input class="form-check-input icon-disabled" type="checkbox" value=""
-                                        id="flexCheckIndeterminateDisabled" disabled>
-                                    <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
-                                </div>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="#">
-                                <img style="display: none;" src="{% static 'access/icon/trash-solid.svg' %}" width="20px" alt="">
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                {% endwith %}
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% termo_date devices as termo %}
+                    {% if termo %}
+                    <div class="flex termo-check">
+                        <input class="form-check-input icon-enable" type="checkbox" value=""
+                            id="flexCheckCheckedDisabled" checked disabled>
+                        <label class="form-check-label" for="flexCheckCheckedDisabled"></label>
+                        {% else %}
+                        <input class="form-check-input icon-disabled" type="checkbox" value=""
+                            id="flexCheckIndeterminateDisabled" disabled>
+                        <label class="form-check-label" for="flexCheckIndeterminateDisabled"></label>
+                    </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="#">
+                        <img style="display: none;" src="{% static 'access/icon/trash-solid.svg' %}" width="20px"
+                            alt="">
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        {% endwith %}
         {% endfor %}
     </table>
 </div>

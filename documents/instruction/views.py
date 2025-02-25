@@ -1,10 +1,12 @@
 import logging
 from typing import Any
-from itertools import chain
+from itertools import chain, product
+import zipfile
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.views.generic import ListView, DetailView, CreateView
@@ -61,6 +63,9 @@ class ProjectDetailView(DetailView):
         logger.info(
             f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {project}"
         )
+        if self.request.method == 'POST':
+            print(self.request.method)
+            return redirect('project:product-detail')
         return context
 
 
@@ -94,15 +99,16 @@ class IdCRMDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        products = self.model.objects.filter(crm_id=self.kwargs['crm_id'])
         context.update(
-            title=f"{self.model.objects.filter(crm_id=self.kwargs['crm_id'])[0]}",
+            title=f"ID-{str(products[0]).split('-')[0]}",
             current_path=self.request.META.get('HTTP_REFERER')
         )
         return context
     
     def get_queryset(self):
-        product = Project.objects.filter(crm_id=self.kwargs['crm_id'])
-        return product
+        products = Project.objects.filter(crm_id=self.kwargs['crm_id'])
+        return products
 
 
 class DeviceDetailView(DetailView):
@@ -297,11 +303,3 @@ class CreateDeviceView(CreateView):
     
     def get_absolute_url(self):
         return reverse_lazy('project:product-detail', slug=self.kwargs['slug'])
-
-
-class DownloadArchiveView():
-    """
-    Класс для скачивания всех файлов в виде архива .zip 
-    для 
-    """
-    pass
