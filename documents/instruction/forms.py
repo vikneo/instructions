@@ -1,12 +1,23 @@
 from django import forms
 
-from .models import Device, Project
+from .models import Device, Project, FileProject
 
 
 class CSVImportForm(forms.Form):
     """ """
 
     csv_file = forms.FileField()
+
+
+class AddFileForm(forms.ModelForm):
+    """
+    
+    """
+    file = forms.FileField(label='Файлы проекта')
+
+    class Meta:
+        model = FileProject
+        fields = ['file']
 
 
 class CreatedDeviceForm(forms.ModelForm):
