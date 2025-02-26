@@ -53,12 +53,19 @@ def cleaned_cache_project(instance, **kwargs) -> None:
 @receiver(pre_save, sender=Project)
 def created_zip_archive(instance, **kwargs) -> None:
     """ """
+  
     if instance.files.all():
-        file_zip = f"{settings.MEDIA_ROOT}/{instance}.zip"  
+        file_zip = os.path.join(settings.MEDIA_ROOT, f"{instance}.zip")
+        dir_path = os.path.join(settings.BASE_DIR, os.path.join(settings.MEDIA_ROOT, os.path.join('files', f'{instance}')))
+        files = []
+        for root, _, _files in os.walk(dir_path):
+            for file in _files:
+                files.append(os.path.join(root, file))
+
         with zipfile.ZipFile(file_zip, "w") as _object:
-            for file in instance.files.all():
-                _object.writestr(
-                    str(file.file), "utf-8", compress_type=zipfile.ZIP_DEFLATED
+            for file in files:
+                _object.write(
+                    file, compress_type=zipfile.ZIP_DEFLATED
                 )
 
         archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
