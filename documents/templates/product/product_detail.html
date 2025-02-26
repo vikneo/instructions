@@ -18,9 +18,9 @@
 <div class="container">
     <div class="flex instr-header">
         <h2>{{ product.project }}</h2>
-        <div class="flex instr-title col gx-5">
+        <div class="instr-title">
             {% if user.is_staff %}
-            <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
+            <a class="btn btn-secondary px-4" href="{% url 'project:add-files' product.slug %}">Добавить
                 файлы</a>
             <a class="btn btn-secondary px-4" href="{% url 'project:device-create' product.slug %}">Добавить
                 устройство</a>
