@@ -1,12 +1,12 @@
 import logging
+from os import name
 from typing import Any
 from itertools import chain, product
 import zipfile
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.http import Http404
-from django.shortcuts import redirect
+from django.http import Http404,HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.views.generic import ListView, DetailView, CreateView
@@ -15,9 +15,10 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import (
     Project,
     Device,
+    FileProject
 )
 from manuals.models import Module
-from .forms import CreatedDeviceForm, CrerateprojectForm
+from .forms import CreatedDeviceForm, CrerateprojectForm, AddFileForm
 from utils.format_name_uer import format_name
 
 logger = logging.getLogger(__name__)
@@ -44,7 +45,7 @@ class ProjectListView(ListView):
             logger.warning(f'Отсутствует кэш для Projects')
             logger.info(f'Сформирован кэш для Projects')
 
-        products = cache.get_or_set('products', Project.objects.filter(archive=False))
+        products = cache.get_or_set('products', Project.objects.filter(archive=False).order_by('-created_at'))
         return products
 
 
@@ -63,9 +64,6 @@ class ProjectDetailView(DetailView):
         logger.info(
             f"`{format_name(self.request)}` - Загружена страница с детальной информацией о {project}"
         )
-        if self.request.method == 'POST':
-            print(self.request.method)
-            return redirect('project:product-detail')
         return context
 
 
@@ -87,6 +85,38 @@ class ProjectCreateView(CreateView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class AddFileProjectView(CreateView):
+    """
+    
+    """
+    template_name = "product/file_upload.html"
+    form_class = AddFileForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = Project.objects.get(slug=self.kwargs['slug'])
+        context.update(
+            title = f"Добавить файлы к проекту {product}",
+            product = product
+        )
+        return context
+    
+    def form_valid(self, form):
+        files = self.request.FILES.getlist('file')
+        product = self.get_context_data().get('product')
+        if not files:
+            return self.form_invalid(form)
+        
+        for file in files:
+            FileProject.objects.create(
+                project_id = product,
+                name=str(file),
+                file=file
+            )
+        product.save()
+        return HttpResponseRedirect(reverse_lazy('project:product-detail', kwargs={'slug': self.kwargs['slug']}))
 
 
 class IdCRMDetailView(ListView):
