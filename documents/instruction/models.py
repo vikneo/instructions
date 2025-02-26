@@ -31,8 +31,8 @@ def path_to_file(instance: 'FileProject', filename: str) -> str:
     """
     The function generates a path based on the name of the file .
 
-    :param instance: object File
-    :param filename: name file
+    :param instance: object FileProject
+    :param filename: name FileProject
     :return: str - path to save
     """
     return f"files/{instance.project_id}/{filename}"
