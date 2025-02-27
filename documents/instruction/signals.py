@@ -4,7 +4,7 @@ import logging
 import zipfile
 
 from django.dispatch import receiver
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_delete
 from django.core.cache import cache
 from django.conf import settings
 
@@ -27,6 +27,7 @@ def get_slugify_settings(instance, **kwargs) -> None:
     result = re.search(r"[0-9]-[0-9]", instance.slug)
     if result:
         instance.slug = f"{slugify(instance.device.project_id.crm_id)}-{slugify(instance.device.project_id.project)}-{slugify(instance.device.designation)}"
+    logger.infor(f"Сформирован slug  для {instance.project}")
 
 
 @receiver(pre_save, sender=Device)
@@ -38,8 +39,10 @@ def get_slugify_settings(instance, **kwargs) -> None:
     """
     if not instance.slug:
         instance.slug = f"{slugify(instance.project_id.crm_id)}-{slugify(instance.project_id.project)}-{slugify(instance.designation)}"
+    logger.infor(f"Сформирован slug  для {instance.project}")
 
 
+@receiver(post_delete, sender=Project)
 @receiver(pre_save, sender=Project)
 def cleaned_cache_project(instance, **kwargs) -> None:
     """
@@ -47,27 +50,37 @@ def cleaned_cache_project(instance, **kwargs) -> None:
     """
     if not instance.slug:
         instance.slug = f"{slugify(instance.crm_id)}-{slugify(instance.project)}"
+        logger.info(f"Сформирован slug  для {instance.project}")
+    if instance.project:
+        instance.project = instance.project.replace(" ", "_")
+        logger.info(f"отформатировано имя проекта {instance.project}")
     logger.warning(f"Очищен кеш `{clear_cache(settings.CACHE_NAME_PROJECT)}`")
 
 
 @receiver(pre_save, sender=Project)
 def created_zip_archive(instance, **kwargs) -> None:
     """ """
-  
-    if instance.files.all():
-        file_zip = os.path.join(settings.MEDIA_ROOT, f"{instance}.zip")
-        dir_path = os.path.join(settings.BASE_DIR, os.path.join(settings.MEDIA_ROOT, os.path.join('files', f'{instance}')))
-        files = []
-        for root, _, _files in os.walk(dir_path):
-            for file in _files:
-                files.append(os.path.join(root, file))
+    try:
+        if instance.files.all():
+            file_zip = os.path.join(settings.MEDIA_ROOT, f"{instance}.zip")
+            dir_path = os.path.join(settings.BASE_DIR, os.path.join(settings.MEDIA_ROOT, os.path.join('files', f'{instance}')))
+            files = []
+            for root, _, _files in os.walk(dir_path):
+                for file in _files:
+                    files.append(os.path.join(root, file))
+                logger.info("Надены все файлы для архивации в .zip")
 
-        with zipfile.ZipFile(file_zip, "w") as _object:
-            for file in files:
-                _object.write(
-                    file, compress_type=zipfile.ZIP_DEFLATED
-                )
+            with zipfile.ZipFile(file_zip, "w") as _object:
+                for file in files:
+                    _object.write(
+                        file, compress_type=zipfile.ZIP_DEFLATED
+                    )
+                logger.info(f"Создан архив с файлами. Имя архива {instance}.zip")
 
-        archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
-        if not archive:
-            archive.save()
+            archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
+            if not archive:
+                logger.info("Добавлен архив в БД - модель ArchiveFile")
+                archive.save()
+                logger.info("Сохранены изменения в БД - модель ArchiveFile")
+    except Exception as err:
+        logger.error(f'Ошибка: {err}')
