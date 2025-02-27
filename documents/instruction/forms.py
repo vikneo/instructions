@@ -137,6 +137,7 @@ class CrerateprojectForm(forms.ModelForm):
     )
     description = forms.CharField(
         label='Дополнительно',
+        required=False,
         widget=forms.Textarea(
             attrs={
                 # 'row': 5,
