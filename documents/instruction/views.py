@@ -1,8 +1,6 @@
 import logging
-from os import name
 from typing import Any
-from itertools import chain, product
-import zipfile
+from itertools import chain
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
@@ -84,6 +82,7 @@ class ProjectCreateView(CreateView):
     
     def form_valid(self, form):
         form.save()
+        logger.info("Сохранена форма с добавлением проекта")
         return super().form_valid(form)
 
 
@@ -115,7 +114,9 @@ class AddFileProjectView(CreateView):
                 name=str(file),
                 file=file
             )
+        logger.info(f"Добавлены файлы к проекту - {product}")
         product.save()
+        logger.info(f"Сохранен проект - {product}. Для отчистки кэша")
         return HttpResponseRedirect(reverse_lazy('project:product-detail', kwargs={'slug': self.kwargs['slug']}))
 
 
@@ -130,14 +131,19 @@ class IdCRMDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         products = self.model.objects.filter(crm_id=self.kwargs['crm_id'])
+        title = f"ID-{str(products[0]).split('-')[0]}"
         context.update(
-            title=f"ID-{str(products[0]).split('-')[0]}",
+            title=title,
             current_path=self.request.META.get('HTTP_REFERER')
+        )
+        logger.info(
+            f"`{format_name(self.request)}` - Получена детальная информация о `{title}`"
         )
         return context
     
     def get_queryset(self):
         products = Project.objects.filter(crm_id=self.kwargs['crm_id'])
+        logger.info(f"`{format_name(self.request)}` - Получены проекты в кол-ве {len(products)} шт.")
         return products
 
 
@@ -203,7 +209,7 @@ class SearchProjectView(ListView):
                 logger.exception(err)
 
             if not result:
-                # messages.info(self.request, not_found)
+                logger.info(f"'{format_name(self.request)}` - Результат поиска ...", not_found)
                 raise ValidationError(not_found)
 
             logger.info(f"'{format_name(self.request)}` - Выполнен запрос поиска с вводной `{self.request.GET.get('search')}`")
