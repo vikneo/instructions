@@ -1,19 +1,18 @@
 import logging
-from typing import Any, Dict
 from itertools import chain
+from typing import Any, Dict
 
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.core.cache import cache
-from django.views.generic import ListView, DetailView, CreateView
-
-
-from .models import Project, Device, FileProject
+from django.views.generic import CreateView, DetailView, ListView
 from manuals.models import Module
-from .forms import CreatedDeviceForm, CrerateprojectForm, AddFileForm
 from utils.format_name_uer import format_name
+
+from .forms import AddFileForm, CreatedDeviceForm, CrerateprojectForm
+from .models import Device, FileProject, Project
 
 logger = logging.getLogger(__name__)
 

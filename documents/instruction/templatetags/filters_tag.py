@@ -1,6 +1,6 @@
 from django import template
-from django.utils.module_loading import cached_import
 
+# from django.utils.module_loading import cached_import
 from instruction.models import Project
 from manuals.models import Instructions
 

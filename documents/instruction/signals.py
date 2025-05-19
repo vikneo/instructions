@@ -1,18 +1,16 @@
+import logging
 import os
 import re
-import logging
 import zipfile
-
-from django.dispatch import receiver
-from django.db.models.signals import pre_save, post_delete
 
 # from django.core.cache import cache
 from django.conf import settings
-
-from utils.slugify import slugify
+from django.db.models.signals import post_delete, pre_save
+from django.dispatch import receiver
 from utils.log_config import clear_cache
-from .models import Settings, Project, Device, ArchiveFile
+from utils.slugify import slugify
 
+from .models import ArchiveFile, Device, Project, Settings
 
 logger = logging.getLogger(__name__)
 

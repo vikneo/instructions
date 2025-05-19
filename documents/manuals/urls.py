@@ -1,9 +1,6 @@
 from django.urls import path
 
-from .views import (
-    BrandView,
-    BrandDetailView
-)
+from .views import BrandDetailView, BrandView
 
 app_name = 'manual'
 
