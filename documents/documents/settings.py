@@ -9,12 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
-from pathlib import Path
 import os
 from os import getenv
-from dotenv import load_dotenv
+from pathlib import Path
 
+from dotenv import load_dotenv
 from utils.log_config import LevelFileHandler
 
 load_dotenv()

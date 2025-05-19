@@ -1,7 +1,5 @@
 from django import template
-
 from instruction.models import Project
-
 
 register = template.Library()
 

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Device, Project, FileProject
+from .models import Device, FileProject, Project
 
 
 class CSVImportForm(forms.Form):

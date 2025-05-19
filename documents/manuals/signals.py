@@ -1,14 +1,12 @@
 import logging
 
-from django.dispatch import receiver
-from django.db.models.signals import pre_save
-from django.core.cache import cache
 from django.conf import settings
-
-from utils.slugify import slugify
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 from utils.log_config import clear_cache
-from .models import Instructions
+from utils.slugify import slugify
 
+from .models import Instructions
 
 logger = logging.getLogger(__name__)
 

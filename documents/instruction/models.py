@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
+# from imagekit.models import ProcessedImageField
+# from imagekit.processors import ResizeToFill
 
 
 def path_to_file_configs(instance: "FileDevice", filename: str) -> str:

@@ -1,25 +1,24 @@
 import logging
 
-# import logging.handlers
-from import_export.admin import ImportExportModelAdmin
-
-from django.contrib import admin
-from django.http import HttpRequest
-from django.db.models import QuerySet
-
 # from django.core.cache import cache
 from django.conf import settings
+from django.contrib import admin
+from django.db.models import QuerySet
+from django.http import HttpRequest
+from import_export.admin import ImportExportModelAdmin
+from utils.log_config import clear_cache
 
 from .models import (
     Device,
     FileDevice,
     FileProject,
     Network,
-    Settings,
     Project,
+    Settings,
     WaveSensor,
 )
-from utils.log_config import clear_cache
+
+# import logging.handlers
 
 logger = logging.getLogger(__name__)
 

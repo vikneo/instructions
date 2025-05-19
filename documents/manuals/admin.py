@@ -1,9 +1,9 @@
 import logging
 
 from django.contrib import admin
-
 from import_export.admin import ImportExportModelAdmin
-from .models import Brand, Module, FileModule
+
+from .models import Brand, FileModule, Module
 
 logger = logging.getLogger(__name__)
 

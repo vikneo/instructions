@@ -2,13 +2,12 @@ import logging
 
 from django.core.cache import cache
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
-
-from .models import (
-    Brand,
-    # Module
-)
+from django.views.generic import CreateView, DetailView, ListView
 from utils.format_name_uer import format_name
+
+from .models import (  # Module
+    Brand,
+)
 
 logger = logging.getLogger(__name__)
 
