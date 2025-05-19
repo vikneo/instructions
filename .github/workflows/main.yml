@@ -1,0 +1,41 @@
+name: instructions-ci
+
+run-name: ${{ github.repository }} is testing out GitHub Actions 🚀
+
+# The variant first
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+# The variant second
+# on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  test-flake8:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12"]
+        # python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: echo "Started Installing dependencies"
+      - name: Install dependencies
+        run:
+          # python3 -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - run: echo "Dependencies are installed"
+      - run: echo "Started checking the repository `${{ github.repository }}` with flake8"
+      - name: Сhecking with flake8
+        run:
+          flake8 documents/
+      - run: echo "Finished checking with flake8"
