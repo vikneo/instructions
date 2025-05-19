@@ -12,3 +12,4 @@ django-import-export==3.3.6
 celery==5.4.0
 rabbitmq==0.2.0
 flake8==7.0.0
+py-make
