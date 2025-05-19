@@ -69,3 +69,18 @@ jobs:
     - name: Test with isort `${{ github.repository }}`
       run:
         isort --check-only --diff --profile black documents/
+
+  test-black:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run:
+        pip install -r requirements.txt
+    - name: Test with black `${{ github.repository }}`
+      run:
+        black --diff --check documents/

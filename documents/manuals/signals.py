@@ -24,6 +24,5 @@ def get_slugify_instruction(instance, **kwargs) -> None:
 
 @receiver(pre_save, sender=Instructions)
 def cleaned_cache_instructions(instance, **kwargs) -> None:
-    """
-    """
+    """ """
     logger.warning(f"Очищен кеш `{clear_cache(settings.CACHE_NAME_INSTRUCT)}`")

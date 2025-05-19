@@ -108,6 +108,7 @@ class AddFileProjectView(CreateView):
 
 class IdCRMDetailView(ListView):
     """ """
+
     model = Project
     template_name = "product/product_crm.html"
     context_object_name = "crm_id"

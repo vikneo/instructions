@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+
 import os
 from os import getenv
 from pathlib import Path
@@ -21,7 +22,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(os.path.join(__file__, os.pardir))))
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATABASE_DIR = BASE_DIR / 'docs_base'
+DATABASE_DIR = BASE_DIR / "docs_base"
 DATABASE_DIR.mkdir(exist_ok=True)
 
 # Quick-start development settings - unsuitable for production
@@ -34,71 +35,73 @@ SECRET_KEY = getenv("SECRET_KEY", "adsasdaad56a7")
 DEBUG = getenv("DEBUG", "0") == "1"
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    '0.0.0.0',
-] + getenv("ALLOWED_HOSTS", "").split(",")
+    "127.0.0.1",
+    "0.0.0.0",
+] + getenv(
+    "ALLOWED_HOSTS", ""
+).split(",")
 
 INTERNAL_IPS = [
-    '127.0.0.1',
-    '0.0.0.0',
+    "127.0.0.1",
+    "0.0.0.0",
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     "debug_toolbar",
-    'users.apps.UsersConfig',
-    'instruction.apps.InstructionConfig',
-    'manuals.apps.ManualsConfig',
-    'imagekit',
+    "users.apps.UsersConfig",
+    "instruction.apps.InstructionConfig",
+    "manuals.apps.ManualsConfig",
+    "imagekit",
     "import_export",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'documents.urls'
+ROOT_URLCONF = "documents.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'documents.wsgi.application'
+WSGI_APPLICATION = "documents.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': getenv("ENGINE_SQL", "django.db.backends.sqlite3"),
-        'NAME': DATABASE_DIR / getenv("NAME_SQL", "db.sqlite3"),
+    "default": {
+        "ENGINE": getenv("ENGINE_SQL", "django.db.backends.sqlite3"),
+        "NAME": DATABASE_DIR / getenv("NAME_SQL", "db.sqlite3"),
     }
 }
 
@@ -107,25 +110,25 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -137,11 +140,11 @@ USE_TZ = True
 LOCAL_MACHINE_DEV = getenv("LOCAL_MACHINE_DEV") == "1"
 
 # STATIC_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_URL = "/static/"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # cachings
 
@@ -154,10 +157,10 @@ CACHES = {
     }
 }
 
-CACHE_NAME_INSTRUCT = 'instructions'
-CACHE_NAME_PROJECT = 'products'
+CACHE_NAME_INSTRUCT = "instructions"
+CACHE_NAME_PROJECT = "products"
 
-FIXTURE_DIRS = [BASE_DIR / 'fixtures']
+FIXTURE_DIRS = [BASE_DIR / "fixtures"]
 
 # sessions
 
@@ -167,7 +170,7 @@ SESSION_EXPIRE_AT_CLOSE = True
 
 # Loging
 
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = ""
 
 LOGGING_ROOT = BASE_DIR / "logging"
 LOGGING_URL = "/logging/"
@@ -180,60 +183,56 @@ LOGFILE_COUNT = 10
 LOGLEVEL = getenv("LOGLEVEL", "info").upper()
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'base': {
-            'format': '%(asctime)s [%(levelname)s] "%(name)s : %(lineno)s : %(message)s"'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "base": {
+            "format": "%(asctime)s [%(levelname)s] `%(name)s : %(lineno)s : %(message)s`"
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-            'formatter': 'base',
-            'stream': 'ext://sys.stdout',
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "DEBUG",
+            "formatter": "base",
+            "stream": "ext://sys.stdout",
         },
-        'file_log': {
+        "file_log": {
             "class": "logging.handlers.RotatingFileHandler",
-            'level': 'INFO',
-            'formatter': 'base',
-            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
-            'maxBytes': LOGFILE_SIZE,
-            'backupCount': LOGFILE_COUNT,
-            'mode': 'a',
-            'encoding': 'utf-8'
+            "level": "INFO",
+            "formatter": "base",
+            "filename": os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            "maxBytes": LOGFILE_SIZE,
+            "backupCount": LOGFILE_COUNT,
+            "mode": "a",
+            "encoding": "utf-8",
         },
         "file_by_date": {
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'level': 'INFO',
-            'formatter': 'base',
-            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
-            'when': 'D',
-            'backupCount': LOGFILE_COUNT,
-            'encoding': 'utf-8',
-
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "level": "INFO",
+            "formatter": "base",
+            "filename": os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            "when": "D",
+            "backupCount": LOGFILE_COUNT,
+            "encoding": "utf-8",
         },
         "custom_file_log": {
             "()": LevelFileHandler,
-            'level': 'INFO',
-            'formatter': 'base',
-            'filename': os.path.join(LOGGING_ROOT, LOGFILE_NAME),
-            'maxBytes': LOGFILE_SIZE,
-            'backupCount': LOGFILE_COUNT,
-            'mode': 'a',
-            'encoding': 'utf-8',
+            "level": "INFO",
+            "formatter": "base",
+            "filename": os.path.join(LOGGING_ROOT, LOGFILE_NAME),
+            "maxBytes": LOGFILE_SIZE,
+            "backupCount": LOGFILE_COUNT,
+            "mode": "a",
+            "encoding": "utf-8",
         },
     },
-    'loggers': {
-        'root': {
-            'level': 'INFO',
-            'handlers': ['console', 'custom_file_log']
-        },
+    "loggers": {
+        "root": {"level": "INFO", "handlers": ["console", "custom_file_log"]},
     },
 }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -5,9 +5,9 @@ register = template.Library()
 
 
 @register.simple_tag(name="termo_date")
-def termo_date(devices = None):
-    """
-    """
+def termo_date(devices=None):
+    """ """
+
     for dev in devices:
         if dev.termodate:
             return True
@@ -16,7 +16,6 @@ def termo_date(devices = None):
 @register.simple_tag(name="project_breadcrumb")
 def project_breadcrumb(slug):
     """ """
-    print(slug)
+
     project = Project.objects.get(slug=slug)
-    print(project)
     return project

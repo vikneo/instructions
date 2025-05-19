@@ -29,7 +29,7 @@ def close_access(
 ):
     """"""
     logger.info(
-        f'| {request.user} - Убрал опцию `термомониторинг` с'
+        f"| {request.user} - Убрал опцию `термомониторинг` с"
         f' [{queryset.get(id = request.POST["_selected_action"])}]'
     )
     queryset.update(termodate=False)
