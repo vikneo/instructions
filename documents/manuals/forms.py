@@ -39,4 +39,3 @@ class CreatedInstructionForms(forms.ModelForm):
     class Meta:
         model = Instructions
         fields = ["brand", "device", "name", "description", "docs"]
-

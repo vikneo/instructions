@@ -10,9 +10,7 @@ class CSVImportForm(forms.Form):
 
 
 class AddFileForm(forms.ModelForm):
-    """
-    
-    """
+    """ """
     file = forms.FileField(label='Файлы проекта')
 
     class Meta:
@@ -21,27 +19,25 @@ class AddFileForm(forms.ModelForm):
 
 
 class CreatedDeviceForm(forms.ModelForm):
-    """
-    
-    """
+    """ """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["project_id"].empty_label = "Выбрать проект"
         self.fields['serial_num'].required = False
         self.fields['description'].required = False
         self.fields['network_id'].required = False
-    
+
     name = forms.CharField(
-        label='Наименование', 
+        label='Наименование',
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
                 "id": "name",
                 "name": "name",
                 "type": "text",
-                "data-validate": "require",                
+                "data-validate": "require",
             }
-            ))
+        ))
     designation = forms.CharField(
         label='Обозначение по РКД',
         widget=forms.TextInput(
@@ -96,9 +92,7 @@ class CreatedDeviceForm(forms.ModelForm):
 
 
 class CrerateprojectForm(forms.ModelForm):
-    """
-    
-    """
+    """ """
     crm_id = forms.CharField(
         label='ID_CRM',
         widget=forms.TextInput(

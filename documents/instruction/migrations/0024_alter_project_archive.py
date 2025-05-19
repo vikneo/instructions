@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0023_alter_filedevice_file_configs'),
+        ("instruction", "0023_alter_filedevice_file_configs"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='project',
-            name='archive',
-            field=models.BooleanField(blank=True, default=False, verbose_name='Archive'),
+            model_name="project",
+            name="archive",
+            field=models.BooleanField(
+                blank=True, default=False, verbose_name="Archive"
+            ),
         ),
     ]

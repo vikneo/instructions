@@ -6,29 +6,35 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0008_wavesensor'),
+        ("instruction", "0008_wavesensor"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='device',
-            name='serial_num',
-            field=models.CharField(default=1, max_length=15, verbose_name='Serial number'),
+            model_name="device",
+            name="serial_num",
+            field=models.CharField(
+                default=1, max_length=15, verbose_name="Serial number"
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='device',
-            name='termodate',
-            field=models.BooleanField(default=False, verbose_name='Termo date'),
+            model_name="device",
+            name="termodate",
+            field=models.BooleanField(default=False, verbose_name="Termo date"),
         ),
         migrations.AlterField(
-            model_name='wavesensor',
-            name='temp_error',
-            field=models.CharField(default='90', max_length=3, verbose_name='Temperature over'),
+            model_name="wavesensor",
+            name="temp_error",
+            field=models.CharField(
+                default="90", max_length=3, verbose_name="Temperature over"
+            ),
         ),
         migrations.AlterField(
-            model_name='wavesensor',
-            name='temp_warning',
-            field=models.CharField(default='85', max_length=3, verbose_name='Temperature warning'),
+            model_name="wavesensor",
+            name="temp_warning",
+            field=models.CharField(
+                default="85", max_length=3, verbose_name="Temperature warning"
+            ),
         ),
     ]

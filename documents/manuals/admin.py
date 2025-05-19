@@ -8,7 +8,6 @@ from .models import Brand, Module, FileModule
 logger = logging.getLogger(__name__)
 
 
-
 @admin.register(Brand)
 class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
     """
@@ -19,7 +18,6 @@ class AdminBrand(ImportExportModelAdmin, admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-
 class FileTabularInline(admin.TabularInline):
     model = FileModule
     extra = 0
@@ -27,13 +25,11 @@ class FileTabularInline(admin.TabularInline):
 
 @admin.register(Module)
 class AdminModule(admin.ModelAdmin):
-    """
-    
-    """
+    """ """
     inlines = [
         FileTabularInline,
     ]
-    
+
     list_display = ['name', 'brand', 'description']
     list_filter = ['name']
     search_fields = ['name']
@@ -55,4 +51,3 @@ class AdminFileModule(admin.ModelAdmin):
             obj.creator = request.user
             logger.info(f"`{request.user}` добавил {obj} в модель {self.model.__name__}")
         obj.save()
-

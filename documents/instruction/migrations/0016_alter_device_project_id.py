@@ -7,13 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0015_alter_device_designation_alter_device_project_id_and_more'),
+        (
+            "instruction",
+            "0015_alter_device_designation_alter_device_project_id_and_more",
+        ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='device',
-            name='project_id',
-            field=models.ForeignKey(blank=True, default='not project', on_delete=django.db.models.deletion.CASCADE, to='instruction.project', verbose_name='Project'),
+            model_name="device",
+            name="project_id",
+            field=models.ForeignKey(
+                blank=True,
+                default="not project",
+                on_delete=django.db.models.deletion.CASCADE,
+                to="instruction.project",
+                verbose_name="Project",
+            ),
         ),
     ]

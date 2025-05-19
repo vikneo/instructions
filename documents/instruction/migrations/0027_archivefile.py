@@ -8,23 +8,54 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0026_alter_fileproject_file_photos'),
+        ("instruction", "0026_alter_fileproject_file_photos"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ArchiveFile',
+            name="ArchiveFile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('zip_archive', models.FileField(blank=True, upload_to=instruction.models.path_to_zip_file, verbose_name='Zip archive')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Date created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Date updated')),
-                ('project_id', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='zip_archives', to='instruction.project', verbose_name='Проект')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "zip_archive",
+                    models.FileField(
+                        blank=True,
+                        upload_to=instruction.models.path_to_zip_file,
+                        verbose_name="Zip archive",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Date created"
+                    ),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Date updated"),
+                ),
+                (
+                    "project_id",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="zip_archives",
+                        to="instruction.project",
+                        verbose_name="Проект",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'zip_archive',
-                'verbose_name_plural': 'zip_archives',
-                'db_table': 'zip_archives',
+                "verbose_name": "zip_archive",
+                "verbose_name_plural": "zip_archives",
+                "db_table": "zip_archives",
             },
         ),
     ]

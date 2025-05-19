@@ -7,18 +7,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0009_device_serial_num_device_termodate_and_more'),
+        ("instruction", "0009_device_serial_num_device_termodate_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='project',
-            name='device_id',
+            model_name="project",
+            name="device_id",
         ),
         migrations.AddField(
-            model_name='project',
-            name='device_id',
-            field=models.ForeignKey(blank=True, default=1, on_delete=django.db.models.deletion.CASCADE, to='instruction.device', verbose_name='Device'),
+            model_name="project",
+            name="device_id",
+            field=models.ForeignKey(
+                blank=True,
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="instruction.device",
+                verbose_name="Device",
+            ),
             preserve_default=False,
         ),
     ]

@@ -2,51 +2,74 @@
 
 import django.db.models.deletion
 import django.utils.timezone
-import instruction.models
+# import instruction.models
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0003_rename_prject_project_project'),
+        ("instruction", "0003_rename_prject_project_project"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='instructionfile',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now, verbose_name='Date created'),
+            model_name="instructionfile",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True,
+                default=django.utils.timezone.now,
+                verbose_name="Date created",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='instructionfile',
-            name='updated_at',
-            field=models.DateTimeField(auto_now=True, verbose_name='Date updated'),
+            model_name="instructionfile",
+            name="updated_at",
+            field=models.DateTimeField(auto_now=True, verbose_name="Date updated"),
         ),
         migrations.AlterField(
-            model_name='device',
-            name='brand_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='brands', to='instruction.brand', verbose_name='Brand'),
+            model_name="device",
+            name="brand_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="brands",
+                to="instruction.brand",
+                verbose_name="Brand",
+            ),
         ),
         migrations.AlterField(
-            model_name='device',
-            name='network_id',
-            field=models.ManyToManyField(to='instruction.network', verbose_name='Network'),
+            model_name="device",
+            name="network_id",
+            field=models.ManyToManyField(
+                to="instruction.network", verbose_name="Network"
+            ),
         ),
         migrations.AlterField(
-            model_name='file',
-            name='device_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='devices_files', to='instruction.device', verbose_name='Device'),
+            model_name="file",
+            name="device_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="devices_files",
+                to="instruction.device",
+                verbose_name="Device",
+            ),
         ),
         migrations.AlterField(
-            model_name='instructionfile',
-            name='device_id',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='devices_instructs', to='instruction.device', verbose_name='Device'),
+            model_name="instructionfile",
+            name="device_id",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="devices_instructs",
+                to="instruction.device",
+                verbose_name="Device",
+            ),
         ),
         migrations.AlterField(
-            model_name='project',
-            name='device_id',
-            field=models.ManyToManyField(blank=True, to='instruction.device', verbose_name='Device'),
+            model_name="project",
+            name="device_id",
+            field=models.ManyToManyField(
+                blank=True, to="instruction.device", verbose_name="Device"
+            ),
         ),
     ]

@@ -29,13 +29,13 @@ class BrandView(ListView):
         )
         logger.info(f"`{format_name(self.request)}` - Загрузка шаблона с {context['title']}")
         return context
-    
+
     def get_queryset(self):
         if not cache.get('brands'):
-            logger.warning(f"Отсутствует кэш для модели Brand")
+            logger.warning("Отсутствует кэш для модели Brand")
 
         brands = cache.get_or_set('brands', Brand.objects.all())
-        logger.info(f"Сформирован кэш для модели Brand")
+        logger.info("Сформирован кэш для модели Brand")
         return brands
 
 
@@ -61,7 +61,6 @@ class BrandDetailView(DetailView):
 
 class BrandCreateView(CreateView):
     """
-    
     """
     template_name = "documents/brand_detail.html"
 
@@ -71,7 +70,7 @@ class BrandCreateView(CreateView):
             title='Добавить производителя'
         )
         return context
-    
+
     def form_valid(self, form):
         docs = form.save()
         print(docs)

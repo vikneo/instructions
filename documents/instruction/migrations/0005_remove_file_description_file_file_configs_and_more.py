@@ -7,22 +7,33 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0004_instructionfile_created_at_instructionfile_docs_and_more'),
+        (
+            "instruction",
+            "0004_instructionfile_created_at_instructionfile_docs_and_more",
+        ),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='file',
-            name='description',
+            model_name="file",
+            name="description",
         ),
         migrations.AddField(
-            model_name='file',
-            name='file_configs',
-            field=models.FileField(blank=True, upload_to=instruction.models.path_to_file_configs, verbose_name='Photo config'),
+            model_name="file",
+            name="file_configs",
+            field=models.FileField(
+                blank=True,
+                upload_to=instruction.models.path_to_file_configs,
+                verbose_name="Photo config",
+            ),
         ),
         migrations.AddField(
-            model_name='file',
-            name='file_report',
-            field=models.FileField(blank=True, upload_to=instruction.models.path_to_file_report, verbose_name='Photo report'),
+            model_name="file",
+            name="file_report",
+            field=models.FileField(
+                blank=True,
+                upload_to=instruction.models.path_to_file_report,
+                verbose_name="Photo report",
+            ),
         ),
     ]

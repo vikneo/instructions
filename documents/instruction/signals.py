@@ -5,7 +5,8 @@ import zipfile
 
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_delete
-from django.core.cache import cache
+
+# from django.core.cache import cache
 from django.conf import settings
 
 from utils.slugify import slugify
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 @receiver(pre_save, sender=Settings)
-def get_slugify_settings(instance, **kwargs) -> None:
+def get_slugify_settings(instance, **kwargs) -> None:  # type: ignore
     """
     Before saving the "Settings" model, the "slug" field is checked, by default,
     the numerical result from the dependent models is recorded in the slug,
@@ -26,8 +27,10 @@ def get_slugify_settings(instance, **kwargs) -> None:
     """
     result = re.search(r"[0-9]-[0-9]", instance.slug)
     if result:
-        instance.slug = f"{slugify(instance.device.project_id.crm_id)}-{slugify(instance.device.project_id.project)}-{slugify(instance.device.designation)}"
-    logger.infor(f"Сформирован slug  для {instance.project}")
+        instance.slug = f"{slugify(instance.device.project_id.crm_id)}-"
+        f"{slugify(instance.device.project_id.project)}-"
+        f"{slugify(instance.device.designation)}"
+    logger.info(f"Сформирован slug для {instance.project}")
 
 
 @receiver(pre_save, sender=Device)
@@ -38,8 +41,10 @@ def get_slugify_settings(instance, **kwargs) -> None:
     fields of the "Device" model via the "slugify" module
     """
     if not instance.slug:
-        instance.slug = f"{slugify(instance.project_id.crm_id)}-{slugify(instance.project_id.project)}-{slugify(instance.designation)}"
-    logger.infor(f"Сформирован slug  для {instance.project}")
+        instance.slug = f"{slugify(instance.project_id.crm_id)}-"
+        f"{slugify(instance.project_id.project)}-"
+        f"{slugify(instance.designation)}"
+    logger.info(f"Сформирован slug  для {instance.project}")
 
 
 @receiver(post_delete, sender=Project)
@@ -63,7 +68,10 @@ def created_zip_archive(instance, **kwargs) -> None:
     try:
         if instance.files.all():
             file_zip = os.path.join(settings.MEDIA_ROOT, f"{instance}.zip")
-            dir_path = os.path.join(settings.BASE_DIR, os.path.join(settings.MEDIA_ROOT, os.path.join('files', f'{instance}')))
+            dir_path = os.path.join(
+                settings.BASE_DIR,
+                os.path.join(settings.MEDIA_ROOT, os.path.join("files", f"{instance}")),
+            )
             files = []
             for root, _, _files in os.walk(dir_path):
                 for file in _files:
@@ -72,15 +80,15 @@ def created_zip_archive(instance, **kwargs) -> None:
 
             with zipfile.ZipFile(file_zip, "w") as _object:
                 for file in files:
-                    _object.write(
-                        file, compress_type=zipfile.ZIP_DEFLATED
-                    )
+                    _object.write(file, compress_type=zipfile.ZIP_DEFLATED)
                 logger.info(f"Создан архив с файлами. Имя архива {instance}.zip")
 
-            archive = ArchiveFile.objects.update_or_create(project_id=instance, zip_archive=file_zip)
+            archive = ArchiveFile.objects.update_or_create(
+                project_id=instance, zip_archive=file_zip
+            )
             if not archive:
                 logger.info("Добавлен архив в БД - модель ArchiveFile")
                 archive.save()
                 logger.info("Сохранены изменения в БД - модель ArchiveFile")
     except Exception as err:
-        logger.error(f'Ошибка: {err}')
+        logger.error(f"Ошибка: {err}")

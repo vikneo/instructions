@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0017_rename_file_filedevice_and_more'),
+        ("instruction", "0017_rename_file_filedevice_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='device',
-            name='serial_num',
-            field=models.CharField(blank=True, default='n/a', max_length=15, verbose_name='Serial number'),
+            model_name="device",
+            name="serial_num",
+            field=models.CharField(
+                blank=True, default="n/a", max_length=15, verbose_name="Serial number"
+            ),
         ),
     ]

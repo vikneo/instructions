@@ -6,17 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0021_alter_fileproject_options_alter_fileproject_table'),
+        ("instruction", "0021_alter_fileproject_options_alter_fileproject_table"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='filedevice',
-            name='file_report',
+            model_name="filedevice",
+            name="file_report",
         ),
         migrations.AlterField(
-            model_name='device',
-            name='serial_num',
-            field=models.CharField(blank=True, default='n/a', max_length=25, verbose_name='Serial number'),
+            model_name="device",
+            name="serial_num",
+            field=models.CharField(
+                blank=True, default="n/a", max_length=25, verbose_name="Serial number"
+            ),
         ),
     ]

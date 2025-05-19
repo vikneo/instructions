@@ -6,19 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0006_remove_file_name'),
+        ("instruction", "0006_remove_file_name"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='device',
-            name='designation',
-            field=models.CharField(default=1, max_length=100, verbose_name='Обозначение'),
+            model_name="device",
+            name="designation",
+            field=models.CharField(
+                default=1, max_length=100, verbose_name="Обозначение"  # type: ignore
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='device',
-            name='name',
-            field=models.CharField(db_index=True, max_length=80, verbose_name='Device'),
+            model_name="device",
+            name="name",
+            field=models.CharField(db_index=True, max_length=80, verbose_name="Device"),
         ),
     ]

@@ -6,34 +6,34 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0016_alter_device_project_id'),
+        ("instruction", "0016_alter_device_project_id"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='File',
-            new_name='FileDevice',
+            old_name="File",
+            new_name="FileDevice",
         ),
         migrations.RemoveField(
-            model_name='instructionfile',
-            name='brand_id',
+            model_name="instructionfile",
+            name="brand_id",
         ),
         migrations.RemoveField(
-            model_name='device',
-            name='brand_id',
+            model_name="device",
+            name="brand_id",
         ),
         migrations.RemoveField(
-            model_name='instructionfile',
-            name='device_id',
+            model_name="instructionfile",
+            name="device_id",
         ),
         migrations.AlterModelTable(
-            name='filedevice',
-            table='file_device',
+            name="filedevice",
+            table="file_device",
         ),
         migrations.DeleteModel(
-            name='Brand',
+            name="Brand",
         ),
         migrations.DeleteModel(
-            name='InstructionFile',
+            name="InstructionFile",
         ),
     ]

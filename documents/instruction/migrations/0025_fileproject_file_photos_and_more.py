@@ -8,18 +8,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0024_alter_project_archive'),
+        ("instruction", "0024_alter_project_archive"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='fileproject',
-            name='file_photos',
-            field=imagekit.models.fields.ProcessedImageField(blank=True, upload_to=instruction.models.path_to_file_report, verbose_name='Photo'),
+            model_name="fileproject",
+            name="file_photos",
+            field=imagekit.models.fields.ProcessedImageField(
+                blank=True,
+                upload_to=instruction.models.path_to_file_report,  # type: ignore
+                verbose_name="Photo",
+            ),
         ),
         migrations.AlterField(
-            model_name='filedevice',
-            name='file_configs',
-            field=models.FileField(blank=True, upload_to=instruction.models.path_to_file_configs, verbose_name='Файлы'),
+            model_name="filedevice",
+            name="file_configs",
+            field=models.FileField(
+                blank=True,
+                upload_to=instruction.models.path_to_file_configs,
+                verbose_name="Файлы",
+            ),
         ),
     ]

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0018_alter_device_serial_num'),
+        ("instruction", "0018_alter_device_serial_num"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='device',
-            name='description',
-            field=models.TextField(blank=True, default='Пока данных нет', verbose_name='Description'),
+            model_name="device",
+            name="description",
+            field=models.TextField(
+                blank=True, default="Пока данных нет", verbose_name="Description"
+            ),
         ),
     ]

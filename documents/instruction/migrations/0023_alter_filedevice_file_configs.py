@@ -8,13 +8,17 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0022_remove_filedevice_file_report_and_more'),
+        ("instruction", "0022_remove_filedevice_file_report_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='filedevice',
-            name='file_configs',
-            field=imagekit.models.fields.ProcessedImageField(blank=True, upload_to=instruction.models.path_to_file_configs, verbose_name='Photo config'),
+            model_name="filedevice",
+            name="file_configs",
+            field=imagekit.models.fields.ProcessedImageField(
+                blank=True,
+                upload_to=instruction.models.path_to_file_configs,  # type: ignore
+                verbose_name="Photo config",
+            ),
         ),
     ]

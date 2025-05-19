@@ -7,28 +7,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0013_instructionfile_brand_id_and_more'),
+        ("instruction", "0013_instructionfile_brand_id_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='device',
-            name='designation',
-            field=models.CharField(blank=True, max_length=100, verbose_name='Обозначение'),
+            model_name="device",
+            name="designation",
+            field=models.CharField(
+                blank=True, max_length=100, verbose_name="Обозначение"
+            ),
         ),
         migrations.AlterField(
-            model_name='device',
-            name='project_id',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='instruction.project', verbose_name='Project'),
+            model_name="device",
+            name="project_id",
+            field=models.ForeignKey(
+                blank=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="instruction.project",
+                verbose_name="Project",
+            ),
         ),
         migrations.AlterField(
-            model_name='device',
-            name='serial_num',
-            field=models.CharField(blank=True, max_length=15, verbose_name='Serial number'),
+            model_name="device",
+            name="serial_num",
+            field=models.CharField(
+                blank=True, max_length=15, verbose_name="Serial number"
+            ),
         ),
         migrations.AlterField(
-            model_name='instructionfile',
-            name='brand_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='instruction.brand', verbose_name='Brand'),
+            model_name="instructionfile",
+            name="brand_id",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="instruction.brand",
+                verbose_name="Brand",
+            ),
         ),
     ]

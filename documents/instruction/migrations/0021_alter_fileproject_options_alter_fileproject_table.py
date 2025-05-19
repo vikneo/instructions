@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('instruction', '0020_fileproject'),
+        ("instruction", "0020_fileproject"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='fileproject',
-            options={'verbose_name': 'file', 'verbose_name_plural': 'files'},
+            name="fileproject",
+            options={"verbose_name": "file", "verbose_name_plural": "files"},
         ),
         migrations.AlterModelTable(
-            name='fileproject',
-            table='file_project',
+            name="fileproject",
+            table="file_project",
         ),
     ]
