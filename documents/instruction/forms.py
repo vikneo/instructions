@@ -11,24 +11,26 @@ class CSVImportForm(forms.Form):
 
 class AddFileForm(forms.ModelForm):
     """ """
-    file = forms.FileField(label='Файлы проекта')
+
+    file = forms.FileField(label="Файлы проекта")
 
     class Meta:
         model = FileProject
-        fields = ['file']
+        fields = ["file"]
 
 
 class CreatedDeviceForm(forms.ModelForm):
     """ """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["project_id"].empty_label = "Выбрать проект"
-        self.fields['serial_num'].required = False
-        self.fields['description'].required = False
-        self.fields['network_id'].required = False
+        self.fields["serial_num"].required = False
+        self.fields["description"].required = False
+        self.fields["network_id"].required = False
 
     name = forms.CharField(
-        label='Наименование',
+        label="Наименование",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -37,9 +39,10 @@ class CreatedDeviceForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        ))
+        ),
+    )
     designation = forms.CharField(
-        label='Обозначение по РКД',
+        label="Обозначение по РКД",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -48,10 +51,10 @@ class CreatedDeviceForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
     serial_num = forms.CharField(
-        label='Серийный номер',
+        label="Серийный номер",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -60,41 +63,42 @@ class CreatedDeviceForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
     description = forms.CharField(
-        label='Описание',
+        label="Описание",
         widget=forms.Textarea(
             attrs={
-                'row': 60,
-                'cols': 10,
+                "row": 60,
+                "cols": 10,
                 "class": "form-input",
                 "id": "description",
                 "name": "description",
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
-    termodate = forms.CharField(label='Термомониторинг', widget=forms.CheckboxInput())
+    termodate = forms.CharField(label="Термомониторинг", widget=forms.CheckboxInput())
 
     class Meta:
         model = Device
         fields = [
-            'project_id',
-            'name',
-            'designation',
-            'serial_num',
-            'description',
-            'termodate',
-            'network_id'
+            "project_id",
+            "name",
+            "designation",
+            "serial_num",
+            "description",
+            "termodate",
+            "network_id",
         ]
 
 
 class CrerateprojectForm(forms.ModelForm):
     """ """
+
     crm_id = forms.CharField(
-        label='ID_CRM',
+        label="ID_CRM",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -103,10 +107,10 @@ class CrerateprojectForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
     company = forms.CharField(
-        label='Заказчик',
+        label="Заказчик",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -115,10 +119,10 @@ class CrerateprojectForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
     project = forms.CharField(
-        label='Проект',
+        label="Проект",
         widget=forms.TextInput(
             attrs={
                 "class": "form-input",
@@ -127,29 +131,24 @@ class CrerateprojectForm(forms.ModelForm):
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
     description = forms.CharField(
-        label='Дополнительно',
+        label="Дополнительно",
         required=False,
         widget=forms.Textarea(
             attrs={
-                # 'row': 5,
-                # 'cols': 60,
+                # "row": 5,
+                # "cols": 60,
                 "class": "form-text",
                 "id": "description",
                 "name": "description",
                 "type": "text",
                 "data-validate": "require",
             }
-        )
+        ),
     )
 
     class Meta:
         model = Project
-        fields = [
-            'crm_id',
-            'company',
-            'project',
-            'description'
-        ]
+        fields = ["crm_id", "company", "project", "description"]
