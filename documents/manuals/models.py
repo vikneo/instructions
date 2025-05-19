@@ -33,7 +33,7 @@ class Brand(models.Model):
     slug = models.SlugField(max_length=100, verbose_name="URL", unique=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         db_table = "brands"
@@ -52,7 +52,7 @@ class Module(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         db_table = "modules"
@@ -75,7 +75,7 @@ class Instructions(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Date updated")
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         db_table = "instructions"
@@ -104,7 +104,7 @@ class FileModule(models.Model):
     )
 
     def __str__(self) -> str:
-        return self.device.name
+        return f"{self.device.name}"
 
     class Meta:
         db_table = "file_modules"

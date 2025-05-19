@@ -39,3 +39,18 @@ jobs:
         run:
           flake8 documents/
       - run: echo "Finished checking with flake8"
+
+  test-mypy:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11", "3.12"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run:
+        pip install -r requirements.txt
+    - name: Test mypy `${{ github.repository }}`
+      run:
+        mypy --check-untyped-defs documents/

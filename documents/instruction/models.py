@@ -110,7 +110,7 @@ class Device(models.Model):
         if self.serial_num:
             return f"{self.designation}-{self.serial_num}"
         else:
-            return self.name
+            return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse("project:device-detail", kwargs={"slug": self.slug})
@@ -147,7 +147,7 @@ class FileDevice(models.Model):
     #     )
 
     def __str__(self) -> str:
-        return self.device_id.name
+        return f"{self.device_id.name}"
 
     class Meta:
         db_table = "file_device"
@@ -165,7 +165,7 @@ class Network(models.Model):
     description = models.TextField(verbose_name="Description", blank=True, default=" ")
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         db_table = "networks"
@@ -277,7 +277,7 @@ class WaveSensor(models.Model):
     )  # Перегрев
 
     def __str__(self) -> str:
-        return self.name_rkd
+        return f"{self.name_rkd}"
 
     class Meta:
         db_table = "wavesensors"
@@ -305,8 +305,8 @@ class FileProject(models.Model):
     #     processors=[ResizeToFill(310, 280, anchor=False)]
     #     )
 
-    def __str__(self):
-        return self.name
+    def __str__(self) -> str:
+        return f"{self.name}"
 
     def get_absolute_url(self):
         return reverse()  # type: ignore

@@ -1,5 +1,5 @@
 import logging
-from typing import Any
+from typing import Any, Dict
 from itertools import chain
 
 from django.core.exceptions import ValidationError
@@ -27,8 +27,8 @@ class ProjectListView(ListView):
     template_name = "product/product_list.html"
     context_object_name = "products"
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs: dict) -> Dict[str, Any]:
+        context: dict = super().get_context_data(**kwargs)
         context.update(title="Network technologies")
         logger.info(f"`{format_name(self.request)}` - Рендеринг шаблона с Projects")
         return context

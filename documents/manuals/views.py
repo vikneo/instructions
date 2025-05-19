@@ -1,5 +1,4 @@
 import logging
-from subprocess import DETACHED_PROCESS
 
 from django.core.cache import cache
 from django.shortcuts import render
@@ -7,7 +6,7 @@ from django.views.generic import ListView, DetailView, CreateView
 
 from .models import (
     Brand,
-    Module
+    # Module
 )
 from utils.format_name_uer import format_name
 

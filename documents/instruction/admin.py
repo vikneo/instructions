@@ -122,8 +122,8 @@ class AdminDevice(ImportExportModelAdmin, admin.ModelAdmin):
     def get_project(self, obj):
         return obj.project_id.company
 
-    get_id_crm.short_description = "id / project"
-    get_project.short_description = "company"
+    get_id_crm.short_description = "id / project"  # type: ignore
+    get_project.short_description = "company"  # type: ignore
 
 
 @admin.register(Network)
@@ -205,7 +205,7 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
     ordering = ["id"]
 
     def get_id_crm(self, obj) -> str:
-        return obj.device_id.project_id
+        return f"{obj.device_id.project_id}"
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, "creator", None) is None:
@@ -215,7 +215,7 @@ class AdminWaveSensor(ImportExportModelAdmin, admin.ModelAdmin):
             )
         obj.save()
 
-    get_id_crm.short_description = "id / project"
+    get_id_crm.short_description = "id / project"  # type: ignore
 
 
 @admin.register(FileProject)
