@@ -39,4 +39,3 @@ jobs:
         run:
           flake8 documents/
       - run: echo "Finished checking with flake8"
-    
