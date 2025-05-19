@@ -34,7 +34,7 @@ def get_slugify_settings(instance, **kwargs) -> None:  # type: ignore
 
 
 @receiver(pre_save, sender=Device)
-def get_slugify_settings(instance, **kwargs) -> None:
+def get_slugify_devices(instance, **kwargs) -> None:  # type: ignore
     """
     Before saving the "Device" model, the "slug" field is checked, if the field is empty,
     it is filled in from the "crm_id", "project" fields of the "Progect" model and the "design"
