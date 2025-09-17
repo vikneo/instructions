@@ -42,7 +42,7 @@ def get_slugify_devices(instance, **kwargs) -> None:  # type: ignore
         instance.slug = f"{slugify(instance.project_id.crm_id)}-"
         f"{slugify(instance.project_id.project)}-"
         f"{slugify(instance.designation)}"
-    logger.info(f"Сформирован slug  для {instance.project}")
+    logger.info(f"Сформирован slug  для {instance.project_id.slug}")
 
 
 @receiver(post_delete, sender=Project)

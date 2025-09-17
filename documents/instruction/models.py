@@ -147,7 +147,7 @@ class FileDevice(models.Model):
     #     )
 
     def __str__(self) -> str:
-        return f"{self.device_id.name}"
+        return f"{self.device_id.name}"  # type: ignore
 
     class Meta:
         db_table = "file_device"
